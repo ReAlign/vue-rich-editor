@@ -4,7 +4,25 @@
   "description": "a vue rich text editor，based on quill",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo lol",
+    "lint": "vbuild -c vbuild.example.js --eslint",
+    "build": "npm run build-cjs && npm run build-umd",
+    "build-cjs": "vbuild -c vbuild.config.js --format cjs",
+    "build-umd": "vbuild -c vbuild.config.js --format umd",
+    "example": "vbuild -c vbuild.example.js -d",
+    "deploy": "vbuild -c vbuild.example.js && gh-pages -d dist-example"
+  },
+  "devDependencies": {
+    "gh-pages": "^0.12.0",
+    "node-sass": "^4.5.2",
+    "sass-loader": "^6.0.3",
+    "spectre.css": "^0.2.12",
+    "webpack": "^2.2.1",
+    "vbuild": "^6.0.0"
+  },
+  "dependencies": {
+    "axios": "^0.16.2",
+    "quill": "1.3.4"
   },
   "repository": {
     "type": "git",
@@ -12,10 +30,13 @@
   },
   "keywords": [
     "quill",
+    "rich editor",
+    "html editor",
+    "text editor",
     "vue",
-    "richEditor"
+    "vue-component"
   ],
-  "author": "ReAlign",
+  "author": "ReAlign <realign@yeah.net>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ReAlign/vue-rich-editor/issues"

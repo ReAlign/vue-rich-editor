@@ -1,0 +1,17 @@
+.idea/
+node_modules/
+demo/
+.npmignore
+.DS_Store
+npm-debug.log
+
+*.log
+.DS_Store
+
+# produced by vbuild
+dist
+dist-example
+
+example/cloudinary.vue
+
+package-lock.json
