@@ -1,205 +1,92 @@
 <template>
-<div id="app">
-  <div class="container grid-960">
-    <h1>Vue2Editor - Upload Images Example </h1>
-    <div class="columns">
-      <div class="editorWrapper column col-6 col-sm-12">
-        <vue-rich-editor id="editor1" @imageAdded="handleImageAdded" useCustomImageHandler v-model="editor1Content"></vue-rich-editor>
-        <button class="btn btn-primary" @click="saveContent(editor1Content)">Save</button>
-      </div>
+<div id='app'>
+  <div class='ve-container'>
+    <h3>vue rich editor example</h3>
+    <vue-rich-editor
+      id='editor1'
+      @imageAdded='uplaodImage'
+      useCustomImageHandler
+      v-model='editorContent' />
+    <div class="ve-button-area">
+      <button
+        class='ve-button'
+        @click='saveContent(editorContent)'>
+        save content
+      </button>
+
+      <button
+        class='ve-button'
+        @click='setEditor(setEditorDemo)'>
+        set editor
+      </button>
     </div>
   </div>
 </div>
 </template>
 
 <script>
+import { VueRichEditor } from '../src/index.js';
+import axios from 'axios';
+import { Config } from './config';
 
-const CLIENT_ID = '993793b1d8d3e2e'
-const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dkrcloudinary/upload'
-const UPLOAD_PRESET = 'ptvbj5nu'
-import {
-  VueRichEditor
-} from '../src/index.js'
-import axios from 'axios'
 export default {
   components: {
-    VueRichEditor,
+    VueRichEditor
   },
   data() {
     return {
-      editor1Content: '<h1>Editor 1 Starting Content</h1>',
-      editor2Content: '<h1>Editor 2 Starting Content</h1>',
+      editorContent: '<h3>demo string</h3>',
+      setEditorDemo: '<h1>hahahah</h1>',
       showPreview: true,
-      content: '<h1>Html For Editor</h1>',
-      editor1IsDisabled: false,
-      editor2IsDisabled: false,
-      customToolbar: [
-        ['bold', 'italic', 'underline'],
-        [{
-          'list': 'ordered'
-        }, {
-          'list': 'bullet'
-        }],
-        ['image', 'code-block']
-      ]
+      editor1IsDisabled: false
     }
   },
-  created() {
-
-  },
   methods: {
-    setEditor1(editor) {
-      this.editor1Content = 'Set Editor 1 Content'
+    setEditor(str = 'demo') {
+      this.editorContent = str;
     },
 
-    setEditor2(editor) {
-      this.editor2Content = 'Set Editor 2 Content'
-    },
-
-    saveContent(content) {
+    saveContent(content = '') {
       console.log(content);
-      // console.log(this.editorContent);
     },
 
-    toggleDisabledForEditor1() {
-      this.editor1IsDisabled = !this.editor1IsDisabled
-    },
-    toggleDisabledForEditor2() {
-      this.editor2IsDisabled = !this.editor2IsDisabled
-    },
-    sendUrlToEditor() {
-      console.log('worked');
-    },
-    handleImageAdded(file, Editor, cursorLocation) {
-
-      console.log('Using Method in Parent');
-
-      var formData = new FormData();
-      formData.append('image', file)
-
-
-
+    uplaodImage(file, Editor, cursorLocation) {
+      let formData = new FormData();
+      formData.append(Config.imageFileName, file);
 
       axios({
-        url: 'https://api.imgur.com/3/image',
+        url: Config.URL.UPLOAD_IMAGE,
         method: 'POST',
-        headers:{
-          'Authorization': 'Client-ID ' + CLIENT_ID
-        },
         data: formData
       })
       .then((result) => {
         console.log(result);
-        let url = result.data.data.link
+        let url = result.data.data.url;
         Editor.insertEmbed(cursorLocation, 'image', url);
       })
       .catch((err) => {
         console.log(err);
       })
-      // axios({
-      //   url: CLOUDINARY_URL,
-      //   method: 'POST',
-      //   headers:{
-      //     'Content-Type': 'application/x-www-form-urlencoded'
-      //   },
-      //   data: formData
-      // })
-      // .then((result) => {
-      //   let url = result.data.url
-      //   Editor.insertEmbed(cursorLocation, 'image', url);
-      // })
-      // .catch((err) => {
-      //   console.log(err);
-      // })
-
-    },
-    uploadImage(file, Editor, cursorLocation) {
-      var formData = new FormData();
-      // formData.append('file', file)
-      // formData.append('upload_preset', UPLOAD_PRESET)
-      //
-      //
-
-      // var settings = {
-      //   "async": true,
-      //   "crossDomain": true,
-      //   "url": "https://api.imgur.com/3/image",
-      //   "method": "POST",
-      //   "headers": {
-      //     "authorization":
-      //   },
-      //   "processData": false,
-      //   "contentType": false,
-      //   "mimeType": "multipart/form-data",
-      //   "data": formData
-      // }
-
-
-      axios({
-        url: 'https://api.imgur.com/3/image',
-        method: 'POST',
-        headers:{
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'authorization': 'Client-ID' + CLIENT_ID
-        },
-        data: formData
-      })
-      .then((result) => {
-        let url = result.data.url
-        Editor.insertEmbed(cursorLocation, 'image', url);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-
-      //
-      // axios({
-      //   url: CLOUDINARY_URL,
-      //   method: 'POST',
-      //   headers:{
-      //     'Content-Type': 'application/x-www-form-urlencoded'
-      //   },
-      //   data: formData
-      // })
-      // .then((result) => {
-      //   let url = result.data.url
-      //   Editor.insertEmbed(cursorLocation, 'image', url);
-      // })
-      // .catch((err) => {
-      //   console.log(err);
-      // })
     }
   }
 }
 </script>
 
-<style>
-/*.flexWrapper {
-      display: flex;
-}
-.editorWrapper {
-    flex-basis: 50%;
-}
-.quillWrapper {
+<style lang="scss">
+.ve-container {
   position: relative;
-  z-index: 99999;
-}
-*/
-
-#preview {
-  background: #f6f6f6;
-  border-left: 3px solid gray;
-  padding: 2em;
-  margin-left: 1em;
-}
-@media (min-width: 601px) {
-  #preview {
-    width: 47%;
+  width: calc(100% - 40px);
+  margin: 0 auto;
+  .ve-button-area {
+    margin: 10px 0 0 0;
+    .ve-button {
+      padding: 4px 10px;
+      background: #00a3cf;
+      border: 0;
+      border-radius: 3px;
+      color: #fff;
+      cursor: pointer;
+    }
   }
 }
-.ql-disabled {
-    opacity: 0.5;
-    background: rgba(153, 153, 153, 0.2);
-}
-
 </style>
