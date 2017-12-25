@@ -1,3 +1,5 @@
+require('jquery');
+
 module.exports = {
   entry: 'src/index.js',
   moduleName: 'VueRichEditor',
@@ -9,12 +11,17 @@ module.exports = {
     js: 'index.js'
   },
   copy: false,
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery'
+    })
+  ],
   module: {
-    loaders: [
-      {
-        test: /\.scss$/,
-        loader: 'style!css!sass'
-      }
-    ],
+    loaders: [{
+      test: /\.scss$/,
+      loader: 'style!css!sass'
+    }]
   }
 }

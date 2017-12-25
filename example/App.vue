@@ -7,7 +7,7 @@
       @imageAdded='uplaodImage'
       useCustomImageHandler
       v-model='editorContent' />
-    <div class="ve-button-area">
+    <div class='ve-button-area'>
       <button
         class='ve-button'
         @click='saveContent(editorContent)'>
@@ -35,11 +35,11 @@ export default {
   },
   data() {
     return {
-      editorContent: '<h3>demo string</h3>',
+      editorContent: 'demo string<img src="http://www.w3school.com.cn/ui2017/compatible_safari.png" />',
       setEditorDemo: '<h1>hahahah</h1>',
       showPreview: true,
       editor1IsDisabled: false
-    }
+    };
   },
   methods: {
     setEditor(str = 'demo') {
@@ -59,20 +59,20 @@ export default {
         method: 'POST',
         data: formData
       })
-      .then((result) => {
-        console.log(result);
-        let url = result.data.data.url;
-        Editor.insertEmbed(cursorLocation, 'image', url);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+        .then(result => {
+          console.log(result);
+          let url = result.data.data.url;
+          Editor.insertEmbed(cursorLocation, 'image', url);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
-}
+};
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 .ve-container {
   position: relative;
   width: calc(100% - 40px);

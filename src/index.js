@@ -1,4 +1,4 @@
-import VueRichEditor from './vue-rich-editor.vue';
+import VueRichEditor from './vue-rich-editor/index.vue';
 
 const VEditor = {
   VueRichEditor,
