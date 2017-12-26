@@ -2,6 +2,10 @@
 
 > a vue rich text editor，based on quill
 
+[vue-rich-editor demo](http://realign.pw/vue-rich-editor/)
+
+### todo
+
 * [x] inline-style
 * [ ] link and style conflict
 * [ ] placeholder
