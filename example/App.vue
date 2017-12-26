@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      editorContent: 'demo string<img src="http://www.w3school.com.cn/ui2017/compatible_safari.png" />',
+      editorContent: 'demo string',
       setEditorDemo: '<h1>hahahah</h1>',
       showPreview: true,
       editor1IsDisabled: false
