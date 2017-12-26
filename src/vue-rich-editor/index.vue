@@ -19,7 +19,7 @@ import Quill from 'quill';
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
 
-import MyBold from './rewrite/blod';
+import MyBold from './rewrite/bold';
 import MyItalic from './rewrite/italic';
 import MyUnderline from './rewrite/underline';
 import SizeStyle from './rewrite/size';
