@@ -59,7 +59,6 @@ export default {
       type: String,
       default: 'quill-container'
     },
-    placeholder: 'qwqwqwqw',
     disabled: Boolean,
     editorToolbar: Array,
     useCustomImageHandler: {
@@ -72,7 +71,8 @@ export default {
     return {
       quill: null,
       editor: null,
-      toolbar: this.editorToolbar ? this.editorToolbar : defaultToolbar
+      toolbar: this.editorToolbar ? this.editorToolbar : defaultToolbar,
+      placeholder: this.placeholder ? this.placeholder : '请输入'
     };
   },
 
@@ -104,7 +104,7 @@ export default {
         modules: {
           toolbar: this.toolbar
         },
-        placeholder: 'qwqwqwsssss',
+        placeholder: this.placeholder,
         theme: 'snow',
         readOnly: this.disabled ? this.disabled : false
       });
