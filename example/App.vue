@@ -3,7 +3,7 @@
   <div class='ve-container'>
     <h3>vue rich editor example</h3>
     <vue-rich-editor
-      id='editor1'
+      id='editor'
       @imageAdded='uplaodImage'
       useCustomImageHandler
       v-model='editorContent' />
