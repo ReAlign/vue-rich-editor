@@ -4,9 +4,10 @@
     <h3>vue rich editor example</h3>
     <vue-rich-editor
       id='editor'
-      @imageAdded='uplaodImage'
       useCustomImageHandler
-      v-model='editorContent' />
+      :disabled='editorIsDisabled'
+      v-model='editorContent'
+      @imageAdded='uplaodImage' />
     <div class='ve-button-area'>
       <button
         class='ve-button'
@@ -37,8 +38,7 @@ export default {
     return {
       editorContent: 'demo string',
       setEditorDemo: '<h1>hahahah</h1>',
-      showPreview: true,
-      editor1IsDisabled: false
+      editorIsDisabled: false
     };
   },
   methods: {
@@ -51,8 +51,11 @@ export default {
     },
 
     uplaodImage(file, Editor, cursorLocation) {
+      const self = this;
       let formData = new FormData();
       formData.append(Config.imageFileName, file);
+
+      this.editorIsDisabled = true;
 
       axios({
         url: Config.URL.UPLOAD_IMAGE,
@@ -60,11 +63,13 @@ export default {
         data: formData
       })
         .then(result => {
+          self.editorIsDisabled = false;
           console.log(result);
           let url = result.data.data.url;
           Editor.insertEmbed(cursorLocation, 'image', url);
         })
         .catch(err => {
+          self.editorIsDisabled = false;
           console.log(err);
         });
     }

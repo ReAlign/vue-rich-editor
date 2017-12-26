@@ -4,6 +4,10 @@
 
 [vue-rich-editor demo](http://realign.pw/vue-rich-editor/)
 
+### Usage
+
+[example](https://github.com/ReAlign/vue-rich-editor/tree/master/example)
+
 ### todo
 
 * [x] inline-style

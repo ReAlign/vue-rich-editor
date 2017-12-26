@@ -72,12 +72,12 @@ export default {
       quill: null,
       editor: null,
       toolbar: this.editorToolbar ? this.editorToolbar : defaultToolbar,
-      placeholder: this.placeholder ? this.placeholder : '请输入'
+      placeholder: this.placeholder ? this.placeholder : ''
     };
   },
 
   mounted() {
-    this.initializeVue2Editor();
+    this.initializeVueRichEditor();
     this.handleUpdatedEditor();
   },
 
@@ -93,7 +93,7 @@ export default {
   },
 
   methods: {
-    initializeVue2Editor() {
+    initializeVueRichEditor() {
       this.setQuillElement();
       this.setEditorElement();
       this.checkForInitialContent();
@@ -156,6 +156,10 @@ export default {
 }
 
 .quill-wrapper {
+  .ql-disabled {
+    cursor: not-allowed;
+    user-select: none;
+  }
   .ql-editor ul {
     &[data-checked='true'] > li::before,
     &[data-checked='false'] > li::before {
