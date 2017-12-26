@@ -9,7 +9,6 @@ npm-debug.log
 .DS_Store
 
 # produced by vbuild
-dist
 dist-example
 
 example/cloudinary.vue

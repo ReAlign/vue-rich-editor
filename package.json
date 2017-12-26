@@ -1,8 +1,8 @@
 {
   "name": "vue-rich-editor",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "a vue rich text editor，based on quill",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo lol",
     "lint": "vbuild -c vbuild.example.js --eslint",

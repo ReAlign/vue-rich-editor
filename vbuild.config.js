@@ -1,3 +1,4 @@
+let webpack = require('webpack');
 require('jquery');
 
 module.exports = {
