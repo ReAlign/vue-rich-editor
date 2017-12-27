@@ -23,18 +23,11 @@ import MyBold from './rewrite/bold';
 import MyItalic from './rewrite/italic';
 import MyUnderline from './rewrite/underline';
 import SizeStyle from './rewrite/size';
-import { ToolbarEmoji, EmojiBlot, EmojiBlotTwo, ShortNameEmoji, TextAreaEmoji } from 'n-quill-emoji';
 
-Quill.register(
-  {
+Quill.register({
     'formats/bold': MyBold,
     'formats/italic': MyItalic,
-    'formats/underline': MyUnderline,
-    'formats/bolt': EmojiBlot,
-    'formats/boltTwo': EmojiBlotTwo,
-    'modules/toolbar_emoji': ToolbarEmoji,
-    'modules/textarea_emoji': TextAreaEmoji,
-    'modules/short_name_emoji': ShortNameEmoji
+    'formats/underline': MyUnderline
   }, true);
 
 Quill.register(SizeStyle, true);
@@ -53,7 +46,6 @@ let defaultToolbar = {
       }, 'bold' , 'italic', 'underline'],
     [{ color: [] }],
     [{ list: 'bullet' }, { list: 'ordered' }],
-    ['emoji'],
     ['image'],
     [
       {
@@ -118,8 +110,7 @@ export default {
     setQuillElement() {
       this.quill = new Quill(this.$refs.quillContainer, {
         modules: {
-          toolbar: this.toolbar,
-          toolbar_emoji: true
+          toolbar: this.toolbar
         },
         placeholder: this.placeholder,
         theme: 'snow',
