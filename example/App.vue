@@ -3,6 +3,8 @@
   <div class='ve-container'>
     <h3>vue rich editor example</h3>
     <vue-rich-editor
+      id='editor'
+      :quillRegisterKeys='quillRegisterKeys'
       useCustomImageHandler
       :disabled='editorIsDisabled'
       v-model='editorContent'
@@ -37,7 +39,8 @@ export default {
     return {
       editorContent: 'demo string<img src="https://olx7tg2rm.qnssl.com/new.png" />',
       setEditorDemo: '<h1>hahahah</h1>',
-      editorIsDisabled: false
+      editorIsDisabled: false,
+      quillRegisterKeys: ['inline']
     };
   },
   methods: {
