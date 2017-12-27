@@ -3,11 +3,10 @@
   <div class='ve-container'>
     <h3>vue rich editor example</h3>
     <vue-rich-editor
-      id='editor'
       useCustomImageHandler
       :disabled='editorIsDisabled'
       v-model='editorContent'
-      @imageAdded='uplaodImage' />
+      @imageAdded='uploadImage' />
     <div class='ve-button-area'>
       <button
         class='ve-button'
@@ -36,7 +35,7 @@ export default {
   },
   data() {
     return {
-      editorContent: 'demo string',
+      editorContent: 'demo string<img src="https://olx7tg2rm.qnssl.com/new.png" />',
       setEditorDemo: '<h1>hahahah</h1>',
       editorIsDisabled: false
     };
@@ -50,7 +49,7 @@ export default {
       console.log(content);
     },
 
-    uplaodImage(file, Editor, cursorLocation) {
+    uploadImage(file, Editor, cursorLocation) {
       const self = this;
       let formData = new FormData();
       formData.append(Config.imageFileName, file);

@@ -1,4 +1,5 @@
 let path = require('path');
+let webpack = require('webpack');
 
 module.exports = {
   entry: 'example/index.js',
@@ -6,7 +7,7 @@ module.exports = {
   webpack: {
     output: {
       path: path.resolve(__dirname, 'dist-example/'),
-      publicPath: ""
+      publicPath: ''
     }
   },
   filename: {
@@ -16,5 +17,20 @@ module.exports = {
   html: {
     title: 'VueRichEditor'
   },
-  copy: true
+  copy: true,
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules(?!\/quill-image-drop-module|quill-image-resize-module)/,
+        loader: 'babel-loader',
+        query: {}
+      }
+    ]
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      'window.Quill': 'quill'
+    })
+  ]
 }
