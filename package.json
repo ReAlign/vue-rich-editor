@@ -1,6 +1,6 @@
 {
   "name": "vue-rich-editor",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "a vue rich text editor，based on quill",
   "main": "dist/index.js",
   "scripts": {
@@ -37,7 +37,9 @@
     "html editor",
     "text editor",
     "vue",
-    "vue-component"
+    "vue-component",
+    "module config",
+    "inline style"
   ],
   "author": "ReAlign <realign@yeah.net>",
   "license": "ISC",
