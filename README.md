@@ -24,8 +24,9 @@
 
 [example](https://github.com/ReAlign/vue-rich-editor/tree/master/example)
 
-### ToDo
+### TODO
 
 * [x] inline-style
+* [x] image-resize
 * [ ] link and style conflict
 * [ ] placeholder
