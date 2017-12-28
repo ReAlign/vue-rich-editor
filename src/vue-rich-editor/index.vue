@@ -188,6 +188,7 @@ export default {
       }
 
       this.quill = new Quill(this.$refs.quillContainer, {
+        bounds: '.vre-editor-sign-only',
         modules: _modulesConf,
         placeholder: this.placeholder,
         theme: 'snow',
