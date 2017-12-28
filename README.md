@@ -18,7 +18,9 @@
 
 ### Demo
 
-[vue-rich-editor demo](http://realign.pw/vue-rich-editor/)
+[deploy demo](http://realign.pw/vue-rich-editor/)
+
+[codesandbox demo](https://codesandbox.io/s/w0m20jjxrl)
 
 ### Usage
 
@@ -28,5 +30,5 @@
 
 * [x] inline-style
 * [x] image-resize
-* [ ] link and style conflict
+* [x] link and style conflict
 * [ ] placeholder
