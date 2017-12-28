@@ -40,7 +40,7 @@ export default {
       editorContent: 'demo string<img src="https://olx7tg2rm.qnssl.com/new.png" />',
       setEditorDemo: '<h1>hahahah</h1>',
       editorIsDisabled: false,
-      quillRegisterKeys: ['inline']
+      quillRegisterKeys: ['inline', 'size', 'imageResize']
     };
   },
   methods: {

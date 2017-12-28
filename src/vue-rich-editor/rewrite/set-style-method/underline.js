@@ -18,9 +18,6 @@ class UnderlineStyleAttributor extends Parchment.Attributor.Style {
   }
 }
 
-let UnderlineStyle = new UnderlineStyleAttributor('underline', 'text-decoration', {
-  scope: Parchment.Scope.INLINE,
-  whitelist: [true, false]
-});
+let UnderlineStyle = new UnderlineStyleAttributor('underline', 'text-decoration');
 
 export default UnderlineStyle;

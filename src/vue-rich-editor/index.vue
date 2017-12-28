@@ -261,6 +261,7 @@ export default {
   .ql-snow.ql-toolbar {
     padding-top: 8px;
     padding-bottom: 4px;
+    line-height: 26px;
     button {
       // margin: 1px;
       svg {
