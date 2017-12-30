@@ -21,7 +21,6 @@ import $ from 'jquery';
 
 require('quill/dist/quill.core.css');
 require('quill/dist/quill.snow.css');
-require('n-quill-emoji/dist/n-quill-emoji.css');
 
 import MyBold from './rewrite/set-style-method/bold';
 import MyItalic from './rewrite/set-style-method/italic';
@@ -251,6 +250,7 @@ export default {
 </script>
 
 <style lang='scss'>
+@import './../../node_modules/n-quill-emoji/dist/n-quill-emoji.css';
 .ql-editor {
   min-height: 200px;
   font-size: 14px;
