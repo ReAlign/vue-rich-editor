@@ -11,7 +11,7 @@ module.exports = {
   filename: {
     js: 'index.js'
   },
-  copy: false,
+  copy: true,
   plugins: [
     new webpack.ProvidePlugin({
       $: 'jquery',

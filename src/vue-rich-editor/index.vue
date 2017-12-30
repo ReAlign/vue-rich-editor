@@ -19,9 +19,9 @@
 import Quill from 'quill';
 import $ from 'jquery';
 
-import 'quill/dist/quill.core.css';
-import 'quill/dist/quill.snow.css';
-import 'n-quill-emoji/dist/n-quill-emoji.css';
+require('quill/dist/quill.core.css');
+require('quill/dist/quill.snow.css');
+require('n-quill-emoji/dist/n-quill-emoji.css');
 
 import MyBold from './rewrite/set-style-method/bold';
 import MyItalic from './rewrite/set-style-method/italic';
