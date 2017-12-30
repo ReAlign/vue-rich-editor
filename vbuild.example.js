@@ -18,6 +18,7 @@ module.exports = {
     title: 'VueRichEditor'
   },
   copy: true,
+  minimize: false,
   module: {
     rules: [
       {

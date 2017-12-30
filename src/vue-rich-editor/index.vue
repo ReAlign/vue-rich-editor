@@ -21,16 +21,25 @@ import $ from 'jquery';
 
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
+import 'n-quill-emoji/dist/n-quill-emoji.css';
 
 import MyBold from './rewrite/set-style-method/bold';
 import MyItalic from './rewrite/set-style-method/italic';
 import MyUnderline from './rewrite/set-style-method/underline';
 import MySizeStyle from './rewrite/set-style-method/size';
-import BlotFormatter from 'quill-blot-formatter';
-import ImageSpec from 'quill-blot-formatter/dist/specs/ImageSpec';
-import ResizeAction from 'quill-blot-formatter/dist/actions/ResizeAction';
-import AlignAction from 'quill-blot-formatter/dist/actions/align/AlignAction';
-import DeleteAction from 'quill-blot-formatter/dist/actions/DeleteAction';
+import BlotFormatter from 'n-quill-blot-formatter';
+import ImageSpec from 'n-quill-blot-formatter/dist/specs/ImageSpec';
+import ResizeAction from 'n-quill-blot-formatter/dist/actions/ResizeAction';
+import AlignAction from 'n-quill-blot-formatter/dist/actions/align/AlignAction';
+import DeleteAction from 'n-quill-blot-formatter/dist/actions/DeleteAction';
+
+import {
+  emojiBlot,
+  emojiBlotTwo,
+  shortNameEmoji,
+  toolbarEmoji,
+  textAreaEmoji
+} from 'n-quill-emoji';
 
 let gValue = { value: '' };
 
@@ -40,9 +49,13 @@ let defaultToolbar = {
     [ { color: [] } ],
     [ { list: 'bullet' }, { list: 'ordered' } ],
     [ 'image' ],
+    [ 'emoji' ],
     [ { size: ['32px', '24px', '18px', '16px', '13px', '12px', false] } ],
     [ 'clean' ]
-  ]
+  ],
+  handlers: {
+      'emoji': function () {}
+  }
 };
 
 let ENUM_MAP = {
@@ -173,7 +186,8 @@ export default {
       const self = this;
 
       let _modulesConf = {
-        toolbar: this.toolbar
+        toolbar: this.toolbar,
+        toolbar_emoji: true
       };
 
       if((this.quillRegisterKeys

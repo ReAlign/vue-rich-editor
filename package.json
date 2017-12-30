@@ -1,11 +1,12 @@
 {
   "name": "vue-rich-editor",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "a vue rich text editor，based on quill",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo lol",
     "lint": "vbuild -c vbuild.example.js --eslint",
+    "build-w": "webpack",
     "build": "npm run build-cjs && npm run build-umd",
     "build-cjs": "vbuild -c vbuild.config.js --format cjs",
     "build-umd": "vbuild -c vbuild.config.js --format umd",
@@ -17,9 +18,13 @@
     "quill": "1.3.4",
     "parchment": "^1.1.3",
     "jquery": "^3.2.1",
-    "quill-blot-formatter": "^1.0.2"
+    "n-quill-emoji": "0.3.1",
+    "n-quill-blot-formatter": "^1.1.1"
   },
   "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.1",
     "gh-pages": "^0.12.0",
     "style-loader": "0.13.0",
     "sass-loader": "^6.0.6",

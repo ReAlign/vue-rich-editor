@@ -5,7 +5,7 @@ module.exports = {
   entry: 'src/index.js',
   moduleName: 'VueRichEditor',
   html: false,
-  minimize: true,
+  minimize: false,
   sourceMap: false,
   extract: false,
   filename: {
