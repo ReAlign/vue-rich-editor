@@ -19,9 +19,6 @@
 import Quill from 'quill';
 import $ from 'jquery';
 
-require('quill/dist/quill.core.css');
-require('quill/dist/quill.snow.css');
-
 import MyBold from './rewrite/set-style-method/bold';
 import MyItalic from './rewrite/set-style-method/italic';
 import MyUnderline from './rewrite/set-style-method/underline';
@@ -250,6 +247,8 @@ export default {
 </script>
 
 <style lang='scss'>
+@import './../../node_modules/quill/dist/quill.core.css';
+@import './../../node_modules/quill/dist/quill.snow.css';
 @import './../../node_modules/n-quill-emoji/dist/n-quill-emoji.css';
 .ql-editor {
   min-height: 200px;

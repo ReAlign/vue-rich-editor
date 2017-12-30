@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "https://github.com/ReAlign/vue-rich-editor#readme/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 143);
+/******/ 	return __webpack_require__(__webpack_require__.s = 141);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -11448,7 +11448,7 @@ var _deepmerge = __webpack_require__(122);
 
 var _deepmerge2 = _interopRequireDefault(_deepmerge);
 
-var _Options = __webpack_require__(62);
+var _Options = __webpack_require__(61);
 
 var _Options2 = _interopRequireDefault(_Options);
 
@@ -11645,8 +11645,8 @@ module.exports = function (it, key) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(14);
-var IE8_DOM_DEFINE = __webpack_require__(53);
-var toPrimitive = __webpack_require__(40);
+var IE8_DOM_DEFINE = __webpack_require__(52);
+var toPrimitive = __webpack_require__(39);
 var dP = Object.defineProperty;
 
 exports.f = __webpack_require__(4) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
@@ -11668,7 +11668,7 @@ exports.f = __webpack_require__(4) ? Object.defineProperty : function defineProp
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
 var IObject = __webpack_require__(94);
-var defined = __webpack_require__(28);
+var defined = __webpack_require__(27);
 module.exports = function (it) {
   return IObject(defined(it));
 };
@@ -11680,7 +11680,7 @@ module.exports = function (it) {
 
 var global = __webpack_require__(3);
 var core = __webpack_require__(2);
-var ctx = __webpack_require__(51);
+var ctx = __webpack_require__(50);
 var hide = __webpack_require__(9);
 var PROTOTYPE = 'prototype';
 
@@ -11768,7 +11768,7 @@ module.exports = function (it) {
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var store = __webpack_require__(38)('wks');
+var store = __webpack_require__(37)('wks');
 var uid = __webpack_require__(23);
 var Symbol = __webpack_require__(3).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
@@ -11958,15 +11958,15 @@ var _Action = __webpack_require__(12);
 
 var _Action2 = _interopRequireDefault(_Action);
 
-var _AlignAction = __webpack_require__(46);
+var _AlignAction = __webpack_require__(45);
 
 var _AlignAction2 = _interopRequireDefault(_AlignAction);
 
-var _ResizeAction = __webpack_require__(45);
+var _ResizeAction = __webpack_require__(44);
 
 var _ResizeAction2 = _interopRequireDefault(_ResizeAction);
 
-var _DeleteAction = __webpack_require__(44);
+var _DeleteAction = __webpack_require__(43);
 
 var _DeleteAction2 = _interopRequireDefault(_DeleteAction);
 
@@ -12079,7 +12079,7 @@ var _create = __webpack_require__(74);
 
 var _create2 = _interopRequireDefault(_create);
 
-var _typeof2 = __webpack_require__(49);
+var _typeof2 = __webpack_require__(48);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -12110,7 +12110,7 @@ exports.default = function (subClass, superClass) {
 
 exports.__esModule = true;
 
-var _typeof2 = __webpack_require__(49);
+var _typeof2 = __webpack_require__(48);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -22420,227 +22420,6 @@ return jQuery;
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-  Modified by Evan You @yyx990803
-*/
-
-var hasDocument = typeof document !== 'undefined'
-
-if (typeof DEBUG !== 'undefined' && DEBUG) {
-  if (!hasDocument) {
-    throw new Error(
-    'vue-style-loader cannot be used in a non-browser environment. ' +
-    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
-  ) }
-}
-
-var listToStyles = __webpack_require__(141)
-
-/*
-type StyleObject = {
-  id: number;
-  parts: Array<StyleObjectPart>
-}
-
-type StyleObjectPart = {
-  css: string;
-  media: string;
-  sourceMap: ?string
-}
-*/
-
-var stylesInDom = {/*
-  [id: number]: {
-    id: number,
-    refs: number,
-    parts: Array<(obj?: StyleObjectPart) => void>
-  }
-*/}
-
-var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
-var singletonElement = null
-var singletonCounter = 0
-var isProduction = false
-var noop = function () {}
-
-// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-// tags it will allow on a page
-var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
-
-module.exports = function (parentId, list, _isProduction) {
-  isProduction = _isProduction
-
-  var styles = listToStyles(parentId, list)
-  addStylesToDom(styles)
-
-  return function update (newList) {
-    var mayRemove = []
-    for (var i = 0; i < styles.length; i++) {
-      var item = styles[i]
-      var domStyle = stylesInDom[item.id]
-      domStyle.refs--
-      mayRemove.push(domStyle)
-    }
-    if (newList) {
-      styles = listToStyles(parentId, newList)
-      addStylesToDom(styles)
-    } else {
-      styles = []
-    }
-    for (var i = 0; i < mayRemove.length; i++) {
-      var domStyle = mayRemove[i]
-      if (domStyle.refs === 0) {
-        for (var j = 0; j < domStyle.parts.length; j++) {
-          domStyle.parts[j]()
-        }
-        delete stylesInDom[domStyle.id]
-      }
-    }
-  }
-}
-
-function addStylesToDom (styles /* Array<StyleObject> */) {
-  for (var i = 0; i < styles.length; i++) {
-    var item = styles[i]
-    var domStyle = stylesInDom[item.id]
-    if (domStyle) {
-      domStyle.refs++
-      for (var j = 0; j < domStyle.parts.length; j++) {
-        domStyle.parts[j](item.parts[j])
-      }
-      for (; j < item.parts.length; j++) {
-        domStyle.parts.push(addStyle(item.parts[j]))
-      }
-      if (domStyle.parts.length > item.parts.length) {
-        domStyle.parts.length = item.parts.length
-      }
-    } else {
-      var parts = []
-      for (var j = 0; j < item.parts.length; j++) {
-        parts.push(addStyle(item.parts[j]))
-      }
-      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
-    }
-  }
-}
-
-function createStyleElement () {
-  var styleElement = document.createElement('style')
-  styleElement.type = 'text/css'
-  head.appendChild(styleElement)
-  return styleElement
-}
-
-function addStyle (obj /* StyleObjectPart */) {
-  var update, remove
-  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
-
-  if (styleElement) {
-    if (isProduction) {
-      // has SSR styles and in production mode.
-      // simply do nothing.
-      return noop
-    } else {
-      // has SSR styles but in dev mode.
-      // for some reason Chrome can't handle source map in server-rendered
-      // style tags - source maps in <style> only works if the style tag is
-      // created and inserted dynamically. So we remove the server rendered
-      // styles and inject new ones.
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  if (isOldIE) {
-    // use singleton mode for IE9.
-    var styleIndex = singletonCounter++
-    styleElement = singletonElement || (singletonElement = createStyleElement())
-    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
-    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
-  } else {
-    // use multi-style-tag mode in all other cases
-    styleElement = createStyleElement()
-    update = applyToTag.bind(null, styleElement)
-    remove = function () {
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  update(obj)
-
-  return function updateStyle (newObj /* StyleObjectPart */) {
-    if (newObj) {
-      if (newObj.css === obj.css &&
-          newObj.media === obj.media &&
-          newObj.sourceMap === obj.sourceMap) {
-        return
-      }
-      update(obj = newObj)
-    } else {
-      remove()
-    }
-  }
-}
-
-var replaceText = (function () {
-  var textStore = []
-
-  return function (index, replacement) {
-    textStore[index] = replacement
-    return textStore.filter(Boolean).join('\n')
-  }
-})()
-
-function applyToSingletonTag (styleElement, index, remove, obj) {
-  var css = remove ? '' : obj.css
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = replaceText(index, css)
-  } else {
-    var cssNode = document.createTextNode(css)
-    var childNodes = styleElement.childNodes
-    if (childNodes[index]) styleElement.removeChild(childNodes[index])
-    if (childNodes.length) {
-      styleElement.insertBefore(cssNode, childNodes[index])
-    } else {
-      styleElement.appendChild(cssNode)
-    }
-  }
-}
-
-function applyToTag (styleElement, obj) {
-  var css = obj.css
-  var media = obj.media
-  var sourceMap = obj.sourceMap
-
-  if (media) {
-    styleElement.setAttribute('media', media)
-  }
-
-  if (sourceMap) {
-    // https://developer.chrome.com/devtools/docs/javascript-debugging
-    // this makes source maps inside style tags work properly in Chrome
-    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
-    // http://stackoverflow.com/a/26603875
-    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
-  }
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = css
-  } else {
-    while (styleElement.firstChild) {
-      styleElement.removeChild(styleElement.firstChild)
-    }
-    styleElement.appendChild(document.createTextNode(css))
-  }
-}
-
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
@@ -22682,7 +22461,7 @@ exports.default = function get(object, property, receiver) {
 };
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports) {
 
 // 7.2.1 RequireObjectCoercible(argument)
@@ -22693,7 +22472,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports) {
 
 // IE 8- don't enum bug keys
@@ -22703,35 +22482,35 @@ module.exports = (
 
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = {};
 
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = true;
 
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject = __webpack_require__(14);
 var dPs = __webpack_require__(99);
-var enumBugKeys = __webpack_require__(29);
-var IE_PROTO = __webpack_require__(37)('IE_PROTO');
+var enumBugKeys = __webpack_require__(28);
+var IE_PROTO = __webpack_require__(36)('IE_PROTO');
 var Empty = function () { /* empty */ };
 var PROTOTYPE = 'prototype';
 
 // Create object with fake `null` prototype: use iframe Object with cleared prototype
 var createDict = function () {
   // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(52)('iframe');
+  var iframe = __webpack_require__(51)('iframe');
   var i = enumBugKeys.length;
   var lt = '<';
   var gt = '>';
@@ -22764,15 +22543,15 @@ module.exports = Object.create || function create(O, Properties) {
 
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE = __webpack_require__(35);
+var pIE = __webpack_require__(34);
 var createDesc = __webpack_require__(22);
 var toIObject = __webpack_require__(7);
-var toPrimitive = __webpack_require__(40);
+var toPrimitive = __webpack_require__(39);
 var has = __webpack_require__(5);
-var IE8_DOM_DEFINE = __webpack_require__(53);
+var IE8_DOM_DEFINE = __webpack_require__(52);
 var gOPD = Object.getOwnPropertyDescriptor;
 
 exports.f = __webpack_require__(4) ? gOPD : function getOwnPropertyDescriptor(O, P) {
@@ -22786,12 +22565,12 @@ exports.f = __webpack_require__(4) ? gOPD : function getOwnPropertyDescriptor(O,
 
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(58);
-var enumBugKeys = __webpack_require__(29);
+var $keys = __webpack_require__(57);
+var enumBugKeys = __webpack_require__(28);
 
 module.exports = Object.keys || function keys(O) {
   return $keys(O, enumBugKeys);
@@ -22799,14 +22578,14 @@ module.exports = Object.keys || function keys(O) {
 
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports) {
 
 exports.f = {}.propertyIsEnumerable;
 
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var def = __webpack_require__(6).f;
@@ -22819,10 +22598,10 @@ module.exports = function (it, tag, stat) {
 
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var shared = __webpack_require__(38)('keys');
+var shared = __webpack_require__(37)('keys');
 var uid = __webpack_require__(23);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
@@ -22830,7 +22609,7 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(3);
@@ -22842,7 +22621,7 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports) {
 
 // 7.1.4 ToInteger
@@ -22854,7 +22633,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
@@ -22872,13 +22651,13 @@ module.exports = function (it, S) {
 
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(3);
 var core = __webpack_require__(2);
-var LIBRARY = __webpack_require__(31);
-var wksExt = __webpack_require__(42);
+var LIBRARY = __webpack_require__(30);
+var wksExt = __webpack_require__(41);
 var defineProperty = __webpack_require__(6).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
@@ -22887,14 +22666,14 @@ module.exports = function (name) {
 
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports.f = __webpack_require__(11);
 
 
 /***/ }),
-/* 43 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -23722,7 +23501,7 @@ exports.f = __webpack_require__(11);
 
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23800,7 +23579,7 @@ var DeleteAction = function (_Action) {
 exports.default = DeleteAction;
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23987,7 +23766,7 @@ var ResizeAction = function (_Action) {
 exports.default = ResizeAction;
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24007,15 +23786,15 @@ var _BlotFormatter = __webpack_require__(1);
 
 var _BlotFormatter2 = _interopRequireDefault(_BlotFormatter);
 
-var _DefaultAligner = __webpack_require__(63);
+var _DefaultAligner = __webpack_require__(62);
 
 var _DefaultAligner2 = _interopRequireDefault(_DefaultAligner);
 
 var _Aligner = __webpack_require__(25);
 
-var _Toolbar = __webpack_require__(65);
+var _Toolbar = __webpack_require__(64);
 
-var _DefaultToolbar = __webpack_require__(64);
+var _DefaultToolbar = __webpack_require__(63);
 
 var _DefaultToolbar2 = _interopRequireDefault(_DefaultToolbar);
 
@@ -24065,7 +23844,7 @@ var AlignAction = function (_Action) {
 exports.default = AlignAction;
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24139,7 +23918,7 @@ var ImageSpec = function (_BlotSpec) {
 exports.default = ImageSpec;
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34933,7 +34712,7 @@ let emojiList = [
 /* harmony default export */ __webpack_exports__["a"] = (emojiList);
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34960,7 +34739,7 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 };
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -34971,7 +34750,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 51 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
@@ -34997,7 +34776,7 @@ module.exports = function (fn, that, length) {
 
 
 /***/ }),
-/* 52 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(10);
@@ -35010,29 +34789,29 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = !__webpack_require__(4) && !__webpack_require__(15)(function () {
-  return Object.defineProperty(__webpack_require__(52)('div'), 'a', { get: function () { return 7; } }).a != 7;
+  return Object.defineProperty(__webpack_require__(51)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var LIBRARY = __webpack_require__(31);
+var LIBRARY = __webpack_require__(30);
 var $export = __webpack_require__(8);
-var redefine = __webpack_require__(60);
+var redefine = __webpack_require__(59);
 var hide = __webpack_require__(9);
 var has = __webpack_require__(5);
-var Iterators = __webpack_require__(30);
+var Iterators = __webpack_require__(29);
 var $iterCreate = __webpack_require__(96);
-var setToStringTag = __webpack_require__(36);
-var getPrototypeOf = __webpack_require__(57);
+var setToStringTag = __webpack_require__(35);
+var getPrototypeOf = __webpack_require__(56);
 var ITERATOR = __webpack_require__(11)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
@@ -35096,12 +34875,12 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 
 /***/ }),
-/* 55 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = __webpack_require__(58);
-var hiddenKeys = __webpack_require__(29).concat('length', 'prototype');
+var $keys = __webpack_require__(57);
+var hiddenKeys = __webpack_require__(28).concat('length', 'prototype');
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
   return $keys(O, hiddenKeys);
@@ -35109,20 +34888,20 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 
 
 /***/ }),
-/* 56 */
+/* 55 */
 /***/ (function(module, exports) {
 
 exports.f = Object.getOwnPropertySymbols;
 
 
 /***/ }),
-/* 57 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(5);
-var toObject = __webpack_require__(61);
-var IE_PROTO = __webpack_require__(37)('IE_PROTO');
+var toObject = __webpack_require__(60);
+var IE_PROTO = __webpack_require__(36)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
 module.exports = Object.getPrototypeOf || function (O) {
@@ -35135,13 +34914,13 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 /***/ }),
-/* 58 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(5);
 var toIObject = __webpack_require__(7);
 var arrayIndexOf = __webpack_require__(91)(false);
-var IE_PROTO = __webpack_require__(37)('IE_PROTO');
+var IE_PROTO = __webpack_require__(36)('IE_PROTO');
 
 module.exports = function (object, names) {
   var O = toIObject(object);
@@ -35158,7 +34937,7 @@ module.exports = function (object, names) {
 
 
 /***/ }),
-/* 59 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // most Object methods by ES6 should accept primitives
@@ -35174,25 +34953,25 @@ module.exports = function (KEY, exec) {
 
 
 /***/ }),
-/* 60 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(9);
 
 
 /***/ }),
-/* 61 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
-var defined = __webpack_require__(28);
+var defined = __webpack_require__(27);
 module.exports = function (it) {
   return Object(defined(it));
 };
 
 
 /***/ }),
-/* 62 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35206,11 +34985,11 @@ var _BlotSpec = __webpack_require__(17);
 
 var _BlotSpec2 = _interopRequireDefault(_BlotSpec);
 
-var _ImageSpec = __webpack_require__(47);
+var _ImageSpec = __webpack_require__(46);
 
 var _ImageSpec2 = _interopRequireDefault(_ImageSpec);
 
-var _IframeVideoSpec = __webpack_require__(66);
+var _IframeVideoSpec = __webpack_require__(65);
 
 var _IframeVideoSpec2 = _interopRequireDefault(_IframeVideoSpec);
 
@@ -35290,7 +35069,7 @@ var DefaultOptions = {
 exports.default = DefaultOptions;
 
 /***/ }),
-/* 63 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35387,7 +35166,7 @@ var DefaultAligner = function () {
 exports.default = DefaultAligner;
 
 /***/ }),
-/* 64 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35399,7 +35178,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Toolbar = __webpack_require__(65);
+var _Toolbar = __webpack_require__(64);
 
 var _Aligner = __webpack_require__(25);
 
@@ -35555,7 +35334,7 @@ var DefaultToolbar = function () {
 exports.default = DefaultToolbar;
 
 /***/ }),
-/* 65 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35570,7 +35349,7 @@ var _BlotFormatter2 = _interopRequireDefault(_BlotFormatter);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 66 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35580,7 +35359,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _UnclickableBlotSpec2 = __webpack_require__(67);
+var _UnclickableBlotSpec2 = __webpack_require__(66);
 
 var _UnclickableBlotSpec3 = _interopRequireDefault(_UnclickableBlotSpec2);
 
@@ -35611,7 +35390,7 @@ var IframeVideoSpec = function (_UnclickableBlotSpec) {
 exports.default = IframeVideoSpec;
 
 /***/ }),
-/* 67 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35759,6 +35538,227 @@ var UnclickableBlotSpec = function (_BlotSpec) {
 exports.default = UnclickableBlotSpec;
 
 /***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(139)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction) {
+  isProduction = _isProduction
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
 /* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -35805,13 +35805,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__rewrite_set_style_method_size__ = __webpack_require__(72);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_n_quill_blot_formatter__ = __webpack_require__(125);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_n_quill_blot_formatter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_n_quill_blot_formatter__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_actions_ResizeAction__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_actions_ResizeAction__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_actions_ResizeAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_actions_ResizeAction__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_align_AlignAction__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_align_AlignAction__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_align_AlignAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_align_AlignAction__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_n_quill_emoji__ = __webpack_require__(131);
 
@@ -35839,9 +35839,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-
-__webpack_require__(137);
-__webpack_require__(138);
 
 
 
@@ -36069,7 +36066,7 @@ var MyImageSpec = function (_ImageSpec) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_get__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_get__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_get___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_get__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits__);
@@ -36136,7 +36133,7 @@ var BoldStyle = new BoldStyleAttributor('bold', 'font-weight');
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_get__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_get__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_get___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_get__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits__);
@@ -36217,7 +36214,7 @@ SizeStyle.whitelist = ['32px', '24px', '18px', '16px', '13px', '12px', false];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_get__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_get__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_get___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_get__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits__);
@@ -38223,7 +38220,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(142)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(140)))
 
 /***/ }),
 /* 82 */
@@ -38291,7 +38288,7 @@ module.exports = __webpack_require__(2).Symbol;
 
 __webpack_require__(112);
 __webpack_require__(116);
-module.exports = __webpack_require__(42).f('iterator');
+module.exports = __webpack_require__(41).f('iterator');
 
 
 /***/ }),
@@ -38345,9 +38342,9 @@ module.exports = function (IS_INCLUDES) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
-var getKeys = __webpack_require__(34);
-var gOPS = __webpack_require__(56);
-var pIE = __webpack_require__(35);
+var getKeys = __webpack_require__(33);
+var gOPS = __webpack_require__(55);
+var pIE = __webpack_require__(34);
 module.exports = function (it) {
   var result = getKeys(it);
   var getSymbols = gOPS.f;
@@ -38374,7 +38371,7 @@ module.exports = document && document.documentElement;
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(50);
+var cof = __webpack_require__(49);
 // eslint-disable-next-line no-prototype-builtins
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
   return cof(it) == 'String' ? it.split('') : Object(it);
@@ -38386,7 +38383,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
-var cof = __webpack_require__(50);
+var cof = __webpack_require__(49);
 module.exports = Array.isArray || function isArray(arg) {
   return cof(arg) == 'Array';
 };
@@ -38398,9 +38395,9 @@ module.exports = Array.isArray || function isArray(arg) {
 
 "use strict";
 
-var create = __webpack_require__(32);
+var create = __webpack_require__(31);
 var descriptor = __webpack_require__(22);
-var setToStringTag = __webpack_require__(36);
+var setToStringTag = __webpack_require__(35);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
@@ -38486,7 +38483,7 @@ var meta = module.exports = {
 
 var dP = __webpack_require__(6);
 var anObject = __webpack_require__(14);
-var getKeys = __webpack_require__(34);
+var getKeys = __webpack_require__(33);
 
 module.exports = __webpack_require__(4) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
@@ -38505,7 +38502,7 @@ module.exports = __webpack_require__(4) ? Object.defineProperties : function def
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var toIObject = __webpack_require__(7);
-var gOPN = __webpack_require__(55).f;
+var gOPN = __webpack_require__(54).f;
 var toString = {}.toString;
 
 var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -38540,7 +38537,7 @@ module.exports = {
   set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
     function (test, buggy, set) {
       try {
-        set = __webpack_require__(51)(Function.call, __webpack_require__(33).f(Object.prototype, '__proto__').set, 2);
+        set = __webpack_require__(50)(Function.call, __webpack_require__(32).f(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch (e) { buggy = true; }
@@ -38559,8 +38556,8 @@ module.exports = {
 /* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(39);
-var defined = __webpack_require__(28);
+var toInteger = __webpack_require__(38);
+var defined = __webpack_require__(27);
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function (TO_STRING) {
@@ -38582,7 +38579,7 @@ module.exports = function (TO_STRING) {
 /* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(39);
+var toInteger = __webpack_require__(38);
 var max = Math.max;
 var min = Math.min;
 module.exports = function (index, length) {
@@ -38596,7 +38593,7 @@ module.exports = function (index, length) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
-var toInteger = __webpack_require__(39);
+var toInteger = __webpack_require__(38);
 var min = Math.min;
 module.exports = function (it) {
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
@@ -38611,14 +38608,14 @@ module.exports = function (it) {
 
 var addToUnscopables = __webpack_require__(90);
 var step = __webpack_require__(97);
-var Iterators = __webpack_require__(30);
+var Iterators = __webpack_require__(29);
 var toIObject = __webpack_require__(7);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(54)(Array, 'Array', function (iterated, kind) {
+module.exports = __webpack_require__(53)(Array, 'Array', function (iterated, kind) {
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -38650,7 +38647,7 @@ addToUnscopables('entries');
 
 var $export = __webpack_require__(8);
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-$export($export.S, 'Object', { create: __webpack_require__(32) });
+$export($export.S, 'Object', { create: __webpack_require__(31) });
 
 
 /***/ }),
@@ -38668,9 +38665,9 @@ $export($export.S + $export.F * !__webpack_require__(4), 'Object', { definePrope
 
 // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
 var toIObject = __webpack_require__(7);
-var $getOwnPropertyDescriptor = __webpack_require__(33).f;
+var $getOwnPropertyDescriptor = __webpack_require__(32).f;
 
-__webpack_require__(59)('getOwnPropertyDescriptor', function () {
+__webpack_require__(58)('getOwnPropertyDescriptor', function () {
   return function getOwnPropertyDescriptor(it, key) {
     return $getOwnPropertyDescriptor(toIObject(it), key);
   };
@@ -38682,10 +38679,10 @@ __webpack_require__(59)('getOwnPropertyDescriptor', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 Object.getPrototypeOf(O)
-var toObject = __webpack_require__(61);
-var $getPrototypeOf = __webpack_require__(57);
+var toObject = __webpack_require__(60);
+var $getPrototypeOf = __webpack_require__(56);
 
-__webpack_require__(59)('getPrototypeOf', function () {
+__webpack_require__(58)('getPrototypeOf', function () {
   return function getPrototypeOf(it) {
     return $getPrototypeOf(toObject(it));
   };
@@ -38716,7 +38713,7 @@ $export($export.S, 'Object', { setPrototypeOf: __webpack_require__(101).set });
 var $at = __webpack_require__(102)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(54)(String, 'String', function (iterated) {
+__webpack_require__(53)(String, 'String', function (iterated) {
   this._t = String(iterated); // target
   this._i = 0;                // next index
 // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -38742,27 +38739,27 @@ var global = __webpack_require__(3);
 var has = __webpack_require__(5);
 var DESCRIPTORS = __webpack_require__(4);
 var $export = __webpack_require__(8);
-var redefine = __webpack_require__(60);
+var redefine = __webpack_require__(59);
 var META = __webpack_require__(98).KEY;
 var $fails = __webpack_require__(15);
-var shared = __webpack_require__(38);
-var setToStringTag = __webpack_require__(36);
+var shared = __webpack_require__(37);
+var setToStringTag = __webpack_require__(35);
 var uid = __webpack_require__(23);
 var wks = __webpack_require__(11);
-var wksExt = __webpack_require__(42);
-var wksDefine = __webpack_require__(41);
+var wksExt = __webpack_require__(41);
+var wksDefine = __webpack_require__(40);
 var enumKeys = __webpack_require__(92);
 var isArray = __webpack_require__(95);
 var anObject = __webpack_require__(14);
 var isObject = __webpack_require__(10);
 var toIObject = __webpack_require__(7);
-var toPrimitive = __webpack_require__(40);
+var toPrimitive = __webpack_require__(39);
 var createDesc = __webpack_require__(22);
-var _create = __webpack_require__(32);
+var _create = __webpack_require__(31);
 var gOPNExt = __webpack_require__(100);
-var $GOPD = __webpack_require__(33);
+var $GOPD = __webpack_require__(32);
 var $DP = __webpack_require__(6);
-var $keys = __webpack_require__(34);
+var $keys = __webpack_require__(33);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
 var gOPN = gOPNExt.f;
@@ -38885,11 +38882,11 @@ if (!USE_NATIVE) {
 
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
-  __webpack_require__(55).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(35).f = $propertyIsEnumerable;
-  __webpack_require__(56).f = $getOwnPropertySymbols;
+  __webpack_require__(54).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(34).f = $propertyIsEnumerable;
+  __webpack_require__(55).f = $getOwnPropertySymbols;
 
-  if (DESCRIPTORS && !__webpack_require__(31)) {
+  if (DESCRIPTORS && !__webpack_require__(30)) {
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
 
@@ -38976,14 +38973,14 @@ setToStringTag(global.JSON, 'JSON', true);
 /* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(41)('asyncIterator');
+__webpack_require__(40)('asyncIterator');
 
 
 /***/ }),
 /* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(41)('observable');
+__webpack_require__(40)('observable');
 
 
 /***/ }),
@@ -38993,7 +38990,7 @@ __webpack_require__(41)('observable');
 __webpack_require__(105);
 var global = __webpack_require__(3);
 var hide = __webpack_require__(9);
-var Iterators = __webpack_require__(30);
+var Iterators = __webpack_require__(29);
 var TO_STRING_TAG = __webpack_require__(11)('toStringTag');
 
 var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
@@ -39034,7 +39031,7 @@ exports = module.exports = __webpack_require__(16)(undefined);
 
 
 // module
-exports.push([module.i, "/*!\n * Quill Editor v1.3.4\n * https://quilljs.com/\n * Copyright (c) 2014, Jason Chen\n * Copyright (c) 2013, salesforce.com\n */\n.ql-container {\n  box-sizing: border-box;\n  font-family: Helvetica, Arial, sans-serif;\n  font-size: 13px;\n  height: 100%;\n  margin: 0px;\n  position: relative;\n}\n.ql-container.ql-disabled .ql-tooltip {\n  visibility: hidden;\n}\n.ql-container.ql-disabled .ql-editor ul[data-checked] > li::before {\n  pointer-events: none;\n}\n.ql-clipboard {\n  left: -100000px;\n  height: 1px;\n  overflow-y: hidden;\n  position: absolute;\n  top: 50%;\n}\n.ql-clipboard p {\n  margin: 0;\n  padding: 0;\n}\n.ql-editor {\n  box-sizing: border-box;\n  line-height: 1.42;\n  height: 100%;\n  outline: none;\n  overflow-y: auto;\n  padding: 12px 15px;\n  tab-size: 4;\n  -moz-tab-size: 4;\n  text-align: left;\n  white-space: pre-wrap;\n  word-wrap: break-word;\n}\n.ql-editor > * {\n  cursor: text;\n}\n.ql-editor p,\n.ql-editor ol,\n.ql-editor ul,\n.ql-editor pre,\n.ql-editor blockquote,\n.ql-editor h1,\n.ql-editor h2,\n.ql-editor h3,\n.ql-editor h4,\n.ql-editor h5,\n.ql-editor h6 {\n  margin: 0;\n  padding: 0;\n  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol,\n.ql-editor ul {\n  padding-left: 1.5em;\n}\n.ql-editor ol > li,\n.ql-editor ul > li {\n  list-style-type: none;\n}\n.ql-editor ul > li::before {\n  content: '\\2022';\n}\n.ql-editor ul[data-checked=true],\n.ql-editor ul[data-checked=false] {\n  pointer-events: none;\n}\n.ql-editor ul[data-checked=true] > li *,\n.ql-editor ul[data-checked=false] > li * {\n  pointer-events: all;\n}\n.ql-editor ul[data-checked=true] > li::before,\n.ql-editor ul[data-checked=false] > li::before {\n  color: #777;\n  cursor: pointer;\n  pointer-events: all;\n}\n.ql-editor ul[data-checked=true] > li::before {\n  content: '\\2611';\n}\n.ql-editor ul[data-checked=false] > li::before {\n  content: '\\2610';\n}\n.ql-editor li::before {\n  display: inline-block;\n  white-space: nowrap;\n  width: 1.2em;\n}\n.ql-editor li:not(.ql-direction-rtl)::before {\n  margin-left: -1.5em;\n  margin-right: 0.3em;\n  text-align: right;\n}\n.ql-editor li.ql-direction-rtl::before {\n  margin-left: 0.3em;\n  margin-right: -1.5em;\n}\n.ql-editor ol li:not(.ql-direction-rtl),\n.ql-editor ul li:not(.ql-direction-rtl) {\n  padding-left: 1.5em;\n}\n.ql-editor ol li.ql-direction-rtl,\n.ql-editor ul li.ql-direction-rtl {\n  padding-right: 1.5em;\n}\n.ql-editor ol li {\n  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n  counter-increment: list-0;\n}\n.ql-editor ol li:before {\n  content: counter(list-0, decimal) '. ';\n}\n.ql-editor ol li.ql-indent-1 {\n  counter-increment: list-1;\n}\n.ql-editor ol li.ql-indent-1:before {\n  content: counter(list-1, lower-alpha) '. ';\n}\n.ql-editor ol li.ql-indent-1 {\n  counter-reset: list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-2 {\n  counter-increment: list-2;\n}\n.ql-editor ol li.ql-indent-2:before {\n  content: counter(list-2, lower-roman) '. ';\n}\n.ql-editor ol li.ql-indent-2 {\n  counter-reset: list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-3 {\n  counter-increment: list-3;\n}\n.ql-editor ol li.ql-indent-3:before {\n  content: counter(list-3, decimal) '. ';\n}\n.ql-editor ol li.ql-indent-3 {\n  counter-reset: list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-4 {\n  counter-increment: list-4;\n}\n.ql-editor ol li.ql-indent-4:before {\n  content: counter(list-4, lower-alpha) '. ';\n}\n.ql-editor ol li.ql-indent-4 {\n  counter-reset: list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-5 {\n  counter-increment: list-5;\n}\n.ql-editor ol li.ql-indent-5:before {\n  content: counter(list-5, lower-roman) '. ';\n}\n.ql-editor ol li.ql-indent-5 {\n  counter-reset: list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-6 {\n  counter-increment: list-6;\n}\n.ql-editor ol li.ql-indent-6:before {\n  content: counter(list-6, decimal) '. ';\n}\n.ql-editor ol li.ql-indent-6 {\n  counter-reset: list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-7 {\n  counter-increment: list-7;\n}\n.ql-editor ol li.ql-indent-7:before {\n  content: counter(list-7, lower-alpha) '. ';\n}\n.ql-editor ol li.ql-indent-7 {\n  counter-reset: list-8 list-9;\n}\n.ql-editor ol li.ql-indent-8 {\n  counter-increment: list-8;\n}\n.ql-editor ol li.ql-indent-8:before {\n  content: counter(list-8, lower-roman) '. ';\n}\n.ql-editor ol li.ql-indent-8 {\n  counter-reset: list-9;\n}\n.ql-editor ol li.ql-indent-9 {\n  counter-increment: list-9;\n}\n.ql-editor ol li.ql-indent-9:before {\n  content: counter(list-9, decimal) '. ';\n}\n.ql-editor .ql-indent-1:not(.ql-direction-rtl) {\n  padding-left: 3em;\n}\n.ql-editor li.ql-indent-1:not(.ql-direction-rtl) {\n  padding-left: 4.5em;\n}\n.ql-editor .ql-indent-1.ql-direction-rtl.ql-align-right {\n  padding-right: 3em;\n}\n.ql-editor li.ql-indent-1.ql-direction-rtl.ql-align-right {\n  padding-right: 4.5em;\n}\n.ql-editor .ql-indent-2:not(.ql-direction-rtl) {\n  padding-left: 6em;\n}\n.ql-editor li.ql-indent-2:not(.ql-direction-rtl) {\n  padding-left: 7.5em;\n}\n.ql-editor .ql-indent-2.ql-direction-rtl.ql-align-right {\n  padding-right: 6em;\n}\n.ql-editor li.ql-indent-2.ql-direction-rtl.ql-align-right {\n  padding-right: 7.5em;\n}\n.ql-editor .ql-indent-3:not(.ql-direction-rtl) {\n  padding-left: 9em;\n}\n.ql-editor li.ql-indent-3:not(.ql-direction-rtl) {\n  padding-left: 10.5em;\n}\n.ql-editor .ql-indent-3.ql-direction-rtl.ql-align-right {\n  padding-right: 9em;\n}\n.ql-editor li.ql-indent-3.ql-direction-rtl.ql-align-right {\n  padding-right: 10.5em;\n}\n.ql-editor .ql-indent-4:not(.ql-direction-rtl) {\n  padding-left: 12em;\n}\n.ql-editor li.ql-indent-4:not(.ql-direction-rtl) {\n  padding-left: 13.5em;\n}\n.ql-editor .ql-indent-4.ql-direction-rtl.ql-align-right {\n  padding-right: 12em;\n}\n.ql-editor li.ql-indent-4.ql-direction-rtl.ql-align-right {\n  padding-right: 13.5em;\n}\n.ql-editor .ql-indent-5:not(.ql-direction-rtl) {\n  padding-left: 15em;\n}\n.ql-editor li.ql-indent-5:not(.ql-direction-rtl) {\n  padding-left: 16.5em;\n}\n.ql-editor .ql-indent-5.ql-direction-rtl.ql-align-right {\n  padding-right: 15em;\n}\n.ql-editor li.ql-indent-5.ql-direction-rtl.ql-align-right {\n  padding-right: 16.5em;\n}\n.ql-editor .ql-indent-6:not(.ql-direction-rtl) {\n  padding-left: 18em;\n}\n.ql-editor li.ql-indent-6:not(.ql-direction-rtl) {\n  padding-left: 19.5em;\n}\n.ql-editor .ql-indent-6.ql-direction-rtl.ql-align-right {\n  padding-right: 18em;\n}\n.ql-editor li.ql-indent-6.ql-direction-rtl.ql-align-right {\n  padding-right: 19.5em;\n}\n.ql-editor .ql-indent-7:not(.ql-direction-rtl) {\n  padding-left: 21em;\n}\n.ql-editor li.ql-indent-7:not(.ql-direction-rtl) {\n  padding-left: 22.5em;\n}\n.ql-editor .ql-indent-7.ql-direction-rtl.ql-align-right {\n  padding-right: 21em;\n}\n.ql-editor li.ql-indent-7.ql-direction-rtl.ql-align-right {\n  padding-right: 22.5em;\n}\n.ql-editor .ql-indent-8:not(.ql-direction-rtl) {\n  padding-left: 24em;\n}\n.ql-editor li.ql-indent-8:not(.ql-direction-rtl) {\n  padding-left: 25.5em;\n}\n.ql-editor .ql-indent-8.ql-direction-rtl.ql-align-right {\n  padding-right: 24em;\n}\n.ql-editor li.ql-indent-8.ql-direction-rtl.ql-align-right {\n  padding-right: 25.5em;\n}\n.ql-editor .ql-indent-9:not(.ql-direction-rtl) {\n  padding-left: 27em;\n}\n.ql-editor li.ql-indent-9:not(.ql-direction-rtl) {\n  padding-left: 28.5em;\n}\n.ql-editor .ql-indent-9.ql-direction-rtl.ql-align-right {\n  padding-right: 27em;\n}\n.ql-editor li.ql-indent-9.ql-direction-rtl.ql-align-right {\n  padding-right: 28.5em;\n}\n.ql-editor .ql-video {\n  display: block;\n  max-width: 100%;\n}\n.ql-editor .ql-video.ql-align-center {\n  margin: 0 auto;\n}\n.ql-editor .ql-video.ql-align-right {\n  margin: 0 0 0 auto;\n}\n.ql-editor .ql-bg-black {\n  background-color: #000;\n}\n.ql-editor .ql-bg-red {\n  background-color: #e60000;\n}\n.ql-editor .ql-bg-orange {\n  background-color: #f90;\n}\n.ql-editor .ql-bg-yellow {\n  background-color: #ff0;\n}\n.ql-editor .ql-bg-green {\n  background-color: #008a00;\n}\n.ql-editor .ql-bg-blue {\n  background-color: #06c;\n}\n.ql-editor .ql-bg-purple {\n  background-color: #93f;\n}\n.ql-editor .ql-color-white {\n  color: #fff;\n}\n.ql-editor .ql-color-red {\n  color: #e60000;\n}\n.ql-editor .ql-color-orange {\n  color: #f90;\n}\n.ql-editor .ql-color-yellow {\n  color: #ff0;\n}\n.ql-editor .ql-color-green {\n  color: #008a00;\n}\n.ql-editor .ql-color-blue {\n  color: #06c;\n}\n.ql-editor .ql-color-purple {\n  color: #93f;\n}\n.ql-editor .ql-font-serif {\n  font-family: Georgia, Times New Roman, serif;\n}\n.ql-editor .ql-font-monospace {\n  font-family: Monaco, Courier New, monospace;\n}\n.ql-editor .ql-size-small {\n  font-size: 0.75em;\n}\n.ql-editor .ql-size-large {\n  font-size: 1.5em;\n}\n.ql-editor .ql-size-huge {\n  font-size: 2.5em;\n}\n.ql-editor .ql-direction-rtl {\n  direction: rtl;\n  text-align: inherit;\n}\n.ql-editor .ql-align-center {\n  text-align: center;\n}\n.ql-editor .ql-align-justify {\n  text-align: justify;\n}\n.ql-editor .ql-align-right {\n  text-align: right;\n}\n.ql-editor.ql-blank::before {\n  color: rgba(0,0,0,0.6);\n  content: attr(data-placeholder);\n  font-style: italic;\n  left: 15px;\n  pointer-events: none;\n  position: absolute;\n  right: 15px;\n}\n", ""]);
+exports.push([module.i, "/* sass-loader doesnt like absolute imports*/\n#quill-editor {\n  position: relative; }\n\n.mention {\n  color: #0366d6; }\n\n.completions {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n  background: #FFF;\n  border-radius: 2px;\n  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25); }\n\n.completions > li {\n  margin: 0;\n  padding: 0; }\n\n.completions > li > button {\n  box-sizing: border-box;\n  height: 2em;\n  padding: .25em .5em;\n  margin: 0;\n  display: block;\n  width: 100%;\n  text-align: left;\n  border: none;\n  background: none; }\n\n.completions > li > button:hover {\n  background: #ddd; }\n\n.completions > li > button:focus {\n  background: #ddd;\n  outline: none; }\n\n.completions > li > button > .matched {\n  font-weight: bold;\n  color: black; }\n\n.completions > li > button > * {\n  vertical-align: middle; }\n\n.emoji_completions {\n  list-style: none;\n  margin: 0;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  padding: 6px;\n  background: #FFF;\n  border-radius: 3px;\n  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12); }\n  .emoji_completions li {\n    margin: 2px 0;\n    padding: 0;\n    display: inline-block; }\n    .emoji_completions li:not(:last-of-type) {\n      margin-right: 3px; }\n\n.emoji_completions > li > button {\n  box-sizing: border-box;\n  padding: 3px 2px 6px;\n  margin: 0;\n  display: block;\n  width: 100%;\n  text-align: left;\n  border: none;\n  background: #efefef;\n  border-radius: 3px; }\n\n.emoji_completions > li > button:hover {\n  background: #2D9EE0;\n  color: #FFF; }\n\n.emoji_completions > li > button:focus {\n  background: #2D9EE0;\n  outline: none;\n  color: #FFF; }\n\n.emoji_completions > li > button.emoji-active {\n  background: red;\n  background: #2d9ee0;\n  outline: none;\n  color: #fff; }\n\n.emoji_completions > li > button > .matched {\n  font-weight: bold; }\n\n.emoji_completions > li > button > * {\n  vertical-align: middle; }\n\n.ico {\n  margin-right: 5px;\n  font-size: 18px;\n  line-height: 0;\n  vertical-align: middle; }\n\n#emoji-palette {\n  position: absolute;\n  max-width: 250px;\n  z-index: 999;\n  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);\n  border-radius: 3px;\n  border: 1px solid rgba(0, 0, 0, 0.15); }\n\n.bem {\n  font-size: 24px;\n  width: 34px;\n  display: inline-block;\n  text-align: center;\n  cursor: pointer;\n  margin: 2px; }\n\n#tab-filters {\n  width: 210px;\n  margin: 0px auto;\n  margin-top: 20px; }\n\n.emoji-tab {\n  display: inline-table;\n  text-align: center;\n  width: 30px;\n  height: 100%;\n  min-height: 30px;\n  cursor: pointer; }\n\n#tab-toolbar {\n  background-color: #f7f7f7;\n  padding: 4px 4px 0;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.15); }\n\n#tab-toolbar ul {\n  margin: 0px;\n  padding: 0px; }\n\n#tab-toolbar .active {\n  border-bottom: 3px solid #2ab27b; }\n\n#tab-panel {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -ms-flex-pack: center;\n      justify-content: center;\n  max-height: 220px;\n  overflow-y: scroll;\n  padding: 2px;\n  background: #FFF; }\n\n#quill-editor x-contain, contain {\n  background: #ffbb88;\n  display: block; }\n\n#quill-editor table {\n  width: 100%;\n  border-collapse: collapse; }\n\n#quill-editor table td {\n  border: 1px solid black;\n  padding: 5px;\n  height: 25px; }\n\nbutton.ql-table::after {\n  content: \"TABLE\"; }\n\n.ql-picker.ql-table .ql-picker-label::before {\n  content: \"TABLE\"; }\n\nbutton.ql-contain::after {\n  content: \"WRAP\"; }\n\nbutton.ql-table[value=\"append-row\"]::after {\n  content: \"ROWS+\"; }\n\nbutton.ql-table[value=\"append-col\"]::after {\n  content: \"COLS+\"; }\n\n.ql-table,\n.ql-contain {\n  width: auto !important;\n  margin-right: -15px; }\n\n#emoji-close-div {\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  top: 0;\n  left: 0; }\n\n.textarea-emoji-control {\n  width: 25px;\n  height: 25px;\n  right: 4px;\n  top: 10px; }\n\n#textarea-emoji {\n  position: absolute;\n  right: 0px;\n  max-width: 250px;\n  z-index: 999;\n  border: 1px solid #66afe9;\n  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);\n  border-radius: 3px;\n  border: 1px solid rgba(0, 0, 0, 0.15); }\n\n.ql-editor {\n  padding-right: 26px; }\n\n.i-activity {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\"><g transform=\"translate(7.500000, 7.500000)\"><path stroke=\"#6F6D70\" d=\"M18.02 1.36c5.92 3.02 8.28 10.26 5.26 16.18-2.12 4.17-6.35 6.57-10.73 6.57-1.83 0-3.7-.4-5.45-1.3-5.9-3-8.27-10.22-5.25-16.2C3.97 2.5 8.2.1 12.57.1c1.84 0 3.7.42 5.45 1.3zm4.7 11.44c.1-1.3-.06-2.6-.47-3.87-.13-.38-.27-.75-.43-1.1l-3.42-1.6-1.57-3.4c-.62-.3-1.27-.5-1.92-.68-.7-.18-1.5-.27-2.3-.27-.4 0-.8.02-1.2.06L8.9 4.74l-3.74.43c-.63.68-1.16 1.45-1.6 2.28-.42.84-.72 1.72-.9 2.63l1.84 3.3-.74 3.68c.3.56.66 1.08 1.1 1.58.76.94 1.7 1.7 2.8 2.32l3.7-.74 3.26 1.84c1.13-.23 2.23-.65 3.24-1.26.6-.35 1.2-.77 1.7-1.24l.44-3.74 2.78-2.55.05-.47z\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><polygon points=\"10.6158689 8.50666885 8.42649168 12.8046921 11.836847 16.2129328 16.1342124 14.0235556 15.3793892 9.26144504\"/></g></g></g></svg>'); }\n\n.i-flags {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\" fill-rule=\"nonzero\"><g transform=\"translate(9.500000, 8.000000)\"><path d=\"M.5 3.13V23.5c0 .83.68 1.5 1.5 1.5.84 0 1.5-.67 1.5-1.5V3.14c0-.83-.66-1.5-1.5-1.5-.82 0-1.5.67-1.5 1.5z\"/><path d=\"M3.5 11.54c.7-.16 1.44-.22 2.25-.17 1.38.07 2.48.3 5.23 1.04l.55.2c3.02.8 4.77 1 5.96.67v-7.9c-1.7.33-3.8-.07-7.1-1-3.9-1.1-5.7-1.3-6.9-.5v7.7zm7.68-10.1c4.1 1.15 5.7 1.3 6.98.44 1-.66 2.33.05 2.33 1.25v11c0 .5-.3 1-.7 1.26-2.2 1.4-4.6 1.2-9.1 0l-.56-.16c-4.54-1.2-6.15-1.3-7.05-.2-.9 1.06-2.65.42-2.65-.98v-11c0-.4.2-.8.5-1.1C3.4-.24 5.75-.1 11.2 1.4z\"/></g></g></g></svg>'); }\n\n.i-food {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\"><path fill-rule=\"nonzero\" d=\"M9.57 28.2c0 .28.22.5.5.5h19.2c.27 0 .5-.22.5-.5v-4.4H9.57v4.4zm23.2-3.06v3.07c0 1.95-1.57 3.5-3.5 3.5h-19.2c-1.93 0-3.5-1.55-3.5-3.5V25c.46.15.96.24 1.47.24h23.78c.33 0 .64-.04.94-.1z\"/><path fill-rule=\"nonzero\" d=\"M6.57 18.2v-3.45c0-3.56 2.9-6.45 6.45-6.45h13.3c3.55 0 6.44 2.9 6.44 6.45v3.45H6.56zm3-1.83h3.6l.4.86c.23.5.73.83 1.3.83.56 0 1.06-.33 1.3-.83l.4-.86h13.2v-1.62c0-1.9-1.56-3.45-3.45-3.45h-13.3c-1.9 0-3.45 1.55-3.45 3.45v1.62z\"/><path fill-rule=\"nonzero\" d=\"M13.23 16.37l.4.86c.24.5.74.83 1.3.83.57 0 1.07-.33 1.3-.83l.4-.86H31.9c2.44 0 4.43 1.98 4.43 4.43 0 2.45-1.98 4.44-4.44 4.44H8.1c-2.44 0-4.43-2-4.43-4.44 0-2.45 1.98-4.43 4.44-4.43h5.14zm-5.12 3c-.8 0-1.42.64-1.42 1.43 0 .8.64 1.44 1.44 1.44h23.8c.8 0 1.43-.64 1.43-1.44 0-.8-.64-1.43-1.44-1.43H18.4c-.83 1.04-2.1 1.7-3.5 1.7-1.37 0-2.65-.66-3.47-1.7H8.1z\"/><circle cx=\"14.6682646\" cy=\"13.75\" r=\"1\"/><circle cx=\"24.6682646\" cy=\"13.75\" r=\"1\"/><circle cx=\"19.6682646\" cy=\"13.75\" r=\"1\"/></g></g></svg>'); }\n\n.i-nature {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\" fill-rule=\"nonzero\"><path d=\"M15.96 18.26L30.86 32c.5.46 1.3.43 1.77-.08.46-.5.43-1.3-.08-1.76l-14.9-13.74c-.5-.46-1.3-.43-1.76.08-.5.5-.5 1.3 0 1.76z\"/><path d=\"M18.17 21.28c-.7-.06-1.3.45-1.35 1.14-.06.7.45 1.3 1.13 1.35l4.96.43c.9.07 1.5-.66 1.4-1.47l-1-5.6c-.1-.7-.74-1.14-1.42-1.02-.67.2-1.12.8-1 1.5l.7 4-3.32-.3z\"/><path d=\"M28.48 28.95c-.38.17-1 .4-1.85.64-2.92.7-6 .9-8.95-.2-5.98-2.17-9.8-8.5-10.54-19.9l-.1-1.4 1.38-.2c14.45-2.08 23.4 7.4 21.33 19.85l-1.9-.3.63 1.43zM10.24 10.77C11.12 20.14 14.2 25 18.7 26.6c2.27.83 4.76.74 7.14.1.4-.12.76-.23 1.07-.35 1.2-9.6-5.4-16.57-16.6-15.58z\"/></g></g></svg>'); }\n\n.i-objects {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\" fill-rule=\"nonzero\"><path d=\"M11.04 16.7c0-4.85 4.02-8.76 8.96-8.76 4.94 0 8.96 3.9 8.96 8.76 0 2.54-1.12 4.9-3 6.54v1.87c0 1.28-1.02 2.27-2.26 2.27h-7.37c-1.23 0-2.25-1-2.25-2.22V23.3c-1.9-1.65-3.04-4-3.04-6.58zm11.9 5.82c0-.48.24-.93.63-1.22 1.5-1.08 2.4-2.77 2.4-4.6 0-3.17-2.67-5.76-5.97-5.76s-5.96 2.6-5.96 5.76c0 1.84.9 3.54 2.42 4.62.4.28.62.74.62 1.22v1.8h5.87V22.5z\"/><path d=\"M21.76 28.78c-.22.05-.42.1-.62.13-.5.1-.9.2-1.1.2-.24 0-.62-.04-1.08-.12l-.74-.15-.08-.02v-2.93c0-.83-.68-1.5-1.5-1.5-.83 0-1.5.67-1.5 1.5v4.1c0 .68.44 1.27 1.1 1.45l.38.1.94.23c.3.1.6.15.87.2.62.1 1.16.17 1.6.17.47 0 1.03-.1 1.7-.2l.7-.17.95-.22c.18-.03.32-.1.4-.1.64-.2 1.08-.76 1.08-1.43v-4.1c0-.83-.67-1.5-1.5-1.5-.82 0-1.5.67-1.5 1.5v2.9c-.03 0-.07 0-.1.02z\"/></g></g></svg>'); }\n\n.i-people {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\"><path fill-rule=\"nonzero\" d=\"M20 34c-7.73 0-14-6.27-14-14S12.27 6 20 6s14 6.27 14 14-6.27 14-14 14zm0-3c6.08 0 11-4.92 11-11S26.08 9 20 9 9 13.92 9 20s4.92 11 11 11z\"/><circle cx=\"15.3474348\" cy=\"16.7705459\" r=\"2.34743481\"/><circle cx=\"24.4703784\" cy=\"16.7705459\" r=\"2.34743481\"/><path d=\"M20 27.9c2.7 0 4.88-2.18 4.88-4.88 0-2.7-9.76-2.7-9.76 0S17.3 27.9 20 27.9z\"/></g></g></svg>'); }\n\n.i-symbols {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\" fill-rule=\"nonzero\"><path d=\"M15.37 7.95c-4.48 0-8.06 3.9-8.06 8.64 0 3.5 2.2 6.9 5.8 10.3 1.2 1.1 2.5 2.2 3.9 3.1.84.6 1.5 1 1.98 1.3l.27.15.8.5 1.1-.6c.5-.27 1.18-.7 2-1.25 1.34-.9 2.66-1.9 3.9-3 3.57-3.28 5.75-6.8 5.75-10.6 0-4.74-3.6-8.65-8.1-8.65v3.3c2.6 0 4.76 2.4 4.76 5.35 0 2.65-1.72 5.43-4.7 8.13-1.1 1-2.27 1.9-3.5 2.7-.43.3-.83.54-1.17.74-.35-.2-.76-.5-1.2-.83-1.24-.87-2.4-1.83-3.54-2.87-2.95-2.76-4.7-5.5-4.7-7.9 0-2.98 2.2-5.35 4.78-5.35 1.3 0 2.5.6 3.4 1.6L20 14.3l1.25-1.43c.9-1.03 2.1-1.6 3.38-1.6v-3.3c-1.68 0-3.3.56-4.63 1.57-1.34-1-2.95-1.57-4.63-1.57z\"/></g></g></svg>'); }\n\n.i-travel {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\" fill-rule=\"nonzero\"><path d=\"M25.46 11.2s-2.67 2.58-3.94 3.95l-10.6-2.13c-.12-.02-.25.04-.3.15l-.8 1.6c-.07.13 0 .3.12.37l7.75 3.88L13.4 24c-.5-.16-1.1-.33-1.66-.3-.3 0-.6.06-.85.25-.3.2-.4.5-.4.9s.1.74.3.98l3.2 3.23c.3.23.7.34 1 .34.4 0 .7-.13.9-.37.2-.23.24-.53.25-.84 0-.6-.15-1.2-.3-1.7l4.97-4.3 3.9 7.76c.06.13.23.2.36.12l1.6-.8c.13-.07.2-.2.17-.3l-2.12-10.6c1.4-1.28 3.95-3.95 3.96-3.96.86-.88 1.4-1.93 1.4-2.87 0-.5-.17-1-.5-1.33-.37-.36-.87-.5-1.38-.5-.95 0-2 .52-2.88 1.4zm2.87-4.4c1.28 0 2.54.44 3.5 1.4.93.93 1.38 2.2 1.38 3.47 0 1.8-.8 3.54-2.2 4.94-.4.5-1.7 1.8-2.8 2.9l1.8 9c.3 1.5-.4 2.9-1.7 3.6l-1.62.8c-1.62.8-3.6.1-4.36-1.4L20 27.1l-.7.6v.62c-.03.92-.28 1.8-.92 2.6-.8 1-1.98 1.5-3.22 1.5-1.03 0-2.12-.37-2.96-1.1l-.16-.14-3.22-3.22-.1-.12c-.75-.83-1.12-1.9-1.12-3 0-1.24.5-2.43 1.48-3.22.8-.6 1.68-.9 2.62-.9h.62l.6-.7-4.27-2.1c-1.65-.8-2.33-2.8-1.52-4.4l.8-1.64c.67-1.3 2.14-2.02 3.57-1.73l9 1.8 1.36-1.33 1.5-1.48c1.42-1.4 3.17-2.27 4.97-2.27z\"/></g></g></svg>'); }\n\n.emoji {\n  margin-bottom: -5px; }\n\n.ap {\n  display: inline-block;\n  height: 20px;\n  width: 20px;\n  background-image: url(" + __webpack_require__(133) + ");\n  background-repeat: no-repeat;\n  text-indent: -999px; }\n\n.ap-copyright {\n  background-position: -0px -0px; }\n\n.ap-registered {\n  background-position: -0px -20px; }\n\n.ap-bangbang {\n  background-position: -0px -40px; }\n\n.ap-interrobang {\n  background-position: -0px -60px; }\n\n.ap-tm {\n  background-position: -0px -80px; }\n\n.ap-information_source {\n  background-position: -0px -100px; }\n\n.ap-left_right_arrow {\n  background-position: -0px -120px; }\n\n.ap-arrow_up_down {\n  background-position: -0px -140px; }\n\n.ap-arrow_upper_left {\n  background-position: -0px -160px; }\n\n.ap-arrow_upper_right {\n  background-position: -0px -180px; }\n\n.ap-arrow_lower_right {\n  background-position: -0px -200px; }\n\n.ap-arrow_lower_left {\n  background-position: -0px -220px; }\n\n.ap-leftwards_arrow_with_hook {\n  background-position: -0px -240px; }\n\n.ap-arrow_right_hook {\n  background-position: -0px -260px; }\n\n.ap-watch {\n  background-position: -0px -280px; }\n\n.ap-hourglass {\n  background-position: -0px -300px; }\n\n.ap-keyboard {\n  background-position: -0px -320px; }\n\n.ap-fast_forward {\n  background-position: -0px -360px; }\n\n.ap-rewind {\n  background-position: -0px -380px; }\n\n.ap-arrow_double_up {\n  background-position: -0px -400px; }\n\n.ap-arrow_double_down {\n  background-position: -0px -420px; }\n\n.ap-black_right_pointing_double_triangle_with_vertical_bar {\n  background-position: -0px -440px; }\n\n.ap-black_left_pointing_double_triangle_with_vertical_bar {\n  background-position: -0px -460px; }\n\n.ap-black_right_pointing_triangle_with_double_vertical_bar {\n  background-position: -0px -480px; }\n\n.ap-alarm_clock {\n  background-position: -0px -500px; }\n\n.ap-stopwatch {\n  background-position: -0px -520px; }\n\n.ap-timer_clock {\n  background-position: -0px -540px; }\n\n.ap-hourglass_flowing_sand {\n  background-position: -0px -560px; }\n\n.ap-double_vertical_bar {\n  background-position: -0px -580px; }\n\n.ap-black_square_for_stop {\n  background-position: -0px -600px; }\n\n.ap-black_circle_for_record {\n  background-position: -0px -620px; }\n\n.ap-m {\n  background-position: -0px -640px; }\n\n.ap-black_small_square {\n  background-position: -0px -660px; }\n\n.ap-white_small_square {\n  background-position: -0px -680px; }\n\n.ap-arrow_forward {\n  background-position: -0px -700px; }\n\n.ap-arrow_backward {\n  background-position: -0px -720px; }\n\n.ap-white_medium_square {\n  background-position: -0px -740px; }\n\n.ap-black_medium_square {\n  background-position: -0px -760px; }\n\n.ap-white_medium_small_square {\n  background-position: -0px -780px; }\n\n.ap-black_medium_small_square {\n  background-position: -0px -800px; }\n\n.ap-sunny {\n  background-position: -20px -0px; }\n\n.ap-cloud {\n  background-position: -20px -20px; }\n\n.ap-umbrella {\n  background-position: -20px -40px; }\n\n.ap-snowman {\n  background-position: -20px -60px; }\n\n.ap-comet {\n  background-position: -20px -80px; }\n\n.ap-phone {\n  background-position: -20px -100px; }\n\n.ap-ballot_box_with_check {\n  background-position: -20px -120px; }\n\n.ap-umbrella_with_rain_drops {\n  background-position: -20px -140px; }\n\n.ap-coffee {\n  background-position: -20px -160px; }\n\n.ap-shamrock {\n  background-position: -20px -180px; }\n\n.ap-point_up {\n  background-position: -20px -200px; }\n\n.ap-skull_and_crossbones {\n  background-position: -20px -320px; }\n\n.ap-radioactive_sign {\n  background-position: -20px -340px; }\n\n.ap-biohazard_sign {\n  background-position: -20px -360px; }\n\n.ap-orthodox_cross {\n  background-position: -20px -380px; }\n\n.ap-star_and_crescent {\n  background-position: -20px -400px; }\n\n.ap-peace_symbol {\n  background-position: -20px -420px; }\n\n.ap-yin_yang {\n  background-position: -20px -440px; }\n\n.ap-wheel_of_dharma {\n  background-position: -20px -460px; }\n\n.ap-white_frowning_face {\n  background-position: -20px -480px; }\n\n.ap-relaxed {\n  background-position: -20px -500px; }\n\n.ap-aries {\n  background-position: -20px -520px; }\n\n.ap-taurus {\n  background-position: -20px -540px; }\n\n.ap-gemini {\n  background-position: -20px -560px; }\n\n.ap-cancer {\n  background-position: -20px -580px; }\n\n.ap-leo {\n  background-position: -20px -600px; }\n\n.ap-virgo {\n  background-position: -20px -620px; }\n\n.ap-libra {\n  background-position: -20px -640px; }\n\n.ap-scorpius {\n  background-position: -20px -660px; }\n\n.ap-sagittarius {\n  background-position: -20px -680px; }\n\n.ap-capricorn {\n  background-position: -20px -700px; }\n\n.ap-aquarius {\n  background-position: -20px -720px; }\n\n.ap-pisces {\n  background-position: -20px -740px; }\n\n.ap-spades {\n  background-position: -20px -760px; }\n\n.ap-clubs {\n  background-position: -20px -780px; }\n\n.ap-hearts {\n  background-position: -20px -800px; }\n\n.ap-diamonds {\n  background-position: -40px -0px; }\n\n.ap-hotsprings {\n  background-position: -40px -20px; }\n\n.ap-recycle {\n  background-position: -40px -40px; }\n\n.ap-wheelchair {\n  background-position: -40px -60px; }\n\n.ap-hammer_and_pick {\n  background-position: -40px -80px; }\n\n.ap-anchor {\n  background-position: -40px -100px; }\n\n.ap-crossed_swords {\n  background-position: -40px -120px; }\n\n.ap-scales {\n  background-position: -40px -140px; }\n\n.ap-alembic {\n  background-position: -40px -160px; }\n\n.ap-gear {\n  background-position: -40px -180px; }\n\n.ap-atom_symbol {\n  background-position: -40px -200px; }\n\n.ap-fleur_de_lis {\n  background-position: -40px -220px; }\n\n.ap-warning {\n  background-position: -40px -240px; }\n\n.ap-zap {\n  background-position: -40px -260px; }\n\n.ap-white_circle {\n  background-position: -40px -280px; }\n\n.ap-black_circle {\n  background-position: -40px -300px; }\n\n.ap-coffin {\n  background-position: -40px -320px; }\n\n.ap-funeral_urn {\n  background-position: -40px -340px; }\n\n.ap-soccer {\n  background-position: -40px -360px; }\n\n.ap-baseball {\n  background-position: -40px -380px; }\n\n.ap-snowman_without_snow {\n  background-position: -40px -400px; }\n\n.ap-partly_sunny {\n  background-position: -40px -420px; }\n\n.ap-thunder_cloud_and_rain {\n  background-position: -40px -440px; }\n\n.ap-ophiuchus {\n  background-position: -40px -460px; }\n\n.ap-pick {\n  background-position: -40px -480px; }\n\n.ap-helmet_with_white_cross {\n  background-position: -40px -500px; }\n\n.ap-chains {\n  background-position: -40px -520px; }\n\n.ap-no_entry {\n  background-position: -40px -540px; }\n\n.ap-shinto_shrine {\n  background-position: -40px -560px; }\n\n.ap-church {\n  background-position: -40px -580px; }\n\n.ap-mountain {\n  background-position: -40px -600px; }\n\n.ap-umbrella_on_ground {\n  background-position: -40px -620px; }\n\n.ap-fountain {\n  background-position: -40px -640px; }\n\n.ap-golf {\n  background-position: -40px -660px; }\n\n.ap-ferry {\n  background-position: -40px -680px; }\n\n.ap-boat {\n  background-position: -40px -700px; }\n\n.ap-skier {\n  background-position: -40px -720px; }\n\n.ap-ice_skate {\n  background-position: -40px -740px; }\n\n.ap-person_with_ball {\n  background-position: -40px -760px; }\n\n.ap-tent {\n  background-position: -60px -60px; }\n\n.ap-fuelpump {\n  background-position: -60px -80px; }\n\n.ap-scissors {\n  background-position: -60px -100px; }\n\n.ap-white_check_mark {\n  background-position: -60px -120px; }\n\n.ap-airplane {\n  background-position: -60px -140px; }\n\n.ap-email {\n  background-position: -60px -160px; }\n\n.ap-fist {\n  background-position: -60px -180px; }\n\n.ap-hand {\n  background-position: -60px -300px; }\n\n.ap-v {\n  background-position: -60px -420px; }\n\n.ap-writing_hand {\n  background-position: -60px -540px; }\n\n.ap-pencil2 {\n  background-position: -60px -660px; }\n\n.ap-black_nib {\n  background-position: -60px -680px; }\n\n.ap-heavy_check_mark {\n  background-position: -60px -700px; }\n\n.ap-heavy_multiplication_x {\n  background-position: -60px -720px; }\n\n.ap-latin_cross {\n  background-position: -60px -740px; }\n\n.ap-star_of_david {\n  background-position: -60px -760px; }\n\n.ap-sparkles {\n  background-position: -60px -780px; }\n\n.ap-eight_spoked_asterisk {\n  background-position: -60px -800px; }\n\n.ap-eight_pointed_black_star {\n  background-position: -80px -0px; }\n\n.ap-snowflake {\n  background-position: -80px -20px; }\n\n.ap-sparkle {\n  background-position: -80px -40px; }\n\n.ap-x {\n  background-position: -80px -60px; }\n\n.ap-negative_squared_cross_mark {\n  background-position: -80px -80px; }\n\n.ap-question {\n  background-position: -80px -100px; }\n\n.ap-grey_question {\n  background-position: -80px -120px; }\n\n.ap-grey_exclamation {\n  background-position: -80px -140px; }\n\n.ap-exclamation {\n  background-position: -80px -160px; }\n\n.ap-heavy_heart_exclamation_mark_ornament {\n  background-position: -80px -180px; }\n\n.ap-heart {\n  background-position: -80px -200px; }\n\n.ap-heavy_plus_sign {\n  background-position: -80px -220px; }\n\n.ap-heavy_minus_sign {\n  background-position: -80px -240px; }\n\n.ap-heavy_division_sign {\n  background-position: -80px -260px; }\n\n.ap-arrow_right {\n  background-position: -80px -280px; }\n\n.ap-curly_loop {\n  background-position: -80px -300px; }\n\n.ap-loop {\n  background-position: -80px -320px; }\n\n.ap-arrow_heading_up {\n  background-position: -80px -340px; }\n\n.ap-arrow_heading_down {\n  background-position: -80px -360px; }\n\n.ap-arrow_left {\n  background-position: -80px -380px; }\n\n.ap-arrow_up {\n  background-position: -80px -400px; }\n\n.ap-arrow_down {\n  background-position: -80px -420px; }\n\n.ap-black_large_square {\n  background-position: -80px -440px; }\n\n.ap-white_large_square {\n  background-position: -80px -460px; }\n\n.ap-star {\n  background-position: -80px -480px; }\n\n.ap-o {\n  background-position: -80px -500px; }\n\n.ap-wavy_dash {\n  background-position: -80px -520px; }\n\n.ap-part_alternation_mark {\n  background-position: -80px -540px; }\n\n.ap-congratulations {\n  background-position: -80px -560px; }\n\n.ap-secret {\n  background-position: -80px -580px; }\n\n.ap-mahjong {\n  background-position: -80px -600px; }\n\n.ap-black_joker {\n  background-position: -80px -620px; }\n\n.ap-a {\n  background-position: -80px -640px; }\n\n.ap-b {\n  background-position: -80px -660px; }\n\n.ap-o2 {\n  background-position: -80px -680px; }\n\n.ap-parking {\n  background-position: -80px -700px; }\n\n.ap-ab {\n  background-position: -80px -720px; }\n\n.ap-cl {\n  background-position: -80px -740px; }\n\n.ap-cool {\n  background-position: -80px -760px; }\n\n.ap-free {\n  background-position: -80px -780px; }\n\n.ap-id {\n  background-position: -80px -800px; }\n\n.ap-new {\n  background-position: -100px -0px; }\n\n.ap-ng {\n  background-position: -100px -20px; }\n\n.ap-ok {\n  background-position: -100px -40px; }\n\n.ap-sos {\n  background-position: -100px -60px; }\n\n.ap-up {\n  background-position: -100px -80px; }\n\n.ap-vs {\n  background-position: -100px -100px; }\n\n.ap-koko {\n  background-position: -100px -120px; }\n\n.ap-sa {\n  background-position: -100px -140px; }\n\n.ap-u7121 {\n  background-position: -100px -160px; }\n\n.ap-u6307 {\n  background-position: -100px -180px; }\n\n.ap-u7981 {\n  background-position: -100px -200px; }\n\n.ap-u7a7a {\n  background-position: -100px -220px; }\n\n.ap-u5408 {\n  background-position: -100px -240px; }\n\n.ap-u6e80 {\n  background-position: -100px -260px; }\n\n.ap-u6709 {\n  background-position: -100px -280px; }\n\n.ap-u6708 {\n  background-position: -100px -300px; }\n\n.ap-u7533 {\n  background-position: -100px -320px; }\n\n.ap-u5272 {\n  background-position: -100px -340px; }\n\n.ap-u55b6 {\n  background-position: -100px -360px; }\n\n.ap-ideograph_advantage {\n  background-position: -100px -380px; }\n\n.ap-accept {\n  background-position: -100px -400px; }\n\n.ap-cyclone {\n  background-position: -100px -420px; }\n\n.ap-foggy {\n  background-position: -100px -440px; }\n\n.ap-closed_umbrella {\n  background-position: -100px -460px; }\n\n.ap-night_with_stars {\n  background-position: -100px -480px; }\n\n.ap-sunrise_over_mountains {\n  background-position: -100px -500px; }\n\n.ap-sunrise {\n  background-position: -100px -520px; }\n\n.ap-city_sunset {\n  background-position: -100px -540px; }\n\n.ap-city_sunrise {\n  background-position: -100px -560px; }\n\n.ap-rainbow {\n  background-position: -100px -580px; }\n\n.ap-bridge_at_night {\n  background-position: -100px -600px; }\n\n.ap-ocean {\n  background-position: -100px -620px; }\n\n.ap-volcano {\n  background-position: -100px -640px; }\n\n.ap-milky_way {\n  background-position: -100px -660px; }\n\n.ap-earth_africa {\n  background-position: -100px -680px; }\n\n.ap-earth_americas {\n  background-position: -100px -700px; }\n\n.ap-earth_asia {\n  background-position: -100px -720px; }\n\n.ap-globe_with_meridians {\n  background-position: -100px -740px; }\n\n.ap-new_moon {\n  background-position: -100px -760px; }\n\n.ap-waxing_crescent_moon {\n  background-position: -100px -780px; }\n\n.ap-first_quarter_moon {\n  background-position: -100px -800px; }\n\n.ap-moon {\n  background-position: -120px -0px; }\n\n.ap-full_moon {\n  background-position: -120px -20px; }\n\n.ap-waning_gibbous_moon {\n  background-position: -120px -40px; }\n\n.ap-last_quarter_moon {\n  background-position: -120px -60px; }\n\n.ap-waning_crescent_moon {\n  background-position: -120px -80px; }\n\n.ap-crescent_moon {\n  background-position: -120px -100px; }\n\n.ap-new_moon_with_face {\n  background-position: -120px -120px; }\n\n.ap-first_quarter_moon_with_face {\n  background-position: -120px -140px; }\n\n.ap-last_quarter_moon_with_face {\n  background-position: -120px -160px; }\n\n.ap-full_moon_with_face {\n  background-position: -120px -180px; }\n\n.ap-sun_with_face {\n  background-position: -120px -200px; }\n\n.ap-star2 {\n  background-position: -120px -220px; }\n\n.ap-stars {\n  background-position: -120px -240px; }\n\n.ap-thermometer {\n  background-position: -120px -260px; }\n\n.ap-mostly_sunny {\n  background-position: -120px -280px; }\n\n.ap-barely_sunny {\n  background-position: -120px -300px; }\n\n.ap-partly_sunny_rain {\n  background-position: -120px -320px; }\n\n.ap-rain_cloud {\n  background-position: -120px -340px; }\n\n.ap-snow_cloud {\n  background-position: -120px -360px; }\n\n.ap-lightning {\n  background-position: -120px -380px; }\n\n.ap-tornado {\n  background-position: -120px -400px; }\n\n.ap-fog {\n  background-position: -120px -420px; }\n\n.ap-wind_blowing_face {\n  background-position: -120px -440px; }\n\n.ap-hotdog {\n  background-position: -120px -460px; }\n\n.ap-taco {\n  background-position: -120px -480px; }\n\n.ap-burrito {\n  background-position: -120px -500px; }\n\n.ap-chestnut {\n  background-position: -120px -520px; }\n\n.ap-seedling {\n  background-position: -120px -540px; }\n\n.ap-evergreen_tree {\n  background-position: -120px -560px; }\n\n.ap-deciduous_tree {\n  background-position: -120px -580px; }\n\n.ap-palm_tree {\n  background-position: -120px -600px; }\n\n.ap-cactus {\n  background-position: -120px -620px; }\n\n.ap-hot_pepper {\n  background-position: -120px -640px; }\n\n.ap-tulip {\n  background-position: -120px -660px; }\n\n.ap-cherry_blossom {\n  background-position: -120px -680px; }\n\n.ap-rose {\n  background-position: -120px -700px; }\n\n.ap-hibiscus {\n  background-position: -120px -720px; }\n\n.ap-sunflower {\n  background-position: -120px -740px; }\n\n.ap-blossom {\n  background-position: -120px -760px; }\n\n.ap-corn {\n  background-position: -120px -780px; }\n\n.ap-ear_of_rice {\n  background-position: -120px -800px; }\n\n.ap-herb {\n  background-position: -140px -0px; }\n\n.ap-four_leaf_clover {\n  background-position: -140px -20px; }\n\n.ap-maple_leaf {\n  background-position: -140px -40px; }\n\n.ap-fallen_leaf {\n  background-position: -140px -60px; }\n\n.ap-leaves {\n  background-position: -140px -80px; }\n\n.ap-mushroom {\n  background-position: -140px -100px; }\n\n.ap-tomato {\n  background-position: -140px -120px; }\n\n.ap-eggplant {\n  background-position: -140px -140px; }\n\n.ap-grapes {\n  background-position: -140px -160px; }\n\n.ap-melon {\n  background-position: -140px -180px; }\n\n.ap-watermelon {\n  background-position: -140px -200px; }\n\n.ap-tangerine {\n  background-position: -140px -220px; }\n\n.ap-lemon {\n  background-position: -140px -240px; }\n\n.ap-banana {\n  background-position: -140px -260px; }\n\n.ap-pineapple {\n  background-position: -140px -280px; }\n\n.ap-apple {\n  background-position: -140px -300px; }\n\n.ap-green_apple {\n  background-position: -140px -320px; }\n\n.ap-pear {\n  background-position: -140px -340px; }\n\n.ap-peach {\n  background-position: -140px -360px; }\n\n.ap-cherries {\n  background-position: -140px -380px; }\n\n.ap-strawberry {\n  background-position: -140px -400px; }\n\n.ap-hamburger {\n  background-position: -140px -420px; }\n\n.ap-pizza {\n  background-position: -140px -440px; }\n\n.ap-meat_on_bone {\n  background-position: -140px -460px; }\n\n.ap-poultry_leg {\n  background-position: -140px -480px; }\n\n.ap-rice_cracker {\n  background-position: -140px -500px; }\n\n.ap-rice_ball {\n  background-position: -140px -520px; }\n\n.ap-rice {\n  background-position: -140px -540px; }\n\n.ap-curry {\n  background-position: -140px -560px; }\n\n.ap-ramen {\n  background-position: -140px -580px; }\n\n.ap-spaghetti {\n  background-position: -140px -600px; }\n\n.ap-bread {\n  background-position: -140px -620px; }\n\n.ap-fries {\n  background-position: -140px -640px; }\n\n.ap-sweet_potato {\n  background-position: -140px -660px; }\n\n.ap-dango {\n  background-position: -140px -680px; }\n\n.ap-oden {\n  background-position: -140px -700px; }\n\n.ap-sushi {\n  background-position: -140px -720px; }\n\n.ap-fried_shrimp {\n  background-position: -140px -740px; }\n\n.ap-fish_cake {\n  background-position: -140px -760px; }\n\n.ap-icecream {\n  background-position: -140px -780px; }\n\n.ap-shaved_ice {\n  background-position: -140px -800px; }\n\n.ap-ice_cream {\n  background-position: -160px -0px; }\n\n.ap-doughnut {\n  background-position: -160px -20px; }\n\n.ap-cookie {\n  background-position: -160px -40px; }\n\n.ap-chocolate_bar {\n  background-position: -160px -60px; }\n\n.ap-candy {\n  background-position: -160px -80px; }\n\n.ap-lollipop {\n  background-position: -160px -100px; }\n\n.ap-custard {\n  background-position: -160px -120px; }\n\n.ap-honey_pot {\n  background-position: -160px -140px; }\n\n.ap-cake {\n  background-position: -160px -160px; }\n\n.ap-bento {\n  background-position: -160px -180px; }\n\n.ap-stew {\n  background-position: -160px -200px; }\n\n.ap-egg {\n  background-position: -160px -220px; }\n\n.ap-fork_and_knife {\n  background-position: -160px -240px; }\n\n.ap-tea {\n  background-position: -160px -260px; }\n\n.ap-sake {\n  background-position: -160px -280px; }\n\n.ap-wine_glass {\n  background-position: -160px -300px; }\n\n.ap-cocktail {\n  background-position: -160px -320px; }\n\n.ap-tropical_drink {\n  background-position: -160px -340px; }\n\n.ap-beer {\n  background-position: -160px -360px; }\n\n.ap-beers {\n  background-position: -160px -380px; }\n\n.ap-baby_bottle {\n  background-position: -160px -400px; }\n\n.ap-knife_fork_plate {\n  background-position: -160px -420px; }\n\n.ap-champagne {\n  background-position: -160px -440px; }\n\n.ap-popcorn {\n  background-position: -160px -460px; }\n\n.ap-ribbon {\n  background-position: -160px -480px; }\n\n.ap-gift {\n  background-position: -160px -500px; }\n\n.ap-birthday {\n  background-position: -160px -520px; }\n\n.ap-jack_o_lantern {\n  background-position: -160px -540px; }\n\n.ap-christmas_tree {\n  background-position: -160px -560px; }\n\n.ap-santa {\n  background-position: -160px -580px; }\n\n.ap-fireworks {\n  background-position: -160px -700px; }\n\n.ap-sparkler {\n  background-position: -160px -720px; }\n\n.ap-balloon {\n  background-position: -160px -740px; }\n\n.ap-tada {\n  background-position: -160px -760px; }\n\n.ap-confetti_ball {\n  background-position: -160px -780px; }\n\n.ap-tanabata_tree {\n  background-position: -160px -800px; }\n\n.ap-crossed_flags {\n  background-position: -180px -0px; }\n\n.ap-bamboo {\n  background-position: -180px -20px; }\n\n.ap-dolls {\n  background-position: -180px -40px; }\n\n.ap-flags {\n  background-position: -180px -60px; }\n\n.ap-wind_chime {\n  background-position: -180px -80px; }\n\n.ap-rice_scene {\n  background-position: -180px -100px; }\n\n.ap-school_satchel {\n  background-position: -180px -120px; }\n\n.ap-mortar_board {\n  background-position: -180px -140px; }\n\n.ap-medal {\n  background-position: -180px -160px; }\n\n.ap-reminder_ribbon {\n  background-position: -180px -180px; }\n\n.ap-studio_microphone {\n  background-position: -180px -200px; }\n\n.ap-level_slider {\n  background-position: -180px -220px; }\n\n.ap-control_knobs {\n  background-position: -180px -240px; }\n\n.ap-film_frames {\n  background-position: -180px -260px; }\n\n.ap-admission_tickets {\n  background-position: -180px -280px; }\n\n.ap-carousel_horse {\n  background-position: -180px -300px; }\n\n.ap-ferris_wheel {\n  background-position: -180px -320px; }\n\n.ap-roller_coaster {\n  background-position: -180px -340px; }\n\n.ap-fishing_pole_and_fish {\n  background-position: -180px -360px; }\n\n.ap-microphone {\n  background-position: -180px -380px; }\n\n.ap-movie_camera {\n  background-position: -180px -400px; }\n\n.ap-cinema {\n  background-position: -180px -420px; }\n\n.ap-headphones {\n  background-position: -180px -440px; }\n\n.ap-art {\n  background-position: -180px -460px; }\n\n.ap-tophat {\n  background-position: -180px -480px; }\n\n.ap-circus_tent {\n  background-position: -180px -500px; }\n\n.ap-ticket {\n  background-position: -180px -520px; }\n\n.ap-clapper {\n  background-position: -180px -540px; }\n\n.ap-performing_arts {\n  background-position: -180px -560px; }\n\n.ap-video_game {\n  background-position: -180px -580px; }\n\n.ap-dart {\n  background-position: -180px -600px; }\n\n.ap-slot_machine {\n  background-position: -180px -620px; }\n\n.ap-8ball {\n  background-position: -180px -640px; }\n\n.ap-game_die {\n  background-position: -180px -660px; }\n\n.ap-bowling {\n  background-position: -180px -680px; }\n\n.ap-flower_playing_cards {\n  background-position: -180px -700px; }\n\n.ap-musical_note {\n  background-position: -180px -720px; }\n\n.ap-notes {\n  background-position: -180px -740px; }\n\n.ap-saxophone {\n  background-position: -180px -760px; }\n\n.ap-guitar {\n  background-position: -180px -780px; }\n\n.ap-musical_keyboard {\n  background-position: -180px -800px; }\n\n.ap-trumpet {\n  background-position: -200px -0px; }\n\n.ap-violin {\n  background-position: -200px -20px; }\n\n.ap-musical_score {\n  background-position: -200px -40px; }\n\n.ap-running_shirt_with_sash {\n  background-position: -200px -60px; }\n\n.ap-tennis {\n  background-position: -200px -80px; }\n\n.ap-ski {\n  background-position: -200px -100px; }\n\n.ap-basketball {\n  background-position: -200px -120px; }\n\n.ap-checkered_flag {\n  background-position: -200px -140px; }\n\n.ap-snowboarder {\n  background-position: -200px -160px; }\n\n.ap-runner {\n  background-position: -200px -180px; }\n\n.ap-surfer {\n  background-position: -200px -300px; }\n\n.ap-sports_medal {\n  background-position: -200px -420px; }\n\n.ap-trophy {\n  background-position: -200px -440px; }\n\n.ap-horse_racing {\n  background-position: -200px -460px; }\n\n.ap-football {\n  background-position: -200px -480px; }\n\n.ap-rugby_football {\n  background-position: -200px -500px; }\n\n.ap-swimmer {\n  background-position: -200px -520px; }\n\n.ap-weight_lifter {\n  background-position: -200px -640px; }\n\n.ap-golfer {\n  background-position: -200px -760px; }\n\n.ap-racing_motorcycle {\n  background-position: -200px -780px; }\n\n.ap-racing_car {\n  background-position: -200px -800px; }\n\n.ap-cricket_bat_and_ball {\n  background-position: -220px -0px; }\n\n.ap-volleyball {\n  background-position: -220px -20px; }\n\n.ap-field_hockey_stick_and_ball {\n  background-position: -220px -40px; }\n\n.ap-ice_hockey_stick_and_puck {\n  background-position: -220px -60px; }\n\n.ap-table_tennis_paddle_and_ball {\n  background-position: -220px -80px; }\n\n.ap-snow_capped_mountain {\n  background-position: -220px -100px; }\n\n.ap-camping {\n  background-position: -220px -120px; }\n\n.ap-beach_with_umbrella {\n  background-position: -220px -140px; }\n\n.ap-building_construction {\n  background-position: -220px -160px; }\n\n.ap-house_buildings {\n  background-position: -220px -180px; }\n\n.ap-cityscape {\n  background-position: -220px -200px; }\n\n.ap-derelict_house_building {\n  background-position: -220px -220px; }\n\n.ap-classical_building {\n  background-position: -220px -240px; }\n\n.ap-desert {\n  background-position: -220px -260px; }\n\n.ap-desert_island {\n  background-position: -220px -280px; }\n\n.ap-national_park {\n  background-position: -220px -300px; }\n\n.ap-stadium {\n  background-position: -220px -320px; }\n\n.ap-house {\n  background-position: -220px -340px; }\n\n.ap-house_with_garden {\n  background-position: -220px -360px; }\n\n.ap-office {\n  background-position: -220px -380px; }\n\n.ap-post_office {\n  background-position: -220px -400px; }\n\n.ap-european_post_office {\n  background-position: -220px -420px; }\n\n.ap-hospital {\n  background-position: -220px -440px; }\n\n.ap-bank {\n  background-position: -220px -460px; }\n\n.ap-atm {\n  background-position: -220px -480px; }\n\n.ap-hotel {\n  background-position: -220px -500px; }\n\n.ap-love_hotel {\n  background-position: -220px -520px; }\n\n.ap-convenience_store {\n  background-position: -220px -540px; }\n\n.ap-school {\n  background-position: -220px -560px; }\n\n.ap-department_store {\n  background-position: -220px -580px; }\n\n.ap-factory {\n  background-position: -220px -600px; }\n\n.ap-izakaya_lantern {\n  background-position: -220px -620px; }\n\n.ap-japanese_castle {\n  background-position: -220px -640px; }\n\n.ap-european_castle {\n  background-position: -220px -660px; }\n\n.ap-waving_white_flag {\n  background-position: -220px -680px; }\n\n.ap-waving_black_flag {\n  background-position: -220px -700px; }\n\n.ap-rosette {\n  background-position: -220px -720px; }\n\n.ap-label {\n  background-position: -220px -740px; }\n\n.ap-badminton_racquet_and_shuttlecock {\n  background-position: -220px -760px; }\n\n.ap-bow_and_arrow {\n  background-position: -220px -780px; }\n\n.ap-amphora {\n  background-position: -220px -800px; }\n\n.ap-skin-tone-2 {\n  background-position: -240px -0px; }\n\n.ap-skin-tone-3 {\n  background-position: -240px -20px; }\n\n.ap-skin-tone-4 {\n  background-position: -240px -40px; }\n\n.ap-skin-tone-5 {\n  background-position: -240px -60px; }\n\n.ap-skin-tone-6 {\n  background-position: -240px -80px; }\n\n.ap-rat {\n  background-position: -240px -100px; }\n\n.ap-mouse2 {\n  background-position: -240px -120px; }\n\n.ap-ox {\n  background-position: -240px -140px; }\n\n.ap-water_buffalo {\n  background-position: -240px -160px; }\n\n.ap-cow2 {\n  background-position: -240px -180px; }\n\n.ap-tiger2 {\n  background-position: -240px -200px; }\n\n.ap-leopard {\n  background-position: -240px -220px; }\n\n.ap-rabbit2 {\n  background-position: -240px -240px; }\n\n.ap-cat2 {\n  background-position: -240px -260px; }\n\n.ap-dragon {\n  background-position: -240px -280px; }\n\n.ap-crocodile {\n  background-position: -240px -300px; }\n\n.ap-whale2 {\n  background-position: -240px -320px; }\n\n.ap-snail {\n  background-position: -240px -340px; }\n\n.ap-snake {\n  background-position: -240px -360px; }\n\n.ap-racehorse {\n  background-position: -240px -380px; }\n\n.ap-ram {\n  background-position: -240px -400px; }\n\n.ap-goat {\n  background-position: -240px -420px; }\n\n.ap-sheep {\n  background-position: -240px -440px; }\n\n.ap-monkey {\n  background-position: -240px -460px; }\n\n.ap-rooster {\n  background-position: -240px -480px; }\n\n.ap-chicken {\n  background-position: -240px -500px; }\n\n.ap-dog2 {\n  background-position: -240px -520px; }\n\n.ap-pig2 {\n  background-position: -240px -540px; }\n\n.ap-boar {\n  background-position: -240px -560px; }\n\n.ap-elephant {\n  background-position: -240px -580px; }\n\n.ap-octopus {\n  background-position: -240px -600px; }\n\n.ap-shell {\n  background-position: -240px -620px; }\n\n.ap-bug {\n  background-position: -240px -640px; }\n\n.ap-ant {\n  background-position: -240px -660px; }\n\n.ap-bee {\n  background-position: -240px -680px; }\n\n.ap-beetle {\n  background-position: -240px -700px; }\n\n.ap-fish {\n  background-position: -240px -720px; }\n\n.ap-tropical_fish {\n  background-position: -240px -740px; }\n\n.ap-blowfish {\n  background-position: -240px -760px; }\n\n.ap-turtle {\n  background-position: -240px -780px; }\n\n.ap-hatching_chick {\n  background-position: -240px -800px; }\n\n.ap-baby_chick {\n  background-position: -260px -0px; }\n\n.ap-hatched_chick {\n  background-position: -260px -20px; }\n\n.ap-bird {\n  background-position: -260px -40px; }\n\n.ap-penguin {\n  background-position: -260px -60px; }\n\n.ap-koala {\n  background-position: -260px -80px; }\n\n.ap-poodle {\n  background-position: -260px -100px; }\n\n.ap-dromedary_camel {\n  background-position: -260px -120px; }\n\n.ap-camel {\n  background-position: -260px -140px; }\n\n.ap-dolphin {\n  background-position: -260px -160px; }\n\n.ap-mouse {\n  background-position: -260px -180px; }\n\n.ap-cow {\n  background-position: -260px -200px; }\n\n.ap-tiger {\n  background-position: -260px -220px; }\n\n.ap-rabbit {\n  background-position: -260px -240px; }\n\n.ap-cat {\n  background-position: -260px -260px; }\n\n.ap-dragon_face {\n  background-position: -260px -280px; }\n\n.ap-whale {\n  background-position: -260px -300px; }\n\n.ap-horse {\n  background-position: -260px -320px; }\n\n.ap-monkey_face {\n  background-position: -260px -340px; }\n\n.ap-dog {\n  background-position: -260px -360px; }\n\n.ap-pig {\n  background-position: -260px -380px; }\n\n.ap-frog {\n  background-position: -260px -400px; }\n\n.ap-hamster {\n  background-position: -260px -420px; }\n\n.ap-wolf {\n  background-position: -260px -440px; }\n\n.ap-bear {\n  background-position: -260px -460px; }\n\n.ap-panda_face {\n  background-position: -260px -480px; }\n\n.ap-pig_nose {\n  background-position: -260px -500px; }\n\n.ap-feet {\n  background-position: -260px -520px; }\n\n.ap-chipmunk {\n  background-position: -260px -540px; }\n\n.ap-eyes {\n  background-position: -260px -560px; }\n\n.ap-eye {\n  background-position: -260px -580px; }\n\n.ap-ear {\n  background-position: -260px -600px; }\n\n.ap-nose {\n  background-position: -260px -720px; }\n\n.ap-lips {\n  background-position: -280px -20px; }\n\n.ap-tongue {\n  background-position: -280px -40px; }\n\n.ap-point_up_2 {\n  background-position: -280px -60px; }\n\n.ap-point_down {\n  background-position: -280px -180px; }\n\n.ap-point_left {\n  background-position: -280px -300px; }\n\n.ap-point_right {\n  background-position: -280px -420px; }\n\n.ap-facepunch {\n  background-position: -280px -540px; }\n\n.ap-wave {\n  background-position: -280px -660px; }\n\n.ap-ok_hand {\n  background-position: -280px -780px; }\n\n.ap-+1 {\n  background-position: -300px -80px; }\n\n.ap--1 {\n  background-position: -300px -200px; }\n\n.ap-clap {\n  background-position: -300px -320px; }\n\n.ap-open_hands {\n  background-position: -300px -440px; }\n\n.ap-crown {\n  background-position: -300px -560px; }\n\n.ap-womans_hat {\n  background-position: -300px -580px; }\n\n.ap-eyeglasses {\n  background-position: -300px -600px; }\n\n.ap-necktie {\n  background-position: -300px -620px; }\n\n.ap-shirt {\n  background-position: -300px -640px; }\n\n.ap-jeans {\n  background-position: -300px -660px; }\n\n.ap-dress {\n  background-position: -300px -680px; }\n\n.ap-kimono {\n  background-position: -300px -700px; }\n\n.ap-bikini {\n  background-position: -300px -720px; }\n\n.ap-womans_clothes {\n  background-position: -300px -740px; }\n\n.ap-purse {\n  background-position: -300px -760px; }\n\n.ap-handbag {\n  background-position: -300px -780px; }\n\n.ap-pouch {\n  background-position: -300px -800px; }\n\n.ap-mans_shoe {\n  background-position: -320px -0px; }\n\n.ap-athletic_shoe {\n  background-position: -320px -20px; }\n\n.ap-high_heel {\n  background-position: -320px -40px; }\n\n.ap-sandal {\n  background-position: -320px -60px; }\n\n.ap-boot {\n  background-position: -320px -80px; }\n\n.ap-footprints {\n  background-position: -320px -100px; }\n\n.ap-bust_in_silhouette {\n  background-position: -320px -120px; }\n\n.ap-busts_in_silhouette {\n  background-position: -320px -140px; }\n\n.ap-boy {\n  background-position: -320px -160px; }\n\n.ap-girl {\n  background-position: -320px -280px; }\n\n.ap-man {\n  background-position: -320px -400px; }\n\n.ap-woman {\n  background-position: -320px -520px; }\n\n.ap-family {\n  background-position: -320px -640px; }\n\n.ap-couple {\n  background-position: -320px -660px; }\n\n.ap-two_men_holding_hands {\n  background-position: -320px -680px; }\n\n.ap-two_women_holding_hands {\n  background-position: -320px -700px; }\n\n.ap-cop {\n  background-position: -320px -720px; }\n\n.ap-dancers {\n  background-position: -340px -20px; }\n\n.ap-bride_with_veil {\n  background-position: -340px -40px; }\n\n.ap-person_with_blond_hair {\n  background-position: -340px -160px; }\n\n.ap-man_with_gua_pi_mao {\n  background-position: -340px -280px; }\n\n.ap-man_with_turban {\n  background-position: -340px -400px; }\n\n.ap-older_man {\n  background-position: -340px -520px; }\n\n.ap-older_woman {\n  background-position: -340px -640px; }\n\n.ap-baby {\n  background-position: -340px -760px; }\n\n.ap-construction_worker {\n  background-position: -360px -60px; }\n\n.ap-princess {\n  background-position: -360px -180px; }\n\n.ap-japanese_ogre {\n  background-position: -360px -300px; }\n\n.ap-japanese_goblin {\n  background-position: -360px -320px; }\n\n.ap-ghost {\n  background-position: -360px -340px; }\n\n.ap-angel {\n  background-position: -360px -360px; }\n\n.ap-alien {\n  background-position: -360px -480px; }\n\n.ap-space_invader {\n  background-position: -360px -500px; }\n\n.ap-imp {\n  background-position: -360px -520px; }\n\n.ap-skull {\n  background-position: -360px -540px; }\n\n.ap-information_desk_person {\n  background-position: -360px -560px; }\n\n.ap-guardsman {\n  background-position: -360px -680px; }\n\n.ap-dancer {\n  background-position: -360px -800px; }\n\n.ap-lipstick {\n  background-position: -380px -100px; }\n\n.ap-nail_care {\n  background-position: -380px -120px; }\n\n.ap-massage {\n  background-position: -380px -240px; }\n\n.ap-haircut {\n  background-position: -380px -360px; }\n\n.ap-barber {\n  background-position: -380px -480px; }\n\n.ap-syringe {\n  background-position: -380px -500px; }\n\n.ap-pill {\n  background-position: -380px -520px; }\n\n.ap-kiss {\n  background-position: -380px -540px; }\n\n.ap-love_letter {\n  background-position: -380px -560px; }\n\n.ap-ring {\n  background-position: -380px -580px; }\n\n.ap-gem {\n  background-position: -380px -600px; }\n\n.ap-couplekiss {\n  background-position: -380px -620px; }\n\n.ap-bouquet {\n  background-position: -380px -640px; }\n\n.ap-couple_with_heart {\n  background-position: -380px -660px; }\n\n.ap-wedding {\n  background-position: -380px -680px; }\n\n.ap-heartbeat {\n  background-position: -380px -700px; }\n\n.ap-broken_heart {\n  background-position: -380px -720px; }\n\n.ap-two_hearts {\n  background-position: -380px -740px; }\n\n.ap-sparkling_heart {\n  background-position: -380px -760px; }\n\n.ap-heartpulse {\n  background-position: -380px -780px; }\n\n.ap-cupid {\n  background-position: -380px -800px; }\n\n.ap-blue_heart {\n  background-position: -400px -0px; }\n\n.ap-green_heart {\n  background-position: -400px -20px; }\n\n.ap-yellow_heart {\n  background-position: -400px -40px; }\n\n.ap-purple_heart {\n  background-position: -400px -60px; }\n\n.ap-gift_heart {\n  background-position: -400px -80px; }\n\n.ap-revolving_hearts {\n  background-position: -400px -100px; }\n\n.ap-heart_decoration {\n  background-position: -400px -120px; }\n\n.ap-diamond_shape_with_a_dot_inside {\n  background-position: -400px -140px; }\n\n.ap-bulb {\n  background-position: -400px -160px; }\n\n.ap-anger {\n  background-position: -400px -180px; }\n\n.ap-bomb {\n  background-position: -400px -200px; }\n\n.ap-zzz {\n  background-position: -400px -220px; }\n\n.ap-boom {\n  background-position: -400px -240px; }\n\n.ap-sweat_drops {\n  background-position: -400px -260px; }\n\n.ap-droplet {\n  background-position: -400px -280px; }\n\n.ap-dash {\n  background-position: -400px -300px; }\n\n.ap-hankey {\n  background-position: -400px -320px; }\n\n.ap-thumbsup {\n  background-position: -300px -80px; }\n\n.ap-thumbsdown {\n  background-position: -300px -200px; }\n\n.ap-muscle {\n  background-position: -400px -340px; }\n\n.ap-dizzy {\n  background-position: -400px -460px; }\n\n.ap-speech_balloon {\n  background-position: -400px -480px; }\n\n.ap-thought_balloon {\n  background-position: -400px -500px; }\n\n.ap-white_flower {\n  background-position: -400px -520px; }\n\n.ap-100 {\n  background-position: -400px -540px; }\n\n.ap-moneybag {\n  background-position: -400px -560px; }\n\n.ap-currency_exchange {\n  background-position: -400px -580px; }\n\n.ap-heavy_dollar_sign {\n  background-position: -400px -600px; }\n\n.ap-credit_card {\n  background-position: -400px -620px; }\n\n.ap-yen {\n  background-position: -400px -640px; }\n\n.ap-dollar {\n  background-position: -400px -660px; }\n\n.ap-euro {\n  background-position: -400px -680px; }\n\n.ap-pound {\n  background-position: -400px -700px; }\n\n.ap-money_with_wings {\n  background-position: -400px -720px; }\n\n.ap-chart {\n  background-position: -400px -740px; }\n\n.ap-seat {\n  background-position: -400px -760px; }\n\n.ap-computer {\n  background-position: -400px -780px; }\n\n.ap-briefcase {\n  background-position: -400px -800px; }\n\n.ap-minidisc {\n  background-position: -420px -0px; }\n\n.ap-floppy_disk {\n  background-position: -420px -20px; }\n\n.ap-cd {\n  background-position: -420px -40px; }\n\n.ap-dvd {\n  background-position: -420px -60px; }\n\n.ap-file_folder {\n  background-position: -420px -80px; }\n\n.ap-open_file_folder {\n  background-position: -420px -100px; }\n\n.ap-page_with_curl {\n  background-position: -420px -120px; }\n\n.ap-page_facing_up {\n  background-position: -420px -140px; }\n\n.ap-date {\n  background-position: -420px -160px; }\n\n.ap-calendar {\n  background-position: -420px -180px; }\n\n.ap-card_index {\n  background-position: -420px -200px; }\n\n.ap-chart_with_upwards_trend {\n  background-position: -420px -220px; }\n\n.ap-chart_with_downwards_trend {\n  background-position: -420px -240px; }\n\n.ap-bar_chart {\n  background-position: -420px -260px; }\n\n.ap-clipboard {\n  background-position: -420px -280px; }\n\n.ap-pushpin {\n  background-position: -420px -300px; }\n\n.ap-round_pushpin {\n  background-position: -420px -320px; }\n\n.ap-paperclip {\n  background-position: -420px -340px; }\n\n.ap-straight_ruler {\n  background-position: -420px -360px; }\n\n.ap-triangular_ruler {\n  background-position: -420px -380px; }\n\n.ap-bookmark_tabs {\n  background-position: -420px -400px; }\n\n.ap-ledger {\n  background-position: -420px -420px; }\n\n.ap-notebook {\n  background-position: -420px -440px; }\n\n.ap-notebook_with_decorative_cover {\n  background-position: -420px -460px; }\n\n.ap-closed_book {\n  background-position: -420px -480px; }\n\n.ap-book {\n  background-position: -420px -500px; }\n\n.ap-green_book {\n  background-position: -420px -520px; }\n\n.ap-blue_book {\n  background-position: -420px -540px; }\n\n.ap-orange_book {\n  background-position: -420px -560px; }\n\n.ap-books {\n  background-position: -420px -580px; }\n\n.ap-name_badge {\n  background-position: -420px -600px; }\n\n.ap-scroll {\n  background-position: -420px -620px; }\n\n.ap-memo {\n  background-position: -420px -640px; }\n\n.ap-telephone_receiver {\n  background-position: -420px -660px; }\n\n.ap-pager {\n  background-position: -420px -680px; }\n\n.ap-fax {\n  background-position: -420px -700px; }\n\n.ap-satellite_antenna {\n  background-position: -420px -720px; }\n\n.ap-loudspeaker {\n  background-position: -420px -740px; }\n\n.ap-mega {\n  background-position: -420px -760px; }\n\n.ap-outbox_tray {\n  background-position: -420px -780px; }\n\n.ap-inbox_tray {\n  background-position: -420px -800px; }\n\n.ap-package {\n  background-position: -440px -0px; }\n\n.ap-e-mail {\n  background-position: -440px -20px; }\n\n.ap-incoming_envelope {\n  background-position: -440px -40px; }\n\n.ap-envelope_with_arrow {\n  background-position: -440px -60px; }\n\n.ap-mailbox_closed {\n  background-position: -440px -80px; }\n\n.ap-mailbox {\n  background-position: -440px -100px; }\n\n.ap-mailbox_with_mail {\n  background-position: -440px -120px; }\n\n.ap-mailbox_with_no_mail {\n  background-position: -440px -140px; }\n\n.ap-postbox {\n  background-position: -440px -160px; }\n\n.ap-postal_horn {\n  background-position: -440px -180px; }\n\n.ap-newspaper {\n  background-position: -440px -200px; }\n\n.ap-iphone {\n  background-position: -440px -220px; }\n\n.ap-calling {\n  background-position: -440px -240px; }\n\n.ap-vibration_mode {\n  background-position: -440px -260px; }\n\n.ap-mobile_phone_off {\n  background-position: -440px -280px; }\n\n.ap-no_mobile_phones {\n  background-position: -440px -300px; }\n\n.ap-signal_strength {\n  background-position: -440px -320px; }\n\n.ap-camera {\n  background-position: -440px -340px; }\n\n.ap-camera_with_flash {\n  background-position: -440px -360px; }\n\n.ap-video_camera {\n  background-position: -440px -380px; }\n\n.ap-tv {\n  background-position: -440px -400px; }\n\n.ap-radio {\n  background-position: -440px -420px; }\n\n.ap-vhs {\n  background-position: -440px -440px; }\n\n.ap-film_projector {\n  background-position: -440px -460px; }\n\n.ap-prayer_beads {\n  background-position: -440px -480px; }\n\n.ap-twisted_rightwards_arrows {\n  background-position: -440px -500px; }\n\n.ap-repeat {\n  background-position: -440px -520px; }\n\n.ap-repeat_one {\n  background-position: -440px -540px; }\n\n.ap-arrows_clockwise {\n  background-position: -440px -560px; }\n\n.ap-arrows_counterclockwise {\n  background-position: -440px -580px; }\n\n.ap-low_brightness {\n  background-position: -440px -600px; }\n\n.ap-high_brightness {\n  background-position: -440px -620px; }\n\n.ap-mute {\n  background-position: -440px -640px; }\n\n.ap-speaker {\n  background-position: -440px -660px; }\n\n.ap-sound {\n  background-position: -440px -680px; }\n\n.ap-loud_sound {\n  background-position: -440px -700px; }\n\n.ap-battery {\n  background-position: -440px -720px; }\n\n.ap-electric_plug {\n  background-position: -440px -740px; }\n\n.ap-mag {\n  background-position: -440px -760px; }\n\n.ap-mag_right {\n  background-position: -440px -780px; }\n\n.ap-lock_with_ink_pen {\n  background-position: -440px -800px; }\n\n.ap-closed_lock_with_key {\n  background-position: -460px -0px; }\n\n.ap-key {\n  background-position: -460px -20px; }\n\n.ap-lock {\n  background-position: -460px -40px; }\n\n.ap-unlock {\n  background-position: -460px -60px; }\n\n.ap-bell {\n  background-position: -460px -80px; }\n\n.ap-no_bell {\n  background-position: -460px -100px; }\n\n.ap-bookmark {\n  background-position: -460px -120px; }\n\n.ap-link {\n  background-position: -460px -140px; }\n\n.ap-radio_button {\n  background-position: -460px -160px; }\n\n.ap-back {\n  background-position: -460px -180px; }\n\n.ap-end {\n  background-position: -460px -200px; }\n\n.ap-on {\n  background-position: -460px -220px; }\n\n.ap-soon {\n  background-position: -460px -240px; }\n\n.ap-top {\n  background-position: -460px -260px; }\n\n.ap-underage {\n  background-position: -460px -280px; }\n\n.ap-keycap_ten {\n  background-position: -460px -300px; }\n\n.ap-capital_abcd {\n  background-position: -460px -320px; }\n\n.ap-abcd {\n  background-position: -460px -340px; }\n\n.ap-1234 {\n  background-position: -460px -360px; }\n\n.ap-symbols {\n  background-position: -460px -380px; }\n\n.ap-abc {\n  background-position: -460px -400px; }\n\n.ap-fire {\n  background-position: -460px -420px; }\n\n.ap-flashlight {\n  background-position: -460px -440px; }\n\n.ap-wrench {\n  background-position: -460px -460px; }\n\n.ap-hammer {\n  background-position: -460px -480px; }\n\n.ap-nut_and_bolt {\n  background-position: -460px -500px; }\n\n.ap-hocho {\n  background-position: -460px -520px; }\n\n.ap-gun {\n  background-position: -460px -540px; }\n\n.ap-microscope {\n  background-position: -460px -560px; }\n\n.ap-telescope {\n  background-position: -460px -580px; }\n\n.ap-crystal_ball {\n  background-position: -460px -600px; }\n\n.ap-six_pointed_star {\n  background-position: -460px -620px; }\n\n.ap-beginner {\n  background-position: -460px -640px; }\n\n.ap-trident {\n  background-position: -460px -660px; }\n\n.ap-black_square_button {\n  background-position: -460px -680px; }\n\n.ap-white_square_button {\n  background-position: -460px -700px; }\n\n.ap-red_circle {\n  background-position: -460px -720px; }\n\n.ap-large_blue_circle {\n  background-position: -460px -740px; }\n\n.ap-large_orange_diamond {\n  background-position: -460px -760px; }\n\n.ap-large_blue_diamond {\n  background-position: -460px -780px; }\n\n.ap-small_orange_diamond {\n  background-position: -460px -800px; }\n\n.ap-small_blue_diamond {\n  background-position: -480px -0px; }\n\n.ap-small_red_triangle {\n  background-position: -480px -20px; }\n\n.ap-small_red_triangle_down {\n  background-position: -480px -40px; }\n\n.ap-arrow_up_small {\n  background-position: -480px -60px; }\n\n.ap-arrow_down_small {\n  background-position: -480px -80px; }\n\n.ap-om_symbol {\n  background-position: -480px -100px; }\n\n.ap-dove_of_peace {\n  background-position: -480px -120px; }\n\n.ap-kaaba {\n  background-position: -480px -140px; }\n\n.ap-mosque {\n  background-position: -480px -160px; }\n\n.ap-synagogue {\n  background-position: -480px -180px; }\n\n.ap-menorah_with_nine_branches {\n  background-position: -480px -200px; }\n\n.ap-clock1 {\n  background-position: -480px -220px; }\n\n.ap-clock2 {\n  background-position: -480px -240px; }\n\n.ap-clock3 {\n  background-position: -480px -260px; }\n\n.ap-clock4 {\n  background-position: -480px -280px; }\n\n.ap-clock5 {\n  background-position: -480px -300px; }\n\n.ap-clock6 {\n  background-position: -480px -320px; }\n\n.ap-clock7 {\n  background-position: -480px -340px; }\n\n.ap-clock8 {\n  background-position: -480px -360px; }\n\n.ap-clock9 {\n  background-position: -480px -380px; }\n\n.ap-clock10 {\n  background-position: -480px -400px; }\n\n.ap-clock11 {\n  background-position: -480px -420px; }\n\n.ap-clock12 {\n  background-position: -480px -440px; }\n\n.ap-clock130 {\n  background-position: -480px -460px; }\n\n.ap-clock230 {\n  background-position: -480px -480px; }\n\n.ap-clock330 {\n  background-position: -480px -500px; }\n\n.ap-clock430 {\n  background-position: -480px -520px; }\n\n.ap-clock530 {\n  background-position: -480px -540px; }\n\n.ap-clock630 {\n  background-position: -480px -560px; }\n\n.ap-clock730 {\n  background-position: -480px -580px; }\n\n.ap-clock830 {\n  background-position: -480px -600px; }\n\n.ap-clock930 {\n  background-position: -480px -620px; }\n\n.ap-clock1030 {\n  background-position: -480px -640px; }\n\n.ap-clock1130 {\n  background-position: -480px -660px; }\n\n.ap-clock1230 {\n  background-position: -480px -680px; }\n\n.ap-candle {\n  background-position: -480px -700px; }\n\n.ap-mantelpiece_clock {\n  background-position: -480px -720px; }\n\n.ap-hole {\n  background-position: -480px -740px; }\n\n.ap-man_in_business_suit_levitating {\n  background-position: -480px -760px; }\n\n.ap-sleuth_or_spy {\n  background-position: -480px -780px; }\n\n.ap-dark_sunglasses {\n  background-position: -500px -80px; }\n\n.ap-spider {\n  background-position: -500px -100px; }\n\n.ap-spider_web {\n  background-position: -500px -120px; }\n\n.ap-joystick {\n  background-position: -500px -140px; }\n\n.ap-linked_paperclips {\n  background-position: -500px -160px; }\n\n.ap-lower_left_ballpoint_pen {\n  background-position: -500px -180px; }\n\n.ap-lower_left_fountain_pen {\n  background-position: -500px -200px; }\n\n.ap-lower_left_paintbrush {\n  background-position: -500px -220px; }\n\n.ap-lower_left_crayon {\n  background-position: -500px -240px; }\n\n.ap-raised_hand_with_fingers_splayed {\n  background-position: -500px -260px; }\n\n.ap-middle_finger {\n  background-position: -500px -380px; }\n\n.ap-spock-hand {\n  background-position: -500px -500px; }\n\n.ap-desktop_computer {\n  background-position: -500px -620px; }\n\n.ap-printer {\n  background-position: -500px -640px; }\n\n.ap-three_button_mouse {\n  background-position: -500px -660px; }\n\n.ap-trackball {\n  background-position: -500px -680px; }\n\n.ap-frame_with_picture {\n  background-position: -500px -700px; }\n\n.ap-card_index_dividers {\n  background-position: -500px -720px; }\n\n.ap-card_file_box {\n  background-position: -500px -740px; }\n\n.ap-file_cabinet {\n  background-position: -500px -760px; }\n\n.ap-wastebasket {\n  background-position: -500px -780px; }\n\n.ap-spiral_note_pad {\n  background-position: -500px -800px; }\n\n.ap-spiral_calendar_pad {\n  background-position: -520px -0px; }\n\n.ap-compression {\n  background-position: -520px -20px; }\n\n.ap-old_key {\n  background-position: -520px -40px; }\n\n.ap-rolled_up_newspaper {\n  background-position: -520px -60px; }\n\n.ap-dagger_knife {\n  background-position: -520px -80px; }\n\n.ap-speaking_head_in_silhouette {\n  background-position: -520px -100px; }\n\n.ap-left_speech_bubble {\n  background-position: -520px -120px; }\n\n.ap-right_anger_bubble {\n  background-position: -520px -140px; }\n\n.ap-ballot_box_with_ballot {\n  background-position: -520px -160px; }\n\n.ap-world_map {\n  background-position: -520px -180px; }\n\n.ap-mount_fuji {\n  background-position: -520px -200px; }\n\n.ap-tokyo_tower {\n  background-position: -520px -220px; }\n\n.ap-statue_of_liberty {\n  background-position: -520px -240px; }\n\n.ap-japan {\n  background-position: -520px -260px; }\n\n.ap-moyai {\n  background-position: -520px -280px; }\n\n.ap-grinning {\n  background-position: -520px -300px; }\n\n.ap-grin {\n  background-position: -520px -320px; }\n\n.ap-joy {\n  background-position: -520px -340px; }\n\n.ap-smiley {\n  background-position: -520px -360px; }\n\n.ap-smile {\n  background-position: -520px -380px; }\n\n.ap-sweat_smile {\n  background-position: -520px -400px; }\n\n.ap-laughing {\n  background-position: -520px -420px; }\n\n.ap-innocent {\n  background-position: -520px -440px; }\n\n.ap-smiling_imp {\n  background-position: -520px -460px; }\n\n.ap-wink {\n  background-position: -520px -480px; }\n\n.ap-blush {\n  background-position: -520px -500px; }\n\n.ap-yum {\n  background-position: -520px -520px; }\n\n.ap-relieved {\n  background-position: -520px -540px; }\n\n.ap-heart_eyes {\n  background-position: -520px -560px; }\n\n.ap-sunglasses {\n  background-position: -520px -580px; }\n\n.ap-smirk {\n  background-position: -520px -600px; }\n\n.ap-neutral_face {\n  background-position: -520px -620px; }\n\n.ap-expressionless {\n  background-position: -520px -640px; }\n\n.ap-unamused {\n  background-position: -520px -660px; }\n\n.ap-sweat {\n  background-position: -520px -680px; }\n\n.ap-pensive {\n  background-position: -520px -700px; }\n\n.ap-confused {\n  background-position: -520px -720px; }\n\n.ap-confounded {\n  background-position: -520px -740px; }\n\n.ap-kissing {\n  background-position: -520px -760px; }\n\n.ap-kissing_heart {\n  background-position: -520px -780px; }\n\n.ap-kissing_smiling_eyes {\n  background-position: -520px -800px; }\n\n.ap-kissing_closed_eyes {\n  background-position: -540px -0px; }\n\n.ap-stuck_out_tongue {\n  background-position: -540px -20px; }\n\n.ap-stuck_out_tongue_winking_eye {\n  background-position: -540px -40px; }\n\n.ap-stuck_out_tongue_closed_eyes {\n  background-position: -540px -60px; }\n\n.ap-disappointed {\n  background-position: -540px -80px; }\n\n.ap-worried {\n  background-position: -540px -100px; }\n\n.ap-angry {\n  background-position: -540px -120px; }\n\n.ap-rage {\n  background-position: -540px -140px; }\n\n.ap-cry {\n  background-position: -540px -160px; }\n\n.ap-persevere {\n  background-position: -540px -180px; }\n\n.ap-triumph {\n  background-position: -540px -200px; }\n\n.ap-disappointed_relieved {\n  background-position: -540px -220px; }\n\n.ap-frowning {\n  background-position: -540px -240px; }\n\n.ap-anguished {\n  background-position: -540px -260px; }\n\n.ap-fearful {\n  background-position: -540px -280px; }\n\n.ap-weary {\n  background-position: -540px -300px; }\n\n.ap-sleepy {\n  background-position: -540px -320px; }\n\n.ap-tired_face {\n  background-position: -540px -340px; }\n\n.ap-grimacing {\n  background-position: -540px -360px; }\n\n.ap-sob {\n  background-position: -540px -380px; }\n\n.ap-open_mouth {\n  background-position: -540px -400px; }\n\n.ap-hushed {\n  background-position: -540px -420px; }\n\n.ap-cold_sweat {\n  background-position: -540px -440px; }\n\n.ap-scream {\n  background-position: -540px -460px; }\n\n.ap-astonished {\n  background-position: -540px -480px; }\n\n.ap-flushed {\n  background-position: -540px -500px; }\n\n.ap-sleeping {\n  background-position: -540px -520px; }\n\n.ap-dizzy_face {\n  background-position: -540px -540px; }\n\n.ap-no_mouth {\n  background-position: -540px -560px; }\n\n.ap-mask {\n  background-position: -540px -580px; }\n\n.ap-smile_cat {\n  background-position: -540px -600px; }\n\n.ap-joy_cat {\n  background-position: -540px -620px; }\n\n.ap-smiley_cat {\n  background-position: -540px -640px; }\n\n.ap-heart_eyes_cat {\n  background-position: -540px -660px; }\n\n.ap-smirk_cat {\n  background-position: -540px -680px; }\n\n.ap-kissing_cat {\n  background-position: -540px -700px; }\n\n.ap-pouting_cat {\n  background-position: -540px -720px; }\n\n.ap-crying_cat_face {\n  background-position: -540px -740px; }\n\n.ap-scream_cat {\n  background-position: -540px -760px; }\n\n.ap-slightly_frowning_face {\n  background-position: -540px -780px; }\n\n.ap-slightly_smiling_face {\n  background-position: -540px -800px; }\n\n.ap-upside_down_face {\n  background-position: -560px -0px; }\n\n.ap-face_with_rolling_eyes {\n  background-position: -560px -20px; }\n\n.ap-no_good {\n  background-position: -560px -40px; }\n\n.ap-ok_woman {\n  background-position: -560px -160px; }\n\n.ap-bow {\n  background-position: -560px -280px; }\n\n.ap-see_no_evil {\n  background-position: -560px -400px; }\n\n.ap-hear_no_evil {\n  background-position: -560px -420px; }\n\n.ap-speak_no_evil {\n  background-position: -560px -440px; }\n\n.ap-raising_hand {\n  background-position: -560px -460px; }\n\n.ap-raised_hands {\n  background-position: -560px -580px; }\n\n.ap-person_frowning {\n  background-position: -560px -700px; }\n\n.ap-person_with_pouting_face {\n  background-position: -580px -0px; }\n\n.ap-pray {\n  background-position: -580px -120px; }\n\n.ap-rocket {\n  background-position: -580px -240px; }\n\n.ap-helicopter {\n  background-position: -580px -260px; }\n\n.ap-steam_locomotive {\n  background-position: -580px -280px; }\n\n.ap-railway_car {\n  background-position: -580px -300px; }\n\n.ap-bullettrain_side {\n  background-position: -580px -320px; }\n\n.ap-bullettrain_front {\n  background-position: -580px -340px; }\n\n.ap-train2 {\n  background-position: -580px -360px; }\n\n.ap-metro {\n  background-position: -580px -380px; }\n\n.ap-light_rail {\n  background-position: -580px -400px; }\n\n.ap-station {\n  background-position: -580px -420px; }\n\n.ap-tram {\n  background-position: -580px -440px; }\n\n.ap-train {\n  background-position: -580px -460px; }\n\n.ap-bus {\n  background-position: -580px -480px; }\n\n.ap-oncoming_bus {\n  background-position: -580px -500px; }\n\n.ap-trolleybus {\n  background-position: -580px -520px; }\n\n.ap-busstop {\n  background-position: -580px -540px; }\n\n.ap-minibus {\n  background-position: -580px -560px; }\n\n.ap-ambulance {\n  background-position: -580px -580px; }\n\n.ap-fire_engine {\n  background-position: -580px -600px; }\n\n.ap-police_car {\n  background-position: -580px -620px; }\n\n.ap-oncoming_police_car {\n  background-position: -580px -640px; }\n\n.ap-taxi {\n  background-position: -580px -660px; }\n\n.ap-oncoming_taxi {\n  background-position: -580px -680px; }\n\n.ap-car {\n  background-position: -580px -700px; }\n\n.ap-oncoming_automobile {\n  background-position: -580px -720px; }\n\n.ap-blue_car {\n  background-position: -580px -740px; }\n\n.ap-truck {\n  background-position: -580px -760px; }\n\n.ap-articulated_lorry {\n  background-position: -580px -780px; }\n\n.ap-tractor {\n  background-position: -580px -800px; }\n\n.ap-monorail {\n  background-position: -600px -0px; }\n\n.ap-mountain_railway {\n  background-position: -600px -20px; }\n\n.ap-suspension_railway {\n  background-position: -600px -40px; }\n\n.ap-mountain_cableway {\n  background-position: -600px -60px; }\n\n.ap-aerial_tramway {\n  background-position: -600px -80px; }\n\n.ap-ship {\n  background-position: -600px -100px; }\n\n.ap-rowboat {\n  background-position: -600px -120px; }\n\n.ap-speedboat {\n  background-position: -600px -240px; }\n\n.ap-traffic_light {\n  background-position: -600px -260px; }\n\n.ap-vertical_traffic_light {\n  background-position: -600px -280px; }\n\n.ap-construction {\n  background-position: -600px -300px; }\n\n.ap-rotating_light {\n  background-position: -600px -320px; }\n\n.ap-triangular_flag_on_post {\n  background-position: -600px -340px; }\n\n.ap-door {\n  background-position: -600px -360px; }\n\n.ap-no_entry_sign {\n  background-position: -600px -380px; }\n\n.ap-smoking {\n  background-position: -600px -400px; }\n\n.ap-no_smoking {\n  background-position: -600px -420px; }\n\n.ap-put_litter_in_its_place {\n  background-position: -600px -440px; }\n\n.ap-do_not_litter {\n  background-position: -600px -460px; }\n\n.ap-potable_water {\n  background-position: -600px -480px; }\n\n.ap-non-potable_water {\n  background-position: -600px -500px; }\n\n.ap-bike {\n  background-position: -600px -520px; }\n\n.ap-no_bicycles {\n  background-position: -600px -540px; }\n\n.ap-bicyclist {\n  background-position: -600px -560px; }\n\n.ap-mountain_bicyclist {\n  background-position: -600px -680px; }\n\n.ap-walking {\n  background-position: -600px -800px; }\n\n.ap-no_pedestrians {\n  background-position: -620px -100px; }\n\n.ap-children_crossing {\n  background-position: -620px -120px; }\n\n.ap-mens {\n  background-position: -620px -140px; }\n\n.ap-womens {\n  background-position: -620px -160px; }\n\n.ap-restroom {\n  background-position: -620px -180px; }\n\n.ap-baby_symbol {\n  background-position: -620px -200px; }\n\n.ap-toilet {\n  background-position: -620px -220px; }\n\n.ap-wc {\n  background-position: -620px -240px; }\n\n.ap-shower {\n  background-position: -620px -260px; }\n\n.ap-bath {\n  background-position: -620px -280px; }\n\n.ap-bathtub {\n  background-position: -620px -400px; }\n\n.ap-passport_control {\n  background-position: -620px -420px; }\n\n.ap-customs {\n  background-position: -620px -440px; }\n\n.ap-baggage_claim {\n  background-position: -620px -460px; }\n\n.ap-left_luggage {\n  background-position: -620px -480px; }\n\n.ap-couch_and_lamp {\n  background-position: -620px -500px; }\n\n.ap-sleeping_accommodation {\n  background-position: -620px -520px; }\n\n.ap-shopping_bags {\n  background-position: -620px -540px; }\n\n.ap-bellhop_bell {\n  background-position: -620px -560px; }\n\n.ap-bed {\n  background-position: -620px -580px; }\n\n.ap-place_of_worship {\n  background-position: -620px -600px; }\n\n.ap-hammer_and_wrench {\n  background-position: -620px -620px; }\n\n.ap-shield {\n  background-position: -620px -640px; }\n\n.ap-oil_drum {\n  background-position: -620px -660px; }\n\n.ap-motorway {\n  background-position: -620px -680px; }\n\n.ap-railway_track {\n  background-position: -620px -700px; }\n\n.ap-motor_boat {\n  background-position: -620px -720px; }\n\n.ap-small_airplane {\n  background-position: -620px -740px; }\n\n.ap-airplane_departure {\n  background-position: -620px -760px; }\n\n.ap-airplane_arriving {\n  background-position: -620px -780px; }\n\n.ap-satellite {\n  background-position: -620px -800px; }\n\n.ap-passenger_ship {\n  background-position: -640px -0px; }\n\n.ap-zipper_mouth_face {\n  background-position: -640px -20px; }\n\n.ap-money_mouth_face {\n  background-position: -640px -40px; }\n\n.ap-face_with_thermometer {\n  background-position: -640px -60px; }\n\n.ap-nerd_face {\n  background-position: -640px -80px; }\n\n.ap-thinking_face {\n  background-position: -640px -100px; }\n\n.ap-face_with_head_bandage {\n  background-position: -640px -120px; }\n\n.ap-robot_face {\n  background-position: -640px -140px; }\n\n.ap-hugging_face {\n  background-position: -640px -160px; }\n\n.ap-the_horns {\n  background-position: -640px -180px; }\n\n.ap-crab {\n  background-position: -640px -300px; }\n\n.ap-lion_face {\n  background-position: -640px -320px; }\n\n.ap-scorpion {\n  background-position: -640px -340px; }\n\n.ap-turkey {\n  background-position: -640px -360px; }\n\n.ap-unicorn_face {\n  background-position: -640px -380px; }\n\n.ap-cheese_wedge {\n  background-position: -640px -400px; }\n\n.ap-hash {\n  background-position: -640px -420px; }\n\n.ap-keycap_star {\n  background-position: -640px -440px; }\n\n.ap-zero {\n  background-position: -640px -460px; }\n\n.ap-one {\n  background-position: -640px -480px; }\n\n.ap-two {\n  background-position: -640px -500px; }\n\n.ap-three {\n  background-position: -640px -520px; }\n\n.ap-four {\n  background-position: -640px -540px; }\n\n.ap-five {\n  background-position: -640px -560px; }\n\n.ap-six {\n  background-position: -640px -580px; }\n\n.ap-seven {\n  background-position: -640px -600px; }\n\n.ap-eight {\n  background-position: -640px -620px; }\n\n.ap-nine {\n  background-position: -640px -640px; }\n\n.ap-flag-ac {\n  background-position: -640px -660px; }\n\n.ap-flag-ad {\n  background-position: -640px -680px; }\n\n.ap-flag-ae {\n  background-position: -640px -700px; }\n\n.ap-flag-af {\n  background-position: -640px -720px; }\n\n.ap-flag-ag {\n  background-position: -640px -740px; }\n\n.ap-flag-ai {\n  background-position: -640px -760px; }\n\n.ap-flag-al {\n  background-position: -640px -780px; }\n\n.ap-flag-am {\n  background-position: -640px -800px; }\n\n.ap-flag-ao {\n  background-position: -660px -0px; }\n\n.ap-flag-aq {\n  background-position: -660px -20px; }\n\n.ap-flag-ar {\n  background-position: -660px -40px; }\n\n.ap-flag-as {\n  background-position: -660px -60px; }\n\n.ap-flag-at {\n  background-position: -660px -80px; }\n\n.ap-flag-au {\n  background-position: -660px -100px; }\n\n.ap-flag-aw {\n  background-position: -660px -120px; }\n\n.ap-flag-ax {\n  background-position: -660px -140px; }\n\n.ap-flag-az {\n  background-position: -660px -160px; }\n\n.ap-flag-ba {\n  background-position: -660px -180px; }\n\n.ap-flag-bb {\n  background-position: -660px -200px; }\n\n.ap-flag-bd {\n  background-position: -660px -220px; }\n\n.ap-flag-be {\n  background-position: -660px -240px; }\n\n.ap-flag-bf {\n  background-position: -660px -260px; }\n\n.ap-flag-bg {\n  background-position: -660px -280px; }\n\n.ap-flag-bh {\n  background-position: -660px -300px; }\n\n.ap-flag-bi {\n  background-position: -660px -320px; }\n\n.ap-flag-bj {\n  background-position: -660px -340px; }\n\n.ap-flag-bl {\n  background-position: -660px -360px; }\n\n.ap-flag-bm {\n  background-position: -660px -380px; }\n\n.ap-flag-bn {\n  background-position: -660px -400px; }\n\n.ap-flag-bo {\n  background-position: -660px -420px; }\n\n.ap-flag-bq {\n  background-position: -660px -440px; }\n\n.ap-flag-br {\n  background-position: -660px -460px; }\n\n.ap-flag-bs {\n  background-position: -660px -480px; }\n\n.ap-flag-bt {\n  background-position: -660px -500px; }\n\n.ap-flag-bv {\n  background-position: -660px -520px; }\n\n.ap-flag-bw {\n  background-position: -660px -540px; }\n\n.ap-flag-by {\n  background-position: -660px -560px; }\n\n.ap-flag-bz {\n  background-position: -660px -580px; }\n\n.ap-flag-ca {\n  background-position: -660px -600px; }\n\n.ap-flag-cc {\n  background-position: -660px -620px; }\n\n.ap-flag-cd {\n  background-position: -660px -640px; }\n\n.ap-flag-cf {\n  background-position: -660px -660px; }\n\n.ap-flag-cg {\n  background-position: -660px -680px; }\n\n.ap-flag-ch {\n  background-position: -660px -700px; }\n\n.ap-flag-ci {\n  background-position: -660px -720px; }\n\n.ap-flag-ck {\n  background-position: -660px -740px; }\n\n.ap-flag-cl {\n  background-position: -660px -760px; }\n\n.ap-flag-cm {\n  background-position: -660px -780px; }\n\n.ap-flag-cn {\n  background-position: -660px -800px; }\n\n.ap-flag-co {\n  background-position: -680px -0px; }\n\n.ap-flag-cp {\n  background-position: -680px -20px; }\n\n.ap-flag-cr {\n  background-position: -680px -40px; }\n\n.ap-flag-cu {\n  background-position: -680px -60px; }\n\n.ap-flag-cv {\n  background-position: -680px -80px; }\n\n.ap-flag-cw {\n  background-position: -680px -100px; }\n\n.ap-flag-cx {\n  background-position: -680px -120px; }\n\n.ap-flag-cy {\n  background-position: -680px -140px; }\n\n.ap-flag-cz {\n  background-position: -680px -160px; }\n\n.ap-flag-de {\n  background-position: -680px -180px; }\n\n.ap-flag-dg {\n  background-position: -680px -200px; }\n\n.ap-flag-dj {\n  background-position: -680px -220px; }\n\n.ap-flag-dk {\n  background-position: -680px -240px; }\n\n.ap-flag-dm {\n  background-position: -680px -260px; }\n\n.ap-flag-do {\n  background-position: -680px -280px; }\n\n.ap-flag-dz {\n  background-position: -680px -300px; }\n\n.ap-flag-ea {\n  background-position: -680px -320px; }\n\n.ap-flag-ec {\n  background-position: -680px -340px; }\n\n.ap-flag-ee {\n  background-position: -680px -360px; }\n\n.ap-flag-eg {\n  background-position: -680px -380px; }\n\n.ap-flag-eh {\n  background-position: -680px -400px; }\n\n.ap-flag-er {\n  background-position: -680px -420px; }\n\n.ap-flag-es {\n  background-position: -680px -440px; }\n\n.ap-flag-et {\n  background-position: -680px -460px; }\n\n.ap-flag-eu {\n  background-position: -680px -480px; }\n\n.ap-flag-fi {\n  background-position: -680px -500px; }\n\n.ap-flag-fj {\n  background-position: -680px -520px; }\n\n.ap-flag-fk {\n  background-position: -680px -540px; }\n\n.ap-flag-fm {\n  background-position: -680px -560px; }\n\n.ap-flag-fo {\n  background-position: -680px -580px; }\n\n.ap-flag-fr {\n  background-position: -680px -600px; }\n\n.ap-flag-ga {\n  background-position: -680px -620px; }\n\n.ap-flag-gb {\n  background-position: -680px -640px; }\n\n.ap-flag-gd {\n  background-position: -680px -660px; }\n\n.ap-flag-ge {\n  background-position: -680px -680px; }\n\n.ap-flag-gf {\n  background-position: -680px -700px; }\n\n.ap-flag-gg {\n  background-position: -680px -720px; }\n\n.ap-flag-gh {\n  background-position: -680px -740px; }\n\n.ap-flag-gi {\n  background-position: -680px -760px; }\n\n.ap-flag-gl {\n  background-position: -680px -780px; }\n\n.ap-flag-gm {\n  background-position: -680px -800px; }\n\n.ap-flag-gn {\n  background-position: -700px -0px; }\n\n.ap-flag-gp {\n  background-position: -700px -20px; }\n\n.ap-flag-gq {\n  background-position: -700px -40px; }\n\n.ap-flag-gr {\n  background-position: -700px -60px; }\n\n.ap-flag-gs {\n  background-position: -700px -80px; }\n\n.ap-flag-gt {\n  background-position: -700px -100px; }\n\n.ap-flag-gu {\n  background-position: -700px -120px; }\n\n.ap-flag-gw {\n  background-position: -700px -140px; }\n\n.ap-flag-gy {\n  background-position: -700px -160px; }\n\n.ap-flag-hk {\n  background-position: -700px -180px; }\n\n.ap-flag-hm {\n  background-position: -700px -200px; }\n\n.ap-flag-hn {\n  background-position: -700px -220px; }\n\n.ap-flag-hr {\n  background-position: -700px -240px; }\n\n.ap-flag-ht {\n  background-position: -700px -260px; }\n\n.ap-flag-hu {\n  background-position: -700px -280px; }\n\n.ap-flag-ic {\n  background-position: -700px -300px; }\n\n.ap-flag-id {\n  background-position: -700px -320px; }\n\n.ap-flag-ie {\n  background-position: -700px -340px; }\n\n.ap-flag-il {\n  background-position: -700px -360px; }\n\n.ap-flag-im {\n  background-position: -700px -380px; }\n\n.ap-flag-in {\n  background-position: -700px -400px; }\n\n.ap-flag-io {\n  background-position: -700px -420px; }\n\n.ap-flag-iq {\n  background-position: -700px -440px; }\n\n.ap-flag-ir {\n  background-position: -700px -460px; }\n\n.ap-flag-is {\n  background-position: -700px -480px; }\n\n.ap-flag-it {\n  background-position: -700px -500px; }\n\n.ap-flag-je {\n  background-position: -700px -520px; }\n\n.ap-flag-jm {\n  background-position: -700px -540px; }\n\n.ap-flag-jo {\n  background-position: -700px -560px; }\n\n.ap-flag-jp {\n  background-position: -700px -580px; }\n\n.ap-flag-ke {\n  background-position: -700px -600px; }\n\n.ap-flag-kg {\n  background-position: -700px -620px; }\n\n.ap-flag-kh {\n  background-position: -700px -640px; }\n\n.ap-flag-ki {\n  background-position: -700px -660px; }\n\n.ap-flag-km {\n  background-position: -700px -680px; }\n\n.ap-flag-kn {\n  background-position: -700px -700px; }\n\n.ap-flag-kp {\n  background-position: -700px -720px; }\n\n.ap-flag-kr {\n  background-position: -700px -740px; }\n\n.ap-flag-kw {\n  background-position: -700px -760px; }\n\n.ap-flag-ky {\n  background-position: -700px -780px; }\n\n.ap-flag-kz {\n  background-position: -700px -800px; }\n\n.ap-flag-la {\n  background-position: -720px -0px; }\n\n.ap-flag-lb {\n  background-position: -720px -20px; }\n\n.ap-flag-lc {\n  background-position: -720px -40px; }\n\n.ap-flag-li {\n  background-position: -720px -60px; }\n\n.ap-flag-lk {\n  background-position: -720px -80px; }\n\n.ap-flag-lr {\n  background-position: -720px -100px; }\n\n.ap-flag-ls {\n  background-position: -720px -120px; }\n\n.ap-flag-lt {\n  background-position: -720px -140px; }\n\n.ap-flag-lu {\n  background-position: -720px -160px; }\n\n.ap-flag-lv {\n  background-position: -720px -180px; }\n\n.ap-flag-ly {\n  background-position: -720px -200px; }\n\n.ap-flag-ma {\n  background-position: -720px -220px; }\n\n.ap-flag-mc {\n  background-position: -720px -240px; }\n\n.ap-flag-md {\n  background-position: -720px -260px; }\n\n.ap-flag-me {\n  background-position: -720px -280px; }\n\n.ap-flag-mf {\n  background-position: -720px -300px; }\n\n.ap-flag-mg {\n  background-position: -720px -320px; }\n\n.ap-flag-mh {\n  background-position: -720px -340px; }\n\n.ap-flag-mk {\n  background-position: -720px -360px; }\n\n.ap-flag-ml {\n  background-position: -720px -380px; }\n\n.ap-flag-mm {\n  background-position: -720px -400px; }\n\n.ap-flag-mn {\n  background-position: -720px -420px; }\n\n.ap-flag-mo {\n  background-position: -720px -440px; }\n\n.ap-flag-mp {\n  background-position: -720px -460px; }\n\n.ap-flag-mq {\n  background-position: -720px -480px; }\n\n.ap-flag-mr {\n  background-position: -720px -500px; }\n\n.ap-flag-ms {\n  background-position: -720px -520px; }\n\n.ap-flag-mt {\n  background-position: -720px -540px; }\n\n.ap-flag-mu {\n  background-position: -720px -560px; }\n\n.ap-flag-mv {\n  background-position: -720px -580px; }\n\n.ap-flag-mw {\n  background-position: -720px -600px; }\n\n.ap-flag-mx {\n  background-position: -720px -620px; }\n\n.ap-flag-my {\n  background-position: -720px -640px; }\n\n.ap-flag-mz {\n  background-position: -720px -660px; }\n\n.ap-flag-na {\n  background-position: -720px -680px; }\n\n.ap-flag-nc {\n  background-position: -720px -700px; }\n\n.ap-flag-ne {\n  background-position: -720px -720px; }\n\n.ap-flag-nf {\n  background-position: -720px -740px; }\n\n.ap-flag-ng {\n  background-position: -720px -760px; }\n\n.ap-flag-ni {\n  background-position: -720px -780px; }\n\n.ap-flag-nl {\n  background-position: -720px -800px; }\n\n.ap-flag-no {\n  background-position: -740px -0px; }\n\n.ap-flag-np {\n  background-position: -740px -20px; }\n\n.ap-flag-nr {\n  background-position: -740px -40px; }\n\n.ap-flag-nu {\n  background-position: -740px -60px; }\n\n.ap-flag-nz {\n  background-position: -740px -80px; }\n\n.ap-flag-om {\n  background-position: -740px -100px; }\n\n.ap-flag-pa {\n  background-position: -740px -120px; }\n\n.ap-flag-pe {\n  background-position: -740px -140px; }\n\n.ap-flag-pf {\n  background-position: -740px -160px; }\n\n.ap-flag-pg {\n  background-position: -740px -180px; }\n\n.ap-flag-ph {\n  background-position: -740px -200px; }\n\n.ap-flag-pk {\n  background-position: -740px -220px; }\n\n.ap-flag-pl {\n  background-position: -740px -240px; }\n\n.ap-flag-pm {\n  background-position: -740px -260px; }\n\n.ap-flag-pn {\n  background-position: -740px -280px; }\n\n.ap-flag-pr {\n  background-position: -740px -300px; }\n\n.ap-flag-ps {\n  background-position: -740px -320px; }\n\n.ap-flag-pt {\n  background-position: -740px -340px; }\n\n.ap-flag-pw {\n  background-position: -740px -360px; }\n\n.ap-flag-py {\n  background-position: -740px -380px; }\n\n.ap-flag-qa {\n  background-position: -740px -400px; }\n\n.ap-flag-re {\n  background-position: -740px -420px; }\n\n.ap-flag-ro {\n  background-position: -740px -440px; }\n\n.ap-flag-rs {\n  background-position: -740px -460px; }\n\n.ap-flag-ru {\n  background-position: -740px -480px; }\n\n.ap-flag-rw {\n  background-position: -740px -500px; }\n\n.ap-flag-sa {\n  background-position: -740px -520px; }\n\n.ap-flag-sb {\n  background-position: -740px -540px; }\n\n.ap-flag-sc {\n  background-position: -740px -560px; }\n\n.ap-flag-sd {\n  background-position: -740px -580px; }\n\n.ap-flag-se {\n  background-position: -740px -600px; }\n\n.ap-flag-sg {\n  background-position: -740px -620px; }\n\n.ap-flag-sh {\n  background-position: -740px -640px; }\n\n.ap-flag-si {\n  background-position: -740px -660px; }\n\n.ap-flag-sj {\n  background-position: -740px -680px; }\n\n.ap-flag-sk {\n  background-position: -740px -700px; }\n\n.ap-flag-sl {\n  background-position: -740px -720px; }\n\n.ap-flag-sm {\n  background-position: -740px -740px; }\n\n.ap-flag-sn {\n  background-position: -740px -760px; }\n\n.ap-flag-so {\n  background-position: -740px -780px; }\n\n.ap-flag-sr {\n  background-position: -740px -800px; }\n\n.ap-flag-ss {\n  background-position: -760px -0px; }\n\n.ap-flag-st {\n  background-position: -760px -20px; }\n\n.ap-flag-sv {\n  background-position: -760px -40px; }\n\n.ap-flag-sx {\n  background-position: -760px -60px; }\n\n.ap-flag-sy {\n  background-position: -760px -80px; }\n\n.ap-flag-sz {\n  background-position: -760px -100px; }\n\n.ap-flag-ta {\n  background-position: -760px -120px; }\n\n.ap-flag-tc {\n  background-position: -760px -140px; }\n\n.ap-flag-td {\n  background-position: -760px -160px; }\n\n.ap-flag-tf {\n  background-position: -760px -180px; }\n\n.ap-flag-tg {\n  background-position: -760px -200px; }\n\n.ap-flag-th {\n  background-position: -760px -220px; }\n\n.ap-flag-tj {\n  background-position: -760px -240px; }\n\n.ap-flag-tk {\n  background-position: -760px -260px; }\n\n.ap-flag-tl {\n  background-position: -760px -280px; }\n\n.ap-flag-tm {\n  background-position: -760px -300px; }\n\n.ap-flag-tn {\n  background-position: -760px -320px; }\n\n.ap-flag-to {\n  background-position: -760px -340px; }\n\n.ap-flag-tr {\n  background-position: -760px -360px; }\n\n.ap-flag-tt {\n  background-position: -760px -380px; }\n\n.ap-flag-tv {\n  background-position: -760px -400px; }\n\n.ap-flag-tw {\n  background-position: -760px -420px; }\n\n.ap-flag-tz {\n  background-position: -760px -440px; }\n\n.ap-flag-ua {\n  background-position: -760px -460px; }\n\n.ap-flag-ug {\n  background-position: -760px -480px; }\n\n.ap-flag-um {\n  background-position: -760px -500px; }\n\n.ap-flag-us {\n  background-position: -760px -520px; }\n\n.ap-flag-uy {\n  background-position: -760px -540px; }\n\n.ap-flag-uz {\n  background-position: -760px -560px; }\n\n.ap-flag-va {\n  background-position: -760px -580px; }\n\n.ap-flag-vc {\n  background-position: -760px -600px; }\n\n.ap-flag-ve {\n  background-position: -760px -620px; }\n\n.ap-flag-vg {\n  background-position: -760px -640px; }\n\n.ap-flag-vi {\n  background-position: -760px -660px; }\n\n.ap-flag-vn {\n  background-position: -760px -680px; }\n\n.ap-flag-vu {\n  background-position: -760px -700px; }\n\n.ap-flag-wf {\n  background-position: -760px -720px; }\n\n.ap-flag-ws {\n  background-position: -760px -740px; }\n\n.ap-flag-xk {\n  background-position: -760px -760px; }\n\n.ap-flag-ye {\n  background-position: -760px -780px; }\n\n.ap-flag-yt {\n  background-position: -760px -800px; }\n\n.ap-flag-za {\n  background-position: -780px -0px; }\n\n.ap-flag-zm {\n  background-position: -780px -20px; }\n\n.ap-flag-zw {\n  background-position: -780px -40px; }\n\n.ap-man-man-boy {\n  background-position: -780px -60px; }\n\n.ap-man-man-boy-boy {\n  background-position: -780px -80px; }\n\n.ap-man-man-girl {\n  background-position: -780px -100px; }\n\n.ap-man-man-girl-boy {\n  background-position: -780px -120px; }\n\n.ap-man-man-girl-girl {\n  background-position: -780px -140px; }\n\n.ap-man-woman-boy-boy {\n  background-position: -780px -160px; }\n\n.ap-man-woman-girl {\n  background-position: -780px -180px; }\n\n.ap-man-woman-girl-boy {\n  background-position: -780px -200px; }\n\n.ap-man-woman-girl-girl {\n  background-position: -780px -220px; }\n\n.ap-man-heart-man {\n  background-position: -780px -240px; }\n\n.ap-man-kiss-man {\n  background-position: -780px -260px; }\n\n.ap-woman-woman-boy {\n  background-position: -780px -280px; }\n\n.ap-woman-woman-boy-boy {\n  background-position: -780px -300px; }\n\n.ap-woman-woman-girl {\n  background-position: -780px -320px; }\n\n.ap-woman-woman-girl-boy {\n  background-position: -780px -340px; }\n\n.ap-woman-woman-girl-girl {\n  background-position: -780px -360px; }\n\n.ap-woman-heart-woman {\n  background-position: -780px -380px; }\n\n.ap-woman-kiss-woman {\n  background-position: -780px -400px; }\n\n.ap-beach_umbrella {\n  background-position: -40px -620px; }\n\n.ap-telephone {\n  background-position: -20px -100px; }\n", ""]);
 
 // exports
 
@@ -39048,7 +39045,7 @@ exports = module.exports = __webpack_require__(16)(undefined);
 
 
 // module
-exports.push([module.i, "/*!\n * Quill Editor v1.3.4\n * https://quilljs.com/\n * Copyright (c) 2014, Jason Chen\n * Copyright (c) 2013, salesforce.com\n */\n.ql-container {\n  box-sizing: border-box;\n  font-family: Helvetica, Arial, sans-serif;\n  font-size: 13px;\n  height: 100%;\n  margin: 0px;\n  position: relative;\n}\n.ql-container.ql-disabled .ql-tooltip {\n  visibility: hidden;\n}\n.ql-container.ql-disabled .ql-editor ul[data-checked] > li::before {\n  pointer-events: none;\n}\n.ql-clipboard {\n  left: -100000px;\n  height: 1px;\n  overflow-y: hidden;\n  position: absolute;\n  top: 50%;\n}\n.ql-clipboard p {\n  margin: 0;\n  padding: 0;\n}\n.ql-editor {\n  box-sizing: border-box;\n  line-height: 1.42;\n  height: 100%;\n  outline: none;\n  overflow-y: auto;\n  padding: 12px 15px;\n  tab-size: 4;\n  -moz-tab-size: 4;\n  text-align: left;\n  white-space: pre-wrap;\n  word-wrap: break-word;\n}\n.ql-editor > * {\n  cursor: text;\n}\n.ql-editor p,\n.ql-editor ol,\n.ql-editor ul,\n.ql-editor pre,\n.ql-editor blockquote,\n.ql-editor h1,\n.ql-editor h2,\n.ql-editor h3,\n.ql-editor h4,\n.ql-editor h5,\n.ql-editor h6 {\n  margin: 0;\n  padding: 0;\n  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol,\n.ql-editor ul {\n  padding-left: 1.5em;\n}\n.ql-editor ol > li,\n.ql-editor ul > li {\n  list-style-type: none;\n}\n.ql-editor ul > li::before {\n  content: '\\2022';\n}\n.ql-editor ul[data-checked=true],\n.ql-editor ul[data-checked=false] {\n  pointer-events: none;\n}\n.ql-editor ul[data-checked=true] > li *,\n.ql-editor ul[data-checked=false] > li * {\n  pointer-events: all;\n}\n.ql-editor ul[data-checked=true] > li::before,\n.ql-editor ul[data-checked=false] > li::before {\n  color: #777;\n  cursor: pointer;\n  pointer-events: all;\n}\n.ql-editor ul[data-checked=true] > li::before {\n  content: '\\2611';\n}\n.ql-editor ul[data-checked=false] > li::before {\n  content: '\\2610';\n}\n.ql-editor li::before {\n  display: inline-block;\n  white-space: nowrap;\n  width: 1.2em;\n}\n.ql-editor li:not(.ql-direction-rtl)::before {\n  margin-left: -1.5em;\n  margin-right: 0.3em;\n  text-align: right;\n}\n.ql-editor li.ql-direction-rtl::before {\n  margin-left: 0.3em;\n  margin-right: -1.5em;\n}\n.ql-editor ol li:not(.ql-direction-rtl),\n.ql-editor ul li:not(.ql-direction-rtl) {\n  padding-left: 1.5em;\n}\n.ql-editor ol li.ql-direction-rtl,\n.ql-editor ul li.ql-direction-rtl {\n  padding-right: 1.5em;\n}\n.ql-editor ol li {\n  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n  counter-increment: list-0;\n}\n.ql-editor ol li:before {\n  content: counter(list-0, decimal) '. ';\n}\n.ql-editor ol li.ql-indent-1 {\n  counter-increment: list-1;\n}\n.ql-editor ol li.ql-indent-1:before {\n  content: counter(list-1, lower-alpha) '. ';\n}\n.ql-editor ol li.ql-indent-1 {\n  counter-reset: list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-2 {\n  counter-increment: list-2;\n}\n.ql-editor ol li.ql-indent-2:before {\n  content: counter(list-2, lower-roman) '. ';\n}\n.ql-editor ol li.ql-indent-2 {\n  counter-reset: list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-3 {\n  counter-increment: list-3;\n}\n.ql-editor ol li.ql-indent-3:before {\n  content: counter(list-3, decimal) '. ';\n}\n.ql-editor ol li.ql-indent-3 {\n  counter-reset: list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-4 {\n  counter-increment: list-4;\n}\n.ql-editor ol li.ql-indent-4:before {\n  content: counter(list-4, lower-alpha) '. ';\n}\n.ql-editor ol li.ql-indent-4 {\n  counter-reset: list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-5 {\n  counter-increment: list-5;\n}\n.ql-editor ol li.ql-indent-5:before {\n  content: counter(list-5, lower-roman) '. ';\n}\n.ql-editor ol li.ql-indent-5 {\n  counter-reset: list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-6 {\n  counter-increment: list-6;\n}\n.ql-editor ol li.ql-indent-6:before {\n  content: counter(list-6, decimal) '. ';\n}\n.ql-editor ol li.ql-indent-6 {\n  counter-reset: list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-7 {\n  counter-increment: list-7;\n}\n.ql-editor ol li.ql-indent-7:before {\n  content: counter(list-7, lower-alpha) '. ';\n}\n.ql-editor ol li.ql-indent-7 {\n  counter-reset: list-8 list-9;\n}\n.ql-editor ol li.ql-indent-8 {\n  counter-increment: list-8;\n}\n.ql-editor ol li.ql-indent-8:before {\n  content: counter(list-8, lower-roman) '. ';\n}\n.ql-editor ol li.ql-indent-8 {\n  counter-reset: list-9;\n}\n.ql-editor ol li.ql-indent-9 {\n  counter-increment: list-9;\n}\n.ql-editor ol li.ql-indent-9:before {\n  content: counter(list-9, decimal) '. ';\n}\n.ql-editor .ql-indent-1:not(.ql-direction-rtl) {\n  padding-left: 3em;\n}\n.ql-editor li.ql-indent-1:not(.ql-direction-rtl) {\n  padding-left: 4.5em;\n}\n.ql-editor .ql-indent-1.ql-direction-rtl.ql-align-right {\n  padding-right: 3em;\n}\n.ql-editor li.ql-indent-1.ql-direction-rtl.ql-align-right {\n  padding-right: 4.5em;\n}\n.ql-editor .ql-indent-2:not(.ql-direction-rtl) {\n  padding-left: 6em;\n}\n.ql-editor li.ql-indent-2:not(.ql-direction-rtl) {\n  padding-left: 7.5em;\n}\n.ql-editor .ql-indent-2.ql-direction-rtl.ql-align-right {\n  padding-right: 6em;\n}\n.ql-editor li.ql-indent-2.ql-direction-rtl.ql-align-right {\n  padding-right: 7.5em;\n}\n.ql-editor .ql-indent-3:not(.ql-direction-rtl) {\n  padding-left: 9em;\n}\n.ql-editor li.ql-indent-3:not(.ql-direction-rtl) {\n  padding-left: 10.5em;\n}\n.ql-editor .ql-indent-3.ql-direction-rtl.ql-align-right {\n  padding-right: 9em;\n}\n.ql-editor li.ql-indent-3.ql-direction-rtl.ql-align-right {\n  padding-right: 10.5em;\n}\n.ql-editor .ql-indent-4:not(.ql-direction-rtl) {\n  padding-left: 12em;\n}\n.ql-editor li.ql-indent-4:not(.ql-direction-rtl) {\n  padding-left: 13.5em;\n}\n.ql-editor .ql-indent-4.ql-direction-rtl.ql-align-right {\n  padding-right: 12em;\n}\n.ql-editor li.ql-indent-4.ql-direction-rtl.ql-align-right {\n  padding-right: 13.5em;\n}\n.ql-editor .ql-indent-5:not(.ql-direction-rtl) {\n  padding-left: 15em;\n}\n.ql-editor li.ql-indent-5:not(.ql-direction-rtl) {\n  padding-left: 16.5em;\n}\n.ql-editor .ql-indent-5.ql-direction-rtl.ql-align-right {\n  padding-right: 15em;\n}\n.ql-editor li.ql-indent-5.ql-direction-rtl.ql-align-right {\n  padding-right: 16.5em;\n}\n.ql-editor .ql-indent-6:not(.ql-direction-rtl) {\n  padding-left: 18em;\n}\n.ql-editor li.ql-indent-6:not(.ql-direction-rtl) {\n  padding-left: 19.5em;\n}\n.ql-editor .ql-indent-6.ql-direction-rtl.ql-align-right {\n  padding-right: 18em;\n}\n.ql-editor li.ql-indent-6.ql-direction-rtl.ql-align-right {\n  padding-right: 19.5em;\n}\n.ql-editor .ql-indent-7:not(.ql-direction-rtl) {\n  padding-left: 21em;\n}\n.ql-editor li.ql-indent-7:not(.ql-direction-rtl) {\n  padding-left: 22.5em;\n}\n.ql-editor .ql-indent-7.ql-direction-rtl.ql-align-right {\n  padding-right: 21em;\n}\n.ql-editor li.ql-indent-7.ql-direction-rtl.ql-align-right {\n  padding-right: 22.5em;\n}\n.ql-editor .ql-indent-8:not(.ql-direction-rtl) {\n  padding-left: 24em;\n}\n.ql-editor li.ql-indent-8:not(.ql-direction-rtl) {\n  padding-left: 25.5em;\n}\n.ql-editor .ql-indent-8.ql-direction-rtl.ql-align-right {\n  padding-right: 24em;\n}\n.ql-editor li.ql-indent-8.ql-direction-rtl.ql-align-right {\n  padding-right: 25.5em;\n}\n.ql-editor .ql-indent-9:not(.ql-direction-rtl) {\n  padding-left: 27em;\n}\n.ql-editor li.ql-indent-9:not(.ql-direction-rtl) {\n  padding-left: 28.5em;\n}\n.ql-editor .ql-indent-9.ql-direction-rtl.ql-align-right {\n  padding-right: 27em;\n}\n.ql-editor li.ql-indent-9.ql-direction-rtl.ql-align-right {\n  padding-right: 28.5em;\n}\n.ql-editor .ql-video {\n  display: block;\n  max-width: 100%;\n}\n.ql-editor .ql-video.ql-align-center {\n  margin: 0 auto;\n}\n.ql-editor .ql-video.ql-align-right {\n  margin: 0 0 0 auto;\n}\n.ql-editor .ql-bg-black {\n  background-color: #000;\n}\n.ql-editor .ql-bg-red {\n  background-color: #e60000;\n}\n.ql-editor .ql-bg-orange {\n  background-color: #f90;\n}\n.ql-editor .ql-bg-yellow {\n  background-color: #ff0;\n}\n.ql-editor .ql-bg-green {\n  background-color: #008a00;\n}\n.ql-editor .ql-bg-blue {\n  background-color: #06c;\n}\n.ql-editor .ql-bg-purple {\n  background-color: #93f;\n}\n.ql-editor .ql-color-white {\n  color: #fff;\n}\n.ql-editor .ql-color-red {\n  color: #e60000;\n}\n.ql-editor .ql-color-orange {\n  color: #f90;\n}\n.ql-editor .ql-color-yellow {\n  color: #ff0;\n}\n.ql-editor .ql-color-green {\n  color: #008a00;\n}\n.ql-editor .ql-color-blue {\n  color: #06c;\n}\n.ql-editor .ql-color-purple {\n  color: #93f;\n}\n.ql-editor .ql-font-serif {\n  font-family: Georgia, Times New Roman, serif;\n}\n.ql-editor .ql-font-monospace {\n  font-family: Monaco, Courier New, monospace;\n}\n.ql-editor .ql-size-small {\n  font-size: 0.75em;\n}\n.ql-editor .ql-size-large {\n  font-size: 1.5em;\n}\n.ql-editor .ql-size-huge {\n  font-size: 2.5em;\n}\n.ql-editor .ql-direction-rtl {\n  direction: rtl;\n  text-align: inherit;\n}\n.ql-editor .ql-align-center {\n  text-align: center;\n}\n.ql-editor .ql-align-justify {\n  text-align: justify;\n}\n.ql-editor .ql-align-right {\n  text-align: right;\n}\n.ql-editor.ql-blank::before {\n  color: rgba(0,0,0,0.6);\n  content: attr(data-placeholder);\n  font-style: italic;\n  left: 15px;\n  pointer-events: none;\n  position: absolute;\n  right: 15px;\n}\n.ql-snow.ql-toolbar:after,\n.ql-snow .ql-toolbar:after {\n  clear: both;\n  content: '';\n  display: table;\n}\n.ql-snow.ql-toolbar button,\n.ql-snow .ql-toolbar button {\n  background: none;\n  border: none;\n  cursor: pointer;\n  display: inline-block;\n  float: left;\n  height: 24px;\n  padding: 3px 5px;\n  width: 28px;\n}\n.ql-snow.ql-toolbar button svg,\n.ql-snow .ql-toolbar button svg {\n  float: left;\n  height: 100%;\n}\n.ql-snow.ql-toolbar button:active:hover,\n.ql-snow .ql-toolbar button:active:hover {\n  outline: none;\n}\n.ql-snow.ql-toolbar input.ql-image[type=file],\n.ql-snow .ql-toolbar input.ql-image[type=file] {\n  display: none;\n}\n.ql-snow.ql-toolbar button:hover,\n.ql-snow .ql-toolbar button:hover,\n.ql-snow.ql-toolbar button:focus,\n.ql-snow .ql-toolbar button:focus,\n.ql-snow.ql-toolbar button.ql-active,\n.ql-snow .ql-toolbar button.ql-active,\n.ql-snow.ql-toolbar .ql-picker-label:hover,\n.ql-snow .ql-toolbar .ql-picker-label:hover,\n.ql-snow.ql-toolbar .ql-picker-label.ql-active,\n.ql-snow .ql-toolbar .ql-picker-label.ql-active,\n.ql-snow.ql-toolbar .ql-picker-item:hover,\n.ql-snow .ql-toolbar .ql-picker-item:hover,\n.ql-snow.ql-toolbar .ql-picker-item.ql-selected,\n.ql-snow .ql-toolbar .ql-picker-item.ql-selected {\n  color: #06c;\n}\n.ql-snow.ql-toolbar button:hover .ql-fill,\n.ql-snow .ql-toolbar button:hover .ql-fill,\n.ql-snow.ql-toolbar button:focus .ql-fill,\n.ql-snow .ql-toolbar button:focus .ql-fill,\n.ql-snow.ql-toolbar button.ql-active .ql-fill,\n.ql-snow .ql-toolbar button.ql-active .ql-fill,\n.ql-snow.ql-toolbar .ql-picker-label:hover .ql-fill,\n.ql-snow .ql-toolbar .ql-picker-label:hover .ql-fill,\n.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-fill,\n.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-fill,\n.ql-snow.ql-toolbar .ql-picker-item:hover .ql-fill,\n.ql-snow .ql-toolbar .ql-picker-item:hover .ql-fill,\n.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-fill,\n.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-fill,\n.ql-snow.ql-toolbar button:hover .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar button:hover .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar button:focus .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar button:focus .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar button.ql-active .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar button.ql-active .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill {\n  fill: #06c;\n}\n.ql-snow.ql-toolbar button:hover .ql-stroke,\n.ql-snow .ql-toolbar button:hover .ql-stroke,\n.ql-snow.ql-toolbar button:focus .ql-stroke,\n.ql-snow .ql-toolbar button:focus .ql-stroke,\n.ql-snow.ql-toolbar button.ql-active .ql-stroke,\n.ql-snow .ql-toolbar button.ql-active .ql-stroke,\n.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke,\n.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke,\n.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,\n.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke,\n.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke,\n.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke,\n.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke,\n.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke,\n.ql-snow.ql-toolbar button:hover .ql-stroke-miter,\n.ql-snow .ql-toolbar button:hover .ql-stroke-miter,\n.ql-snow.ql-toolbar button:focus .ql-stroke-miter,\n.ql-snow .ql-toolbar button:focus .ql-stroke-miter,\n.ql-snow.ql-toolbar button.ql-active .ql-stroke-miter,\n.ql-snow .ql-toolbar button.ql-active .ql-stroke-miter,\n.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke-miter,\n.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke-miter,\n.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,\n.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,\n.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke-miter,\n.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,\n.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,\n.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter {\n  stroke: #06c;\n}\n@media (pointer: coarse) {\n  .ql-snow.ql-toolbar button:hover:not(.ql-active),\n  .ql-snow .ql-toolbar button:hover:not(.ql-active) {\n    color: #444;\n  }\n  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-fill,\n  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-fill,\n  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill,\n  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill {\n    fill: #444;\n  }\n  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke,\n  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke,\n  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter,\n  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter {\n    stroke: #444;\n  }\n}\n.ql-snow {\n  box-sizing: border-box;\n}\n.ql-snow * {\n  box-sizing: border-box;\n}\n.ql-snow .ql-hidden {\n  display: none;\n}\n.ql-snow .ql-out-bottom,\n.ql-snow .ql-out-top {\n  visibility: hidden;\n}\n.ql-snow .ql-tooltip {\n  position: absolute;\n  -ms-transform: translateY(10px);\n      transform: translateY(10px);\n}\n.ql-snow .ql-tooltip a {\n  cursor: pointer;\n  text-decoration: none;\n}\n.ql-snow .ql-tooltip.ql-flip {\n  -ms-transform: translateY(-10px);\n      transform: translateY(-10px);\n}\n.ql-snow .ql-formats {\n  display: inline-block;\n  vertical-align: middle;\n}\n.ql-snow .ql-formats:after {\n  clear: both;\n  content: '';\n  display: table;\n}\n.ql-snow .ql-stroke {\n  fill: none;\n  stroke: #444;\n  stroke-linecap: round;\n  stroke-linejoin: round;\n  stroke-width: 2;\n}\n.ql-snow .ql-stroke-miter {\n  fill: none;\n  stroke: #444;\n  stroke-miterlimit: 10;\n  stroke-width: 2;\n}\n.ql-snow .ql-fill,\n.ql-snow .ql-stroke.ql-fill {\n  fill: #444;\n}\n.ql-snow .ql-empty {\n  fill: none;\n}\n.ql-snow .ql-even {\n  fill-rule: evenodd;\n}\n.ql-snow .ql-thin,\n.ql-snow .ql-stroke.ql-thin {\n  stroke-width: 1;\n}\n.ql-snow .ql-transparent {\n  opacity: 0.4;\n}\n.ql-snow .ql-direction svg:last-child {\n  display: none;\n}\n.ql-snow .ql-direction.ql-active svg:last-child {\n  display: inline;\n}\n.ql-snow .ql-direction.ql-active svg:first-child {\n  display: none;\n}\n.ql-snow .ql-editor h1 {\n  font-size: 2em;\n}\n.ql-snow .ql-editor h2 {\n  font-size: 1.5em;\n}\n.ql-snow .ql-editor h3 {\n  font-size: 1.17em;\n}\n.ql-snow .ql-editor h4 {\n  font-size: 1em;\n}\n.ql-snow .ql-editor h5 {\n  font-size: 0.83em;\n}\n.ql-snow .ql-editor h6 {\n  font-size: 0.67em;\n}\n.ql-snow .ql-editor a {\n  text-decoration: underline;\n}\n.ql-snow .ql-editor blockquote {\n  border-left: 4px solid #ccc;\n  margin-bottom: 5px;\n  margin-top: 5px;\n  padding-left: 16px;\n}\n.ql-snow .ql-editor code,\n.ql-snow .ql-editor pre {\n  background-color: #f0f0f0;\n  border-radius: 3px;\n}\n.ql-snow .ql-editor pre {\n  white-space: pre-wrap;\n  margin-bottom: 5px;\n  margin-top: 5px;\n  padding: 5px 10px;\n}\n.ql-snow .ql-editor code {\n  font-size: 85%;\n  padding: 2px 4px;\n}\n.ql-snow .ql-editor pre.ql-syntax {\n  background-color: #23241f;\n  color: #f8f8f2;\n  overflow: visible;\n}\n.ql-snow .ql-editor img {\n  max-width: 100%;\n}\n.ql-snow .ql-picker {\n  color: #444;\n  display: inline-block;\n  float: left;\n  font-size: 14px;\n  font-weight: 500;\n  height: 24px;\n  position: relative;\n  vertical-align: middle;\n}\n.ql-snow .ql-picker-label {\n  cursor: pointer;\n  display: inline-block;\n  height: 100%;\n  padding-left: 8px;\n  padding-right: 2px;\n  position: relative;\n  width: 100%;\n}\n.ql-snow .ql-picker-label::before {\n  display: inline-block;\n  line-height: 22px;\n}\n.ql-snow .ql-picker-options {\n  background-color: #fff;\n  display: none;\n  min-width: 100%;\n  padding: 4px 8px;\n  position: absolute;\n  white-space: nowrap;\n}\n.ql-snow .ql-picker-options .ql-picker-item {\n  cursor: pointer;\n  display: block;\n  padding-bottom: 5px;\n  padding-top: 5px;\n}\n.ql-snow .ql-picker.ql-expanded .ql-picker-label {\n  color: #ccc;\n  z-index: 2;\n}\n.ql-snow .ql-picker.ql-expanded .ql-picker-label .ql-fill {\n  fill: #ccc;\n}\n.ql-snow .ql-picker.ql-expanded .ql-picker-label .ql-stroke {\n  stroke: #ccc;\n}\n.ql-snow .ql-picker.ql-expanded .ql-picker-options {\n  display: block;\n  margin-top: -1px;\n  top: 100%;\n  z-index: 1;\n}\n.ql-snow .ql-color-picker,\n.ql-snow .ql-icon-picker {\n  width: 28px;\n}\n.ql-snow .ql-color-picker .ql-picker-label,\n.ql-snow .ql-icon-picker .ql-picker-label {\n  padding: 2px 4px;\n}\n.ql-snow .ql-color-picker .ql-picker-label svg,\n.ql-snow .ql-icon-picker .ql-picker-label svg {\n  right: 4px;\n}\n.ql-snow .ql-icon-picker .ql-picker-options {\n  padding: 4px 0px;\n}\n.ql-snow .ql-icon-picker .ql-picker-item {\n  height: 24px;\n  width: 24px;\n  padding: 2px 4px;\n}\n.ql-snow .ql-color-picker .ql-picker-options {\n  padding: 3px 5px;\n  width: 152px;\n}\n.ql-snow .ql-color-picker .ql-picker-item {\n  border: 1px solid transparent;\n  float: left;\n  height: 16px;\n  margin: 2px;\n  padding: 0px;\n  width: 16px;\n}\n.ql-snow .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) svg {\n  position: absolute;\n  margin-top: -9px;\n  right: 0;\n  top: 50%;\n  width: 18px;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-label]:not([data-label=''])::before,\n.ql-snow .ql-picker.ql-font .ql-picker-label[data-label]:not([data-label=''])::before,\n.ql-snow .ql-picker.ql-size .ql-picker-label[data-label]:not([data-label=''])::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-label]:not([data-label=''])::before,\n.ql-snow .ql-picker.ql-font .ql-picker-item[data-label]:not([data-label=''])::before,\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-label]:not([data-label=''])::before {\n  content: attr(data-label);\n}\n.ql-snow .ql-picker.ql-header {\n  width: 98px;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item::before {\n  content: 'Normal';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"1\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"1\"]::before {\n  content: 'Heading 1';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"2\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"2\"]::before {\n  content: 'Heading 2';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"3\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"3\"]::before {\n  content: 'Heading 3';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"4\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"4\"]::before {\n  content: 'Heading 4';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"5\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"5\"]::before {\n  content: 'Heading 5';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"6\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"6\"]::before {\n  content: 'Heading 6';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"1\"]::before {\n  font-size: 2em;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"2\"]::before {\n  font-size: 1.5em;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"3\"]::before {\n  font-size: 1.17em;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"4\"]::before {\n  font-size: 1em;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"5\"]::before {\n  font-size: 0.83em;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"6\"]::before {\n  font-size: 0.67em;\n}\n.ql-snow .ql-picker.ql-font {\n  width: 108px;\n}\n.ql-snow .ql-picker.ql-font .ql-picker-label::before,\n.ql-snow .ql-picker.ql-font .ql-picker-item::before {\n  content: 'Sans Serif';\n}\n.ql-snow .ql-picker.ql-font .ql-picker-label[data-value=serif]::before,\n.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=serif]::before {\n  content: 'Serif';\n}\n.ql-snow .ql-picker.ql-font .ql-picker-label[data-value=monospace]::before,\n.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=monospace]::before {\n  content: 'Monospace';\n}\n.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=serif]::before {\n  font-family: Georgia, Times New Roman, serif;\n}\n.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=monospace]::before {\n  font-family: Monaco, Courier New, monospace;\n}\n.ql-snow .ql-picker.ql-size {\n  width: 98px;\n}\n.ql-snow .ql-picker.ql-size .ql-picker-label::before,\n.ql-snow .ql-picker.ql-size .ql-picker-item::before {\n  content: 'Normal';\n}\n.ql-snow .ql-picker.ql-size .ql-picker-label[data-value=small]::before,\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=small]::before {\n  content: 'Small';\n}\n.ql-snow .ql-picker.ql-size .ql-picker-label[data-value=large]::before,\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=large]::before {\n  content: 'Large';\n}\n.ql-snow .ql-picker.ql-size .ql-picker-label[data-value=huge]::before,\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=huge]::before {\n  content: 'Huge';\n}\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=small]::before {\n  font-size: 10px;\n}\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=large]::before {\n  font-size: 18px;\n}\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=huge]::before {\n  font-size: 32px;\n}\n.ql-snow .ql-color-picker.ql-background .ql-picker-item {\n  background-color: #fff;\n}\n.ql-snow .ql-color-picker.ql-color .ql-picker-item {\n  background-color: #000;\n}\n.ql-toolbar.ql-snow {\n  border: 1px solid #ccc;\n  box-sizing: border-box;\n  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n  padding: 8px;\n}\n.ql-toolbar.ql-snow .ql-formats {\n  margin-right: 15px;\n}\n.ql-toolbar.ql-snow .ql-picker-label {\n  border: 1px solid transparent;\n}\n.ql-toolbar.ql-snow .ql-picker-options {\n  border: 1px solid transparent;\n  box-shadow: rgba(0,0,0,0.2) 0 2px 8px;\n}\n.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {\n  border-color: #ccc;\n}\n.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {\n  border-color: #ccc;\n}\n.ql-toolbar.ql-snow .ql-color-picker .ql-picker-item.ql-selected,\n.ql-toolbar.ql-snow .ql-color-picker .ql-picker-item:hover {\n  border-color: #000;\n}\n.ql-toolbar.ql-snow + .ql-container.ql-snow {\n  border-top: 0px;\n}\n.ql-snow .ql-tooltip {\n  background-color: #fff;\n  border: 1px solid #ccc;\n  box-shadow: 0px 0px 5px #ddd;\n  color: #444;\n  padding: 5px 12px;\n  white-space: nowrap;\n}\n.ql-snow .ql-tooltip::before {\n  content: \"Visit URL:\";\n  line-height: 26px;\n  margin-right: 8px;\n}\n.ql-snow .ql-tooltip input[type=text] {\n  display: none;\n  border: 1px solid #ccc;\n  font-size: 13px;\n  height: 26px;\n  margin: 0px;\n  padding: 3px 5px;\n  width: 170px;\n}\n.ql-snow .ql-tooltip a.ql-preview {\n  display: inline-block;\n  max-width: 200px;\n  overflow-x: hidden;\n  text-overflow: ellipsis;\n  vertical-align: top;\n}\n.ql-snow .ql-tooltip a.ql-action::after {\n  border-right: 1px solid #ccc;\n  content: 'Edit';\n  margin-left: 16px;\n  padding-right: 8px;\n}\n.ql-snow .ql-tooltip a.ql-remove::before {\n  content: 'Remove';\n  margin-left: 8px;\n}\n.ql-snow .ql-tooltip a {\n  line-height: 26px;\n}\n.ql-snow .ql-tooltip.ql-editing a.ql-preview,\n.ql-snow .ql-tooltip.ql-editing a.ql-remove {\n  display: none;\n}\n.ql-snow .ql-tooltip.ql-editing input[type=text] {\n  display: inline-block;\n}\n.ql-snow .ql-tooltip.ql-editing a.ql-action::after {\n  border-right: 0px;\n  content: 'Save';\n  padding-right: 0px;\n}\n.ql-snow .ql-tooltip[data-mode=link]::before {\n  content: \"Enter link:\";\n}\n.ql-snow .ql-tooltip[data-mode=formula]::before {\n  content: \"Enter formula:\";\n}\n.ql-snow .ql-tooltip[data-mode=video]::before {\n  content: \"Enter video:\";\n}\n.ql-snow a {\n  color: #06c;\n}\n.ql-container.ql-snow {\n  border: 1px solid #ccc;\n}\n", ""]);
+exports.push([module.i, "/*!\n * Quill Editor v1.3.4\n * https://quilljs.com/\n * Copyright (c) 2014, Jason Chen\n * Copyright (c) 2013, salesforce.com\n */\n.ql-container {\n  box-sizing: border-box;\n  font-family: Helvetica, Arial, sans-serif;\n  font-size: 13px;\n  height: 100%;\n  margin: 0px;\n  position: relative;\n}\n.ql-container.ql-disabled .ql-tooltip {\n  visibility: hidden;\n}\n.ql-container.ql-disabled .ql-editor ul[data-checked] > li::before {\n  pointer-events: none;\n}\n.ql-clipboard {\n  left: -100000px;\n  height: 1px;\n  overflow-y: hidden;\n  position: absolute;\n  top: 50%;\n}\n.ql-clipboard p {\n  margin: 0;\n  padding: 0;\n}\n.ql-editor {\n  box-sizing: border-box;\n  line-height: 1.42;\n  height: 100%;\n  outline: none;\n  overflow-y: auto;\n  padding: 12px 15px;\n  tab-size: 4;\n  -moz-tab-size: 4;\n  text-align: left;\n  white-space: pre-wrap;\n  word-wrap: break-word;\n}\n.ql-editor > * {\n  cursor: text;\n}\n.ql-editor p,\n.ql-editor ol,\n.ql-editor ul,\n.ql-editor pre,\n.ql-editor blockquote,\n.ql-editor h1,\n.ql-editor h2,\n.ql-editor h3,\n.ql-editor h4,\n.ql-editor h5,\n.ql-editor h6 {\n  margin: 0;\n  padding: 0;\n  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol,\n.ql-editor ul {\n  padding-left: 1.5em;\n}\n.ql-editor ol > li,\n.ql-editor ul > li {\n  list-style-type: none;\n}\n.ql-editor ul > li::before {\n  content: '\\2022';\n}\n.ql-editor ul[data-checked=true],\n.ql-editor ul[data-checked=false] {\n  pointer-events: none;\n}\n.ql-editor ul[data-checked=true] > li *,\n.ql-editor ul[data-checked=false] > li * {\n  pointer-events: all;\n}\n.ql-editor ul[data-checked=true] > li::before,\n.ql-editor ul[data-checked=false] > li::before {\n  color: #777;\n  cursor: pointer;\n  pointer-events: all;\n}\n.ql-editor ul[data-checked=true] > li::before {\n  content: '\\2611';\n}\n.ql-editor ul[data-checked=false] > li::before {\n  content: '\\2610';\n}\n.ql-editor li::before {\n  display: inline-block;\n  white-space: nowrap;\n  width: 1.2em;\n}\n.ql-editor li:not(.ql-direction-rtl)::before {\n  margin-left: -1.5em;\n  margin-right: 0.3em;\n  text-align: right;\n}\n.ql-editor li.ql-direction-rtl::before {\n  margin-left: 0.3em;\n  margin-right: -1.5em;\n}\n.ql-editor ol li:not(.ql-direction-rtl),\n.ql-editor ul li:not(.ql-direction-rtl) {\n  padding-left: 1.5em;\n}\n.ql-editor ol li.ql-direction-rtl,\n.ql-editor ul li.ql-direction-rtl {\n  padding-right: 1.5em;\n}\n.ql-editor ol li {\n  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n  counter-increment: list-0;\n}\n.ql-editor ol li:before {\n  content: counter(list-0, decimal) '. ';\n}\n.ql-editor ol li.ql-indent-1 {\n  counter-increment: list-1;\n}\n.ql-editor ol li.ql-indent-1:before {\n  content: counter(list-1, lower-alpha) '. ';\n}\n.ql-editor ol li.ql-indent-1 {\n  counter-reset: list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-2 {\n  counter-increment: list-2;\n}\n.ql-editor ol li.ql-indent-2:before {\n  content: counter(list-2, lower-roman) '. ';\n}\n.ql-editor ol li.ql-indent-2 {\n  counter-reset: list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-3 {\n  counter-increment: list-3;\n}\n.ql-editor ol li.ql-indent-3:before {\n  content: counter(list-3, decimal) '. ';\n}\n.ql-editor ol li.ql-indent-3 {\n  counter-reset: list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-4 {\n  counter-increment: list-4;\n}\n.ql-editor ol li.ql-indent-4:before {\n  content: counter(list-4, lower-alpha) '. ';\n}\n.ql-editor ol li.ql-indent-4 {\n  counter-reset: list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-5 {\n  counter-increment: list-5;\n}\n.ql-editor ol li.ql-indent-5:before {\n  content: counter(list-5, lower-roman) '. ';\n}\n.ql-editor ol li.ql-indent-5 {\n  counter-reset: list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-6 {\n  counter-increment: list-6;\n}\n.ql-editor ol li.ql-indent-6:before {\n  content: counter(list-6, decimal) '. ';\n}\n.ql-editor ol li.ql-indent-6 {\n  counter-reset: list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-7 {\n  counter-increment: list-7;\n}\n.ql-editor ol li.ql-indent-7:before {\n  content: counter(list-7, lower-alpha) '. ';\n}\n.ql-editor ol li.ql-indent-7 {\n  counter-reset: list-8 list-9;\n}\n.ql-editor ol li.ql-indent-8 {\n  counter-increment: list-8;\n}\n.ql-editor ol li.ql-indent-8:before {\n  content: counter(list-8, lower-roman) '. ';\n}\n.ql-editor ol li.ql-indent-8 {\n  counter-reset: list-9;\n}\n.ql-editor ol li.ql-indent-9 {\n  counter-increment: list-9;\n}\n.ql-editor ol li.ql-indent-9:before {\n  content: counter(list-9, decimal) '. ';\n}\n.ql-editor .ql-indent-1:not(.ql-direction-rtl) {\n  padding-left: 3em;\n}\n.ql-editor li.ql-indent-1:not(.ql-direction-rtl) {\n  padding-left: 4.5em;\n}\n.ql-editor .ql-indent-1.ql-direction-rtl.ql-align-right {\n  padding-right: 3em;\n}\n.ql-editor li.ql-indent-1.ql-direction-rtl.ql-align-right {\n  padding-right: 4.5em;\n}\n.ql-editor .ql-indent-2:not(.ql-direction-rtl) {\n  padding-left: 6em;\n}\n.ql-editor li.ql-indent-2:not(.ql-direction-rtl) {\n  padding-left: 7.5em;\n}\n.ql-editor .ql-indent-2.ql-direction-rtl.ql-align-right {\n  padding-right: 6em;\n}\n.ql-editor li.ql-indent-2.ql-direction-rtl.ql-align-right {\n  padding-right: 7.5em;\n}\n.ql-editor .ql-indent-3:not(.ql-direction-rtl) {\n  padding-left: 9em;\n}\n.ql-editor li.ql-indent-3:not(.ql-direction-rtl) {\n  padding-left: 10.5em;\n}\n.ql-editor .ql-indent-3.ql-direction-rtl.ql-align-right {\n  padding-right: 9em;\n}\n.ql-editor li.ql-indent-3.ql-direction-rtl.ql-align-right {\n  padding-right: 10.5em;\n}\n.ql-editor .ql-indent-4:not(.ql-direction-rtl) {\n  padding-left: 12em;\n}\n.ql-editor li.ql-indent-4:not(.ql-direction-rtl) {\n  padding-left: 13.5em;\n}\n.ql-editor .ql-indent-4.ql-direction-rtl.ql-align-right {\n  padding-right: 12em;\n}\n.ql-editor li.ql-indent-4.ql-direction-rtl.ql-align-right {\n  padding-right: 13.5em;\n}\n.ql-editor .ql-indent-5:not(.ql-direction-rtl) {\n  padding-left: 15em;\n}\n.ql-editor li.ql-indent-5:not(.ql-direction-rtl) {\n  padding-left: 16.5em;\n}\n.ql-editor .ql-indent-5.ql-direction-rtl.ql-align-right {\n  padding-right: 15em;\n}\n.ql-editor li.ql-indent-5.ql-direction-rtl.ql-align-right {\n  padding-right: 16.5em;\n}\n.ql-editor .ql-indent-6:not(.ql-direction-rtl) {\n  padding-left: 18em;\n}\n.ql-editor li.ql-indent-6:not(.ql-direction-rtl) {\n  padding-left: 19.5em;\n}\n.ql-editor .ql-indent-6.ql-direction-rtl.ql-align-right {\n  padding-right: 18em;\n}\n.ql-editor li.ql-indent-6.ql-direction-rtl.ql-align-right {\n  padding-right: 19.5em;\n}\n.ql-editor .ql-indent-7:not(.ql-direction-rtl) {\n  padding-left: 21em;\n}\n.ql-editor li.ql-indent-7:not(.ql-direction-rtl) {\n  padding-left: 22.5em;\n}\n.ql-editor .ql-indent-7.ql-direction-rtl.ql-align-right {\n  padding-right: 21em;\n}\n.ql-editor li.ql-indent-7.ql-direction-rtl.ql-align-right {\n  padding-right: 22.5em;\n}\n.ql-editor .ql-indent-8:not(.ql-direction-rtl) {\n  padding-left: 24em;\n}\n.ql-editor li.ql-indent-8:not(.ql-direction-rtl) {\n  padding-left: 25.5em;\n}\n.ql-editor .ql-indent-8.ql-direction-rtl.ql-align-right {\n  padding-right: 24em;\n}\n.ql-editor li.ql-indent-8.ql-direction-rtl.ql-align-right {\n  padding-right: 25.5em;\n}\n.ql-editor .ql-indent-9:not(.ql-direction-rtl) {\n  padding-left: 27em;\n}\n.ql-editor li.ql-indent-9:not(.ql-direction-rtl) {\n  padding-left: 28.5em;\n}\n.ql-editor .ql-indent-9.ql-direction-rtl.ql-align-right {\n  padding-right: 27em;\n}\n.ql-editor li.ql-indent-9.ql-direction-rtl.ql-align-right {\n  padding-right: 28.5em;\n}\n.ql-editor .ql-video {\n  display: block;\n  max-width: 100%;\n}\n.ql-editor .ql-video.ql-align-center {\n  margin: 0 auto;\n}\n.ql-editor .ql-video.ql-align-right {\n  margin: 0 0 0 auto;\n}\n.ql-editor .ql-bg-black {\n  background-color: #000;\n}\n.ql-editor .ql-bg-red {\n  background-color: #e60000;\n}\n.ql-editor .ql-bg-orange {\n  background-color: #f90;\n}\n.ql-editor .ql-bg-yellow {\n  background-color: #ff0;\n}\n.ql-editor .ql-bg-green {\n  background-color: #008a00;\n}\n.ql-editor .ql-bg-blue {\n  background-color: #06c;\n}\n.ql-editor .ql-bg-purple {\n  background-color: #93f;\n}\n.ql-editor .ql-color-white {\n  color: #fff;\n}\n.ql-editor .ql-color-red {\n  color: #e60000;\n}\n.ql-editor .ql-color-orange {\n  color: #f90;\n}\n.ql-editor .ql-color-yellow {\n  color: #ff0;\n}\n.ql-editor .ql-color-green {\n  color: #008a00;\n}\n.ql-editor .ql-color-blue {\n  color: #06c;\n}\n.ql-editor .ql-color-purple {\n  color: #93f;\n}\n.ql-editor .ql-font-serif {\n  font-family: Georgia, Times New Roman, serif;\n}\n.ql-editor .ql-font-monospace {\n  font-family: Monaco, Courier New, monospace;\n}\n.ql-editor .ql-size-small {\n  font-size: 0.75em;\n}\n.ql-editor .ql-size-large {\n  font-size: 1.5em;\n}\n.ql-editor .ql-size-huge {\n  font-size: 2.5em;\n}\n.ql-editor .ql-direction-rtl {\n  direction: rtl;\n  text-align: inherit;\n}\n.ql-editor .ql-align-center {\n  text-align: center;\n}\n.ql-editor .ql-align-justify {\n  text-align: justify;\n}\n.ql-editor .ql-align-right {\n  text-align: right;\n}\n.ql-editor.ql-blank::before {\n  color: rgba(0,0,0,0.6);\n  content: attr(data-placeholder);\n  font-style: italic;\n  left: 15px;\n  pointer-events: none;\n  position: absolute;\n  right: 15px;\n}\n", ""]);
 
 // exports
 
@@ -39062,7 +39059,7 @@ exports = module.exports = __webpack_require__(16)(undefined);
 
 
 // module
-exports.push([module.i, "/* sass-loader doesnt like absolute imports*/\n#quill-editor {\n  position: relative; }\n\n.mention {\n  color: #0366d6; }\n\n.completions {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n  background: #FFF;\n  border-radius: 2px;\n  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25); }\n\n.completions > li {\n  margin: 0;\n  padding: 0; }\n\n.completions > li > button {\n  box-sizing: border-box;\n  height: 2em;\n  padding: .25em .5em;\n  margin: 0;\n  display: block;\n  width: 100%;\n  text-align: left;\n  border: none;\n  background: none; }\n\n.completions > li > button:hover {\n  background: #ddd; }\n\n.completions > li > button:focus {\n  background: #ddd;\n  outline: none; }\n\n.completions > li > button > .matched {\n  font-weight: bold;\n  color: black; }\n\n.completions > li > button > * {\n  vertical-align: middle; }\n\n.emoji_completions {\n  list-style: none;\n  margin: 0;\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  padding: 6px;\n  background: #FFF;\n  border-radius: 3px;\n  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12); }\n  .emoji_completions li {\n    margin: 2px 0;\n    padding: 0;\n    display: inline-block; }\n    .emoji_completions li:not(:last-of-type) {\n      margin-right: 3px; }\n\n.emoji_completions > li > button {\n  box-sizing: border-box;\n  padding: 3px 2px 6px;\n  margin: 0;\n  display: block;\n  width: 100%;\n  text-align: left;\n  border: none;\n  background: #efefef;\n  border-radius: 3px; }\n\n.emoji_completions > li > button:hover {\n  background: #2D9EE0;\n  color: #FFF; }\n\n.emoji_completions > li > button:focus {\n  background: #2D9EE0;\n  outline: none;\n  color: #FFF; }\n\n.emoji_completions > li > button.emoji-active {\n  background: red;\n  background: #2d9ee0;\n  outline: none;\n  color: #fff; }\n\n.emoji_completions > li > button > .matched {\n  font-weight: bold; }\n\n.emoji_completions > li > button > * {\n  vertical-align: middle; }\n\n.ico {\n  margin-right: 5px;\n  font-size: 18px;\n  line-height: 0;\n  vertical-align: middle; }\n\n#emoji-palette {\n  position: absolute;\n  max-width: 250px;\n  z-index: 999;\n  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);\n  border-radius: 3px;\n  border: 1px solid rgba(0, 0, 0, 0.15); }\n\n.bem {\n  font-size: 24px;\n  width: 34px;\n  display: inline-block;\n  text-align: center;\n  cursor: pointer;\n  margin: 2px; }\n\n#tab-filters {\n  width: 210px;\n  margin: 0px auto;\n  margin-top: 20px; }\n\n.emoji-tab {\n  display: inline-table;\n  text-align: center;\n  width: 30px;\n  height: 100%;\n  min-height: 30px;\n  cursor: pointer; }\n\n#tab-toolbar {\n  background-color: #f7f7f7;\n  padding: 4px 4px 0;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.15); }\n\n#tab-toolbar ul {\n  margin: 0px;\n  padding: 0px; }\n\n#tab-toolbar .active {\n  border-bottom: 3px solid #2ab27b; }\n\n#tab-panel {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -ms-flex-pack: center;\n      justify-content: center;\n  max-height: 220px;\n  overflow-y: scroll;\n  padding: 2px;\n  background: #FFF; }\n\n#quill-editor x-contain, contain {\n  background: #ffbb88;\n  display: block; }\n\n#quill-editor table {\n  width: 100%;\n  border-collapse: collapse; }\n\n#quill-editor table td {\n  border: 1px solid black;\n  padding: 5px;\n  height: 25px; }\n\nbutton.ql-table::after {\n  content: \"TABLE\"; }\n\n.ql-picker.ql-table .ql-picker-label::before {\n  content: \"TABLE\"; }\n\nbutton.ql-contain::after {\n  content: \"WRAP\"; }\n\nbutton.ql-table[value=\"append-row\"]::after {\n  content: \"ROWS+\"; }\n\nbutton.ql-table[value=\"append-col\"]::after {\n  content: \"COLS+\"; }\n\n.ql-table,\n.ql-contain {\n  width: auto !important;\n  margin-right: -15px; }\n\n#emoji-close-div {\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  top: 0;\n  left: 0; }\n\n.textarea-emoji-control {\n  width: 25px;\n  height: 25px;\n  right: 4px;\n  top: 10px; }\n\n#textarea-emoji {\n  position: absolute;\n  right: 0px;\n  max-width: 250px;\n  z-index: 999;\n  border: 1px solid #66afe9;\n  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);\n  border-radius: 3px;\n  border: 1px solid rgba(0, 0, 0, 0.15); }\n\n.ql-editor {\n  padding-right: 26px; }\n\n.i-activity {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\"><g transform=\"translate(7.500000, 7.500000)\"><path stroke=\"#6F6D70\" d=\"M18.02 1.36c5.92 3.02 8.28 10.26 5.26 16.18-2.12 4.17-6.35 6.57-10.73 6.57-1.83 0-3.7-.4-5.45-1.3-5.9-3-8.27-10.22-5.25-16.2C3.97 2.5 8.2.1 12.57.1c1.84 0 3.7.42 5.45 1.3zm4.7 11.44c.1-1.3-.06-2.6-.47-3.87-.13-.38-.27-.75-.43-1.1l-3.42-1.6-1.57-3.4c-.62-.3-1.27-.5-1.92-.68-.7-.18-1.5-.27-2.3-.27-.4 0-.8.02-1.2.06L8.9 4.74l-3.74.43c-.63.68-1.16 1.45-1.6 2.28-.42.84-.72 1.72-.9 2.63l1.84 3.3-.74 3.68c.3.56.66 1.08 1.1 1.58.76.94 1.7 1.7 2.8 2.32l3.7-.74 3.26 1.84c1.13-.23 2.23-.65 3.24-1.26.6-.35 1.2-.77 1.7-1.24l.44-3.74 2.78-2.55.05-.47z\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><polygon points=\"10.6158689 8.50666885 8.42649168 12.8046921 11.836847 16.2129328 16.1342124 14.0235556 15.3793892 9.26144504\"/></g></g></g></svg>'); }\n\n.i-flags {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\" fill-rule=\"nonzero\"><g transform=\"translate(9.500000, 8.000000)\"><path d=\"M.5 3.13V23.5c0 .83.68 1.5 1.5 1.5.84 0 1.5-.67 1.5-1.5V3.14c0-.83-.66-1.5-1.5-1.5-.82 0-1.5.67-1.5 1.5z\"/><path d=\"M3.5 11.54c.7-.16 1.44-.22 2.25-.17 1.38.07 2.48.3 5.23 1.04l.55.2c3.02.8 4.77 1 5.96.67v-7.9c-1.7.33-3.8-.07-7.1-1-3.9-1.1-5.7-1.3-6.9-.5v7.7zm7.68-10.1c4.1 1.15 5.7 1.3 6.98.44 1-.66 2.33.05 2.33 1.25v11c0 .5-.3 1-.7 1.26-2.2 1.4-4.6 1.2-9.1 0l-.56-.16c-4.54-1.2-6.15-1.3-7.05-.2-.9 1.06-2.65.42-2.65-.98v-11c0-.4.2-.8.5-1.1C3.4-.24 5.75-.1 11.2 1.4z\"/></g></g></g></svg>'); }\n\n.i-food {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\"><path fill-rule=\"nonzero\" d=\"M9.57 28.2c0 .28.22.5.5.5h19.2c.27 0 .5-.22.5-.5v-4.4H9.57v4.4zm23.2-3.06v3.07c0 1.95-1.57 3.5-3.5 3.5h-19.2c-1.93 0-3.5-1.55-3.5-3.5V25c.46.15.96.24 1.47.24h23.78c.33 0 .64-.04.94-.1z\"/><path fill-rule=\"nonzero\" d=\"M6.57 18.2v-3.45c0-3.56 2.9-6.45 6.45-6.45h13.3c3.55 0 6.44 2.9 6.44 6.45v3.45H6.56zm3-1.83h3.6l.4.86c.23.5.73.83 1.3.83.56 0 1.06-.33 1.3-.83l.4-.86h13.2v-1.62c0-1.9-1.56-3.45-3.45-3.45h-13.3c-1.9 0-3.45 1.55-3.45 3.45v1.62z\"/><path fill-rule=\"nonzero\" d=\"M13.23 16.37l.4.86c.24.5.74.83 1.3.83.57 0 1.07-.33 1.3-.83l.4-.86H31.9c2.44 0 4.43 1.98 4.43 4.43 0 2.45-1.98 4.44-4.44 4.44H8.1c-2.44 0-4.43-2-4.43-4.44 0-2.45 1.98-4.43 4.44-4.43h5.14zm-5.12 3c-.8 0-1.42.64-1.42 1.43 0 .8.64 1.44 1.44 1.44h23.8c.8 0 1.43-.64 1.43-1.44 0-.8-.64-1.43-1.44-1.43H18.4c-.83 1.04-2.1 1.7-3.5 1.7-1.37 0-2.65-.66-3.47-1.7H8.1z\"/><circle cx=\"14.6682646\" cy=\"13.75\" r=\"1\"/><circle cx=\"24.6682646\" cy=\"13.75\" r=\"1\"/><circle cx=\"19.6682646\" cy=\"13.75\" r=\"1\"/></g></g></svg>'); }\n\n.i-nature {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\" fill-rule=\"nonzero\"><path d=\"M15.96 18.26L30.86 32c.5.46 1.3.43 1.77-.08.46-.5.43-1.3-.08-1.76l-14.9-13.74c-.5-.46-1.3-.43-1.76.08-.5.5-.5 1.3 0 1.76z\"/><path d=\"M18.17 21.28c-.7-.06-1.3.45-1.35 1.14-.06.7.45 1.3 1.13 1.35l4.96.43c.9.07 1.5-.66 1.4-1.47l-1-5.6c-.1-.7-.74-1.14-1.42-1.02-.67.2-1.12.8-1 1.5l.7 4-3.32-.3z\"/><path d=\"M28.48 28.95c-.38.17-1 .4-1.85.64-2.92.7-6 .9-8.95-.2-5.98-2.17-9.8-8.5-10.54-19.9l-.1-1.4 1.38-.2c14.45-2.08 23.4 7.4 21.33 19.85l-1.9-.3.63 1.43zM10.24 10.77C11.12 20.14 14.2 25 18.7 26.6c2.27.83 4.76.74 7.14.1.4-.12.76-.23 1.07-.35 1.2-9.6-5.4-16.57-16.6-15.58z\"/></g></g></svg>'); }\n\n.i-objects {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\" fill-rule=\"nonzero\"><path d=\"M11.04 16.7c0-4.85 4.02-8.76 8.96-8.76 4.94 0 8.96 3.9 8.96 8.76 0 2.54-1.12 4.9-3 6.54v1.87c0 1.28-1.02 2.27-2.26 2.27h-7.37c-1.23 0-2.25-1-2.25-2.22V23.3c-1.9-1.65-3.04-4-3.04-6.58zm11.9 5.82c0-.48.24-.93.63-1.22 1.5-1.08 2.4-2.77 2.4-4.6 0-3.17-2.67-5.76-5.97-5.76s-5.96 2.6-5.96 5.76c0 1.84.9 3.54 2.42 4.62.4.28.62.74.62 1.22v1.8h5.87V22.5z\"/><path d=\"M21.76 28.78c-.22.05-.42.1-.62.13-.5.1-.9.2-1.1.2-.24 0-.62-.04-1.08-.12l-.74-.15-.08-.02v-2.93c0-.83-.68-1.5-1.5-1.5-.83 0-1.5.67-1.5 1.5v4.1c0 .68.44 1.27 1.1 1.45l.38.1.94.23c.3.1.6.15.87.2.62.1 1.16.17 1.6.17.47 0 1.03-.1 1.7-.2l.7-.17.95-.22c.18-.03.32-.1.4-.1.64-.2 1.08-.76 1.08-1.43v-4.1c0-.83-.67-1.5-1.5-1.5-.82 0-1.5.67-1.5 1.5v2.9c-.03 0-.07 0-.1.02z\"/></g></g></svg>'); }\n\n.i-people {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\"><path fill-rule=\"nonzero\" d=\"M20 34c-7.73 0-14-6.27-14-14S12.27 6 20 6s14 6.27 14 14-6.27 14-14 14zm0-3c6.08 0 11-4.92 11-11S26.08 9 20 9 9 13.92 9 20s4.92 11 11 11z\"/><circle cx=\"15.3474348\" cy=\"16.7705459\" r=\"2.34743481\"/><circle cx=\"24.4703784\" cy=\"16.7705459\" r=\"2.34743481\"/><path d=\"M20 27.9c2.7 0 4.88-2.18 4.88-4.88 0-2.7-9.76-2.7-9.76 0S17.3 27.9 20 27.9z\"/></g></g></svg>'); }\n\n.i-symbols {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\" fill-rule=\"nonzero\"><path d=\"M15.37 7.95c-4.48 0-8.06 3.9-8.06 8.64 0 3.5 2.2 6.9 5.8 10.3 1.2 1.1 2.5 2.2 3.9 3.1.84.6 1.5 1 1.98 1.3l.27.15.8.5 1.1-.6c.5-.27 1.18-.7 2-1.25 1.34-.9 2.66-1.9 3.9-3 3.57-3.28 5.75-6.8 5.75-10.6 0-4.74-3.6-8.65-8.1-8.65v3.3c2.6 0 4.76 2.4 4.76 5.35 0 2.65-1.72 5.43-4.7 8.13-1.1 1-2.27 1.9-3.5 2.7-.43.3-.83.54-1.17.74-.35-.2-.76-.5-1.2-.83-1.24-.87-2.4-1.83-3.54-2.87-2.95-2.76-4.7-5.5-4.7-7.9 0-2.98 2.2-5.35 4.78-5.35 1.3 0 2.5.6 3.4 1.6L20 14.3l1.25-1.43c.9-1.03 2.1-1.6 3.38-1.6v-3.3c-1.68 0-3.3.56-4.63 1.57-1.34-1-2.95-1.57-4.63-1.57z\"/></g></g></svg>'); }\n\n.i-travel {\n  content: '';\n  height: 25px;\n  width: 25px;\n  margin: auto;\n  background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"25px\" height=\"25px\" viewBox=\"0 0 40 40\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"#6F6D70\" fill-rule=\"nonzero\"><path d=\"M25.46 11.2s-2.67 2.58-3.94 3.95l-10.6-2.13c-.12-.02-.25.04-.3.15l-.8 1.6c-.07.13 0 .3.12.37l7.75 3.88L13.4 24c-.5-.16-1.1-.33-1.66-.3-.3 0-.6.06-.85.25-.3.2-.4.5-.4.9s.1.74.3.98l3.2 3.23c.3.23.7.34 1 .34.4 0 .7-.13.9-.37.2-.23.24-.53.25-.84 0-.6-.15-1.2-.3-1.7l4.97-4.3 3.9 7.76c.06.13.23.2.36.12l1.6-.8c.13-.07.2-.2.17-.3l-2.12-10.6c1.4-1.28 3.95-3.95 3.96-3.96.86-.88 1.4-1.93 1.4-2.87 0-.5-.17-1-.5-1.33-.37-.36-.87-.5-1.38-.5-.95 0-2 .52-2.88 1.4zm2.87-4.4c1.28 0 2.54.44 3.5 1.4.93.93 1.38 2.2 1.38 3.47 0 1.8-.8 3.54-2.2 4.94-.4.5-1.7 1.8-2.8 2.9l1.8 9c.3 1.5-.4 2.9-1.7 3.6l-1.62.8c-1.62.8-3.6.1-4.36-1.4L20 27.1l-.7.6v.62c-.03.92-.28 1.8-.92 2.6-.8 1-1.98 1.5-3.22 1.5-1.03 0-2.12-.37-2.96-1.1l-.16-.14-3.22-3.22-.1-.12c-.75-.83-1.12-1.9-1.12-3 0-1.24.5-2.43 1.48-3.22.8-.6 1.68-.9 2.62-.9h.62l.6-.7-4.27-2.1c-1.65-.8-2.33-2.8-1.52-4.4l.8-1.64c.67-1.3 2.14-2.02 3.57-1.73l9 1.8 1.36-1.33 1.5-1.48c1.42-1.4 3.17-2.27 4.97-2.27z\"/></g></g></svg>'); }\n\n.emoji {\n  margin-bottom: -5px; }\n\n.ap {\n  display: inline-block;\n  height: 20px;\n  width: 20px;\n  background-image: url(" + __webpack_require__(133) + ");\n  background-repeat: no-repeat;\n  text-indent: -999px; }\n\n.ap-copyright {\n  background-position: -0px -0px; }\n\n.ap-registered {\n  background-position: -0px -20px; }\n\n.ap-bangbang {\n  background-position: -0px -40px; }\n\n.ap-interrobang {\n  background-position: -0px -60px; }\n\n.ap-tm {\n  background-position: -0px -80px; }\n\n.ap-information_source {\n  background-position: -0px -100px; }\n\n.ap-left_right_arrow {\n  background-position: -0px -120px; }\n\n.ap-arrow_up_down {\n  background-position: -0px -140px; }\n\n.ap-arrow_upper_left {\n  background-position: -0px -160px; }\n\n.ap-arrow_upper_right {\n  background-position: -0px -180px; }\n\n.ap-arrow_lower_right {\n  background-position: -0px -200px; }\n\n.ap-arrow_lower_left {\n  background-position: -0px -220px; }\n\n.ap-leftwards_arrow_with_hook {\n  background-position: -0px -240px; }\n\n.ap-arrow_right_hook {\n  background-position: -0px -260px; }\n\n.ap-watch {\n  background-position: -0px -280px; }\n\n.ap-hourglass {\n  background-position: -0px -300px; }\n\n.ap-keyboard {\n  background-position: -0px -320px; }\n\n.ap-fast_forward {\n  background-position: -0px -360px; }\n\n.ap-rewind {\n  background-position: -0px -380px; }\n\n.ap-arrow_double_up {\n  background-position: -0px -400px; }\n\n.ap-arrow_double_down {\n  background-position: -0px -420px; }\n\n.ap-black_right_pointing_double_triangle_with_vertical_bar {\n  background-position: -0px -440px; }\n\n.ap-black_left_pointing_double_triangle_with_vertical_bar {\n  background-position: -0px -460px; }\n\n.ap-black_right_pointing_triangle_with_double_vertical_bar {\n  background-position: -0px -480px; }\n\n.ap-alarm_clock {\n  background-position: -0px -500px; }\n\n.ap-stopwatch {\n  background-position: -0px -520px; }\n\n.ap-timer_clock {\n  background-position: -0px -540px; }\n\n.ap-hourglass_flowing_sand {\n  background-position: -0px -560px; }\n\n.ap-double_vertical_bar {\n  background-position: -0px -580px; }\n\n.ap-black_square_for_stop {\n  background-position: -0px -600px; }\n\n.ap-black_circle_for_record {\n  background-position: -0px -620px; }\n\n.ap-m {\n  background-position: -0px -640px; }\n\n.ap-black_small_square {\n  background-position: -0px -660px; }\n\n.ap-white_small_square {\n  background-position: -0px -680px; }\n\n.ap-arrow_forward {\n  background-position: -0px -700px; }\n\n.ap-arrow_backward {\n  background-position: -0px -720px; }\n\n.ap-white_medium_square {\n  background-position: -0px -740px; }\n\n.ap-black_medium_square {\n  background-position: -0px -760px; }\n\n.ap-white_medium_small_square {\n  background-position: -0px -780px; }\n\n.ap-black_medium_small_square {\n  background-position: -0px -800px; }\n\n.ap-sunny {\n  background-position: -20px -0px; }\n\n.ap-cloud {\n  background-position: -20px -20px; }\n\n.ap-umbrella {\n  background-position: -20px -40px; }\n\n.ap-snowman {\n  background-position: -20px -60px; }\n\n.ap-comet {\n  background-position: -20px -80px; }\n\n.ap-phone {\n  background-position: -20px -100px; }\n\n.ap-ballot_box_with_check {\n  background-position: -20px -120px; }\n\n.ap-umbrella_with_rain_drops {\n  background-position: -20px -140px; }\n\n.ap-coffee {\n  background-position: -20px -160px; }\n\n.ap-shamrock {\n  background-position: -20px -180px; }\n\n.ap-point_up {\n  background-position: -20px -200px; }\n\n.ap-skull_and_crossbones {\n  background-position: -20px -320px; }\n\n.ap-radioactive_sign {\n  background-position: -20px -340px; }\n\n.ap-biohazard_sign {\n  background-position: -20px -360px; }\n\n.ap-orthodox_cross {\n  background-position: -20px -380px; }\n\n.ap-star_and_crescent {\n  background-position: -20px -400px; }\n\n.ap-peace_symbol {\n  background-position: -20px -420px; }\n\n.ap-yin_yang {\n  background-position: -20px -440px; }\n\n.ap-wheel_of_dharma {\n  background-position: -20px -460px; }\n\n.ap-white_frowning_face {\n  background-position: -20px -480px; }\n\n.ap-relaxed {\n  background-position: -20px -500px; }\n\n.ap-aries {\n  background-position: -20px -520px; }\n\n.ap-taurus {\n  background-position: -20px -540px; }\n\n.ap-gemini {\n  background-position: -20px -560px; }\n\n.ap-cancer {\n  background-position: -20px -580px; }\n\n.ap-leo {\n  background-position: -20px -600px; }\n\n.ap-virgo {\n  background-position: -20px -620px; }\n\n.ap-libra {\n  background-position: -20px -640px; }\n\n.ap-scorpius {\n  background-position: -20px -660px; }\n\n.ap-sagittarius {\n  background-position: -20px -680px; }\n\n.ap-capricorn {\n  background-position: -20px -700px; }\n\n.ap-aquarius {\n  background-position: -20px -720px; }\n\n.ap-pisces {\n  background-position: -20px -740px; }\n\n.ap-spades {\n  background-position: -20px -760px; }\n\n.ap-clubs {\n  background-position: -20px -780px; }\n\n.ap-hearts {\n  background-position: -20px -800px; }\n\n.ap-diamonds {\n  background-position: -40px -0px; }\n\n.ap-hotsprings {\n  background-position: -40px -20px; }\n\n.ap-recycle {\n  background-position: -40px -40px; }\n\n.ap-wheelchair {\n  background-position: -40px -60px; }\n\n.ap-hammer_and_pick {\n  background-position: -40px -80px; }\n\n.ap-anchor {\n  background-position: -40px -100px; }\n\n.ap-crossed_swords {\n  background-position: -40px -120px; }\n\n.ap-scales {\n  background-position: -40px -140px; }\n\n.ap-alembic {\n  background-position: -40px -160px; }\n\n.ap-gear {\n  background-position: -40px -180px; }\n\n.ap-atom_symbol {\n  background-position: -40px -200px; }\n\n.ap-fleur_de_lis {\n  background-position: -40px -220px; }\n\n.ap-warning {\n  background-position: -40px -240px; }\n\n.ap-zap {\n  background-position: -40px -260px; }\n\n.ap-white_circle {\n  background-position: -40px -280px; }\n\n.ap-black_circle {\n  background-position: -40px -300px; }\n\n.ap-coffin {\n  background-position: -40px -320px; }\n\n.ap-funeral_urn {\n  background-position: -40px -340px; }\n\n.ap-soccer {\n  background-position: -40px -360px; }\n\n.ap-baseball {\n  background-position: -40px -380px; }\n\n.ap-snowman_without_snow {\n  background-position: -40px -400px; }\n\n.ap-partly_sunny {\n  background-position: -40px -420px; }\n\n.ap-thunder_cloud_and_rain {\n  background-position: -40px -440px; }\n\n.ap-ophiuchus {\n  background-position: -40px -460px; }\n\n.ap-pick {\n  background-position: -40px -480px; }\n\n.ap-helmet_with_white_cross {\n  background-position: -40px -500px; }\n\n.ap-chains {\n  background-position: -40px -520px; }\n\n.ap-no_entry {\n  background-position: -40px -540px; }\n\n.ap-shinto_shrine {\n  background-position: -40px -560px; }\n\n.ap-church {\n  background-position: -40px -580px; }\n\n.ap-mountain {\n  background-position: -40px -600px; }\n\n.ap-umbrella_on_ground {\n  background-position: -40px -620px; }\n\n.ap-fountain {\n  background-position: -40px -640px; }\n\n.ap-golf {\n  background-position: -40px -660px; }\n\n.ap-ferry {\n  background-position: -40px -680px; }\n\n.ap-boat {\n  background-position: -40px -700px; }\n\n.ap-skier {\n  background-position: -40px -720px; }\n\n.ap-ice_skate {\n  background-position: -40px -740px; }\n\n.ap-person_with_ball {\n  background-position: -40px -760px; }\n\n.ap-tent {\n  background-position: -60px -60px; }\n\n.ap-fuelpump {\n  background-position: -60px -80px; }\n\n.ap-scissors {\n  background-position: -60px -100px; }\n\n.ap-white_check_mark {\n  background-position: -60px -120px; }\n\n.ap-airplane {\n  background-position: -60px -140px; }\n\n.ap-email {\n  background-position: -60px -160px; }\n\n.ap-fist {\n  background-position: -60px -180px; }\n\n.ap-hand {\n  background-position: -60px -300px; }\n\n.ap-v {\n  background-position: -60px -420px; }\n\n.ap-writing_hand {\n  background-position: -60px -540px; }\n\n.ap-pencil2 {\n  background-position: -60px -660px; }\n\n.ap-black_nib {\n  background-position: -60px -680px; }\n\n.ap-heavy_check_mark {\n  background-position: -60px -700px; }\n\n.ap-heavy_multiplication_x {\n  background-position: -60px -720px; }\n\n.ap-latin_cross {\n  background-position: -60px -740px; }\n\n.ap-star_of_david {\n  background-position: -60px -760px; }\n\n.ap-sparkles {\n  background-position: -60px -780px; }\n\n.ap-eight_spoked_asterisk {\n  background-position: -60px -800px; }\n\n.ap-eight_pointed_black_star {\n  background-position: -80px -0px; }\n\n.ap-snowflake {\n  background-position: -80px -20px; }\n\n.ap-sparkle {\n  background-position: -80px -40px; }\n\n.ap-x {\n  background-position: -80px -60px; }\n\n.ap-negative_squared_cross_mark {\n  background-position: -80px -80px; }\n\n.ap-question {\n  background-position: -80px -100px; }\n\n.ap-grey_question {\n  background-position: -80px -120px; }\n\n.ap-grey_exclamation {\n  background-position: -80px -140px; }\n\n.ap-exclamation {\n  background-position: -80px -160px; }\n\n.ap-heavy_heart_exclamation_mark_ornament {\n  background-position: -80px -180px; }\n\n.ap-heart {\n  background-position: -80px -200px; }\n\n.ap-heavy_plus_sign {\n  background-position: -80px -220px; }\n\n.ap-heavy_minus_sign {\n  background-position: -80px -240px; }\n\n.ap-heavy_division_sign {\n  background-position: -80px -260px; }\n\n.ap-arrow_right {\n  background-position: -80px -280px; }\n\n.ap-curly_loop {\n  background-position: -80px -300px; }\n\n.ap-loop {\n  background-position: -80px -320px; }\n\n.ap-arrow_heading_up {\n  background-position: -80px -340px; }\n\n.ap-arrow_heading_down {\n  background-position: -80px -360px; }\n\n.ap-arrow_left {\n  background-position: -80px -380px; }\n\n.ap-arrow_up {\n  background-position: -80px -400px; }\n\n.ap-arrow_down {\n  background-position: -80px -420px; }\n\n.ap-black_large_square {\n  background-position: -80px -440px; }\n\n.ap-white_large_square {\n  background-position: -80px -460px; }\n\n.ap-star {\n  background-position: -80px -480px; }\n\n.ap-o {\n  background-position: -80px -500px; }\n\n.ap-wavy_dash {\n  background-position: -80px -520px; }\n\n.ap-part_alternation_mark {\n  background-position: -80px -540px; }\n\n.ap-congratulations {\n  background-position: -80px -560px; }\n\n.ap-secret {\n  background-position: -80px -580px; }\n\n.ap-mahjong {\n  background-position: -80px -600px; }\n\n.ap-black_joker {\n  background-position: -80px -620px; }\n\n.ap-a {\n  background-position: -80px -640px; }\n\n.ap-b {\n  background-position: -80px -660px; }\n\n.ap-o2 {\n  background-position: -80px -680px; }\n\n.ap-parking {\n  background-position: -80px -700px; }\n\n.ap-ab {\n  background-position: -80px -720px; }\n\n.ap-cl {\n  background-position: -80px -740px; }\n\n.ap-cool {\n  background-position: -80px -760px; }\n\n.ap-free {\n  background-position: -80px -780px; }\n\n.ap-id {\n  background-position: -80px -800px; }\n\n.ap-new {\n  background-position: -100px -0px; }\n\n.ap-ng {\n  background-position: -100px -20px; }\n\n.ap-ok {\n  background-position: -100px -40px; }\n\n.ap-sos {\n  background-position: -100px -60px; }\n\n.ap-up {\n  background-position: -100px -80px; }\n\n.ap-vs {\n  background-position: -100px -100px; }\n\n.ap-koko {\n  background-position: -100px -120px; }\n\n.ap-sa {\n  background-position: -100px -140px; }\n\n.ap-u7121 {\n  background-position: -100px -160px; }\n\n.ap-u6307 {\n  background-position: -100px -180px; }\n\n.ap-u7981 {\n  background-position: -100px -200px; }\n\n.ap-u7a7a {\n  background-position: -100px -220px; }\n\n.ap-u5408 {\n  background-position: -100px -240px; }\n\n.ap-u6e80 {\n  background-position: -100px -260px; }\n\n.ap-u6709 {\n  background-position: -100px -280px; }\n\n.ap-u6708 {\n  background-position: -100px -300px; }\n\n.ap-u7533 {\n  background-position: -100px -320px; }\n\n.ap-u5272 {\n  background-position: -100px -340px; }\n\n.ap-u55b6 {\n  background-position: -100px -360px; }\n\n.ap-ideograph_advantage {\n  background-position: -100px -380px; }\n\n.ap-accept {\n  background-position: -100px -400px; }\n\n.ap-cyclone {\n  background-position: -100px -420px; }\n\n.ap-foggy {\n  background-position: -100px -440px; }\n\n.ap-closed_umbrella {\n  background-position: -100px -460px; }\n\n.ap-night_with_stars {\n  background-position: -100px -480px; }\n\n.ap-sunrise_over_mountains {\n  background-position: -100px -500px; }\n\n.ap-sunrise {\n  background-position: -100px -520px; }\n\n.ap-city_sunset {\n  background-position: -100px -540px; }\n\n.ap-city_sunrise {\n  background-position: -100px -560px; }\n\n.ap-rainbow {\n  background-position: -100px -580px; }\n\n.ap-bridge_at_night {\n  background-position: -100px -600px; }\n\n.ap-ocean {\n  background-position: -100px -620px; }\n\n.ap-volcano {\n  background-position: -100px -640px; }\n\n.ap-milky_way {\n  background-position: -100px -660px; }\n\n.ap-earth_africa {\n  background-position: -100px -680px; }\n\n.ap-earth_americas {\n  background-position: -100px -700px; }\n\n.ap-earth_asia {\n  background-position: -100px -720px; }\n\n.ap-globe_with_meridians {\n  background-position: -100px -740px; }\n\n.ap-new_moon {\n  background-position: -100px -760px; }\n\n.ap-waxing_crescent_moon {\n  background-position: -100px -780px; }\n\n.ap-first_quarter_moon {\n  background-position: -100px -800px; }\n\n.ap-moon {\n  background-position: -120px -0px; }\n\n.ap-full_moon {\n  background-position: -120px -20px; }\n\n.ap-waning_gibbous_moon {\n  background-position: -120px -40px; }\n\n.ap-last_quarter_moon {\n  background-position: -120px -60px; }\n\n.ap-waning_crescent_moon {\n  background-position: -120px -80px; }\n\n.ap-crescent_moon {\n  background-position: -120px -100px; }\n\n.ap-new_moon_with_face {\n  background-position: -120px -120px; }\n\n.ap-first_quarter_moon_with_face {\n  background-position: -120px -140px; }\n\n.ap-last_quarter_moon_with_face {\n  background-position: -120px -160px; }\n\n.ap-full_moon_with_face {\n  background-position: -120px -180px; }\n\n.ap-sun_with_face {\n  background-position: -120px -200px; }\n\n.ap-star2 {\n  background-position: -120px -220px; }\n\n.ap-stars {\n  background-position: -120px -240px; }\n\n.ap-thermometer {\n  background-position: -120px -260px; }\n\n.ap-mostly_sunny {\n  background-position: -120px -280px; }\n\n.ap-barely_sunny {\n  background-position: -120px -300px; }\n\n.ap-partly_sunny_rain {\n  background-position: -120px -320px; }\n\n.ap-rain_cloud {\n  background-position: -120px -340px; }\n\n.ap-snow_cloud {\n  background-position: -120px -360px; }\n\n.ap-lightning {\n  background-position: -120px -380px; }\n\n.ap-tornado {\n  background-position: -120px -400px; }\n\n.ap-fog {\n  background-position: -120px -420px; }\n\n.ap-wind_blowing_face {\n  background-position: -120px -440px; }\n\n.ap-hotdog {\n  background-position: -120px -460px; }\n\n.ap-taco {\n  background-position: -120px -480px; }\n\n.ap-burrito {\n  background-position: -120px -500px; }\n\n.ap-chestnut {\n  background-position: -120px -520px; }\n\n.ap-seedling {\n  background-position: -120px -540px; }\n\n.ap-evergreen_tree {\n  background-position: -120px -560px; }\n\n.ap-deciduous_tree {\n  background-position: -120px -580px; }\n\n.ap-palm_tree {\n  background-position: -120px -600px; }\n\n.ap-cactus {\n  background-position: -120px -620px; }\n\n.ap-hot_pepper {\n  background-position: -120px -640px; }\n\n.ap-tulip {\n  background-position: -120px -660px; }\n\n.ap-cherry_blossom {\n  background-position: -120px -680px; }\n\n.ap-rose {\n  background-position: -120px -700px; }\n\n.ap-hibiscus {\n  background-position: -120px -720px; }\n\n.ap-sunflower {\n  background-position: -120px -740px; }\n\n.ap-blossom {\n  background-position: -120px -760px; }\n\n.ap-corn {\n  background-position: -120px -780px; }\n\n.ap-ear_of_rice {\n  background-position: -120px -800px; }\n\n.ap-herb {\n  background-position: -140px -0px; }\n\n.ap-four_leaf_clover {\n  background-position: -140px -20px; }\n\n.ap-maple_leaf {\n  background-position: -140px -40px; }\n\n.ap-fallen_leaf {\n  background-position: -140px -60px; }\n\n.ap-leaves {\n  background-position: -140px -80px; }\n\n.ap-mushroom {\n  background-position: -140px -100px; }\n\n.ap-tomato {\n  background-position: -140px -120px; }\n\n.ap-eggplant {\n  background-position: -140px -140px; }\n\n.ap-grapes {\n  background-position: -140px -160px; }\n\n.ap-melon {\n  background-position: -140px -180px; }\n\n.ap-watermelon {\n  background-position: -140px -200px; }\n\n.ap-tangerine {\n  background-position: -140px -220px; }\n\n.ap-lemon {\n  background-position: -140px -240px; }\n\n.ap-banana {\n  background-position: -140px -260px; }\n\n.ap-pineapple {\n  background-position: -140px -280px; }\n\n.ap-apple {\n  background-position: -140px -300px; }\n\n.ap-green_apple {\n  background-position: -140px -320px; }\n\n.ap-pear {\n  background-position: -140px -340px; }\n\n.ap-peach {\n  background-position: -140px -360px; }\n\n.ap-cherries {\n  background-position: -140px -380px; }\n\n.ap-strawberry {\n  background-position: -140px -400px; }\n\n.ap-hamburger {\n  background-position: -140px -420px; }\n\n.ap-pizza {\n  background-position: -140px -440px; }\n\n.ap-meat_on_bone {\n  background-position: -140px -460px; }\n\n.ap-poultry_leg {\n  background-position: -140px -480px; }\n\n.ap-rice_cracker {\n  background-position: -140px -500px; }\n\n.ap-rice_ball {\n  background-position: -140px -520px; }\n\n.ap-rice {\n  background-position: -140px -540px; }\n\n.ap-curry {\n  background-position: -140px -560px; }\n\n.ap-ramen {\n  background-position: -140px -580px; }\n\n.ap-spaghetti {\n  background-position: -140px -600px; }\n\n.ap-bread {\n  background-position: -140px -620px; }\n\n.ap-fries {\n  background-position: -140px -640px; }\n\n.ap-sweet_potato {\n  background-position: -140px -660px; }\n\n.ap-dango {\n  background-position: -140px -680px; }\n\n.ap-oden {\n  background-position: -140px -700px; }\n\n.ap-sushi {\n  background-position: -140px -720px; }\n\n.ap-fried_shrimp {\n  background-position: -140px -740px; }\n\n.ap-fish_cake {\n  background-position: -140px -760px; }\n\n.ap-icecream {\n  background-position: -140px -780px; }\n\n.ap-shaved_ice {\n  background-position: -140px -800px; }\n\n.ap-ice_cream {\n  background-position: -160px -0px; }\n\n.ap-doughnut {\n  background-position: -160px -20px; }\n\n.ap-cookie {\n  background-position: -160px -40px; }\n\n.ap-chocolate_bar {\n  background-position: -160px -60px; }\n\n.ap-candy {\n  background-position: -160px -80px; }\n\n.ap-lollipop {\n  background-position: -160px -100px; }\n\n.ap-custard {\n  background-position: -160px -120px; }\n\n.ap-honey_pot {\n  background-position: -160px -140px; }\n\n.ap-cake {\n  background-position: -160px -160px; }\n\n.ap-bento {\n  background-position: -160px -180px; }\n\n.ap-stew {\n  background-position: -160px -200px; }\n\n.ap-egg {\n  background-position: -160px -220px; }\n\n.ap-fork_and_knife {\n  background-position: -160px -240px; }\n\n.ap-tea {\n  background-position: -160px -260px; }\n\n.ap-sake {\n  background-position: -160px -280px; }\n\n.ap-wine_glass {\n  background-position: -160px -300px; }\n\n.ap-cocktail {\n  background-position: -160px -320px; }\n\n.ap-tropical_drink {\n  background-position: -160px -340px; }\n\n.ap-beer {\n  background-position: -160px -360px; }\n\n.ap-beers {\n  background-position: -160px -380px; }\n\n.ap-baby_bottle {\n  background-position: -160px -400px; }\n\n.ap-knife_fork_plate {\n  background-position: -160px -420px; }\n\n.ap-champagne {\n  background-position: -160px -440px; }\n\n.ap-popcorn {\n  background-position: -160px -460px; }\n\n.ap-ribbon {\n  background-position: -160px -480px; }\n\n.ap-gift {\n  background-position: -160px -500px; }\n\n.ap-birthday {\n  background-position: -160px -520px; }\n\n.ap-jack_o_lantern {\n  background-position: -160px -540px; }\n\n.ap-christmas_tree {\n  background-position: -160px -560px; }\n\n.ap-santa {\n  background-position: -160px -580px; }\n\n.ap-fireworks {\n  background-position: -160px -700px; }\n\n.ap-sparkler {\n  background-position: -160px -720px; }\n\n.ap-balloon {\n  background-position: -160px -740px; }\n\n.ap-tada {\n  background-position: -160px -760px; }\n\n.ap-confetti_ball {\n  background-position: -160px -780px; }\n\n.ap-tanabata_tree {\n  background-position: -160px -800px; }\n\n.ap-crossed_flags {\n  background-position: -180px -0px; }\n\n.ap-bamboo {\n  background-position: -180px -20px; }\n\n.ap-dolls {\n  background-position: -180px -40px; }\n\n.ap-flags {\n  background-position: -180px -60px; }\n\n.ap-wind_chime {\n  background-position: -180px -80px; }\n\n.ap-rice_scene {\n  background-position: -180px -100px; }\n\n.ap-school_satchel {\n  background-position: -180px -120px; }\n\n.ap-mortar_board {\n  background-position: -180px -140px; }\n\n.ap-medal {\n  background-position: -180px -160px; }\n\n.ap-reminder_ribbon {\n  background-position: -180px -180px; }\n\n.ap-studio_microphone {\n  background-position: -180px -200px; }\n\n.ap-level_slider {\n  background-position: -180px -220px; }\n\n.ap-control_knobs {\n  background-position: -180px -240px; }\n\n.ap-film_frames {\n  background-position: -180px -260px; }\n\n.ap-admission_tickets {\n  background-position: -180px -280px; }\n\n.ap-carousel_horse {\n  background-position: -180px -300px; }\n\n.ap-ferris_wheel {\n  background-position: -180px -320px; }\n\n.ap-roller_coaster {\n  background-position: -180px -340px; }\n\n.ap-fishing_pole_and_fish {\n  background-position: -180px -360px; }\n\n.ap-microphone {\n  background-position: -180px -380px; }\n\n.ap-movie_camera {\n  background-position: -180px -400px; }\n\n.ap-cinema {\n  background-position: -180px -420px; }\n\n.ap-headphones {\n  background-position: -180px -440px; }\n\n.ap-art {\n  background-position: -180px -460px; }\n\n.ap-tophat {\n  background-position: -180px -480px; }\n\n.ap-circus_tent {\n  background-position: -180px -500px; }\n\n.ap-ticket {\n  background-position: -180px -520px; }\n\n.ap-clapper {\n  background-position: -180px -540px; }\n\n.ap-performing_arts {\n  background-position: -180px -560px; }\n\n.ap-video_game {\n  background-position: -180px -580px; }\n\n.ap-dart {\n  background-position: -180px -600px; }\n\n.ap-slot_machine {\n  background-position: -180px -620px; }\n\n.ap-8ball {\n  background-position: -180px -640px; }\n\n.ap-game_die {\n  background-position: -180px -660px; }\n\n.ap-bowling {\n  background-position: -180px -680px; }\n\n.ap-flower_playing_cards {\n  background-position: -180px -700px; }\n\n.ap-musical_note {\n  background-position: -180px -720px; }\n\n.ap-notes {\n  background-position: -180px -740px; }\n\n.ap-saxophone {\n  background-position: -180px -760px; }\n\n.ap-guitar {\n  background-position: -180px -780px; }\n\n.ap-musical_keyboard {\n  background-position: -180px -800px; }\n\n.ap-trumpet {\n  background-position: -200px -0px; }\n\n.ap-violin {\n  background-position: -200px -20px; }\n\n.ap-musical_score {\n  background-position: -200px -40px; }\n\n.ap-running_shirt_with_sash {\n  background-position: -200px -60px; }\n\n.ap-tennis {\n  background-position: -200px -80px; }\n\n.ap-ski {\n  background-position: -200px -100px; }\n\n.ap-basketball {\n  background-position: -200px -120px; }\n\n.ap-checkered_flag {\n  background-position: -200px -140px; }\n\n.ap-snowboarder {\n  background-position: -200px -160px; }\n\n.ap-runner {\n  background-position: -200px -180px; }\n\n.ap-surfer {\n  background-position: -200px -300px; }\n\n.ap-sports_medal {\n  background-position: -200px -420px; }\n\n.ap-trophy {\n  background-position: -200px -440px; }\n\n.ap-horse_racing {\n  background-position: -200px -460px; }\n\n.ap-football {\n  background-position: -200px -480px; }\n\n.ap-rugby_football {\n  background-position: -200px -500px; }\n\n.ap-swimmer {\n  background-position: -200px -520px; }\n\n.ap-weight_lifter {\n  background-position: -200px -640px; }\n\n.ap-golfer {\n  background-position: -200px -760px; }\n\n.ap-racing_motorcycle {\n  background-position: -200px -780px; }\n\n.ap-racing_car {\n  background-position: -200px -800px; }\n\n.ap-cricket_bat_and_ball {\n  background-position: -220px -0px; }\n\n.ap-volleyball {\n  background-position: -220px -20px; }\n\n.ap-field_hockey_stick_and_ball {\n  background-position: -220px -40px; }\n\n.ap-ice_hockey_stick_and_puck {\n  background-position: -220px -60px; }\n\n.ap-table_tennis_paddle_and_ball {\n  background-position: -220px -80px; }\n\n.ap-snow_capped_mountain {\n  background-position: -220px -100px; }\n\n.ap-camping {\n  background-position: -220px -120px; }\n\n.ap-beach_with_umbrella {\n  background-position: -220px -140px; }\n\n.ap-building_construction {\n  background-position: -220px -160px; }\n\n.ap-house_buildings {\n  background-position: -220px -180px; }\n\n.ap-cityscape {\n  background-position: -220px -200px; }\n\n.ap-derelict_house_building {\n  background-position: -220px -220px; }\n\n.ap-classical_building {\n  background-position: -220px -240px; }\n\n.ap-desert {\n  background-position: -220px -260px; }\n\n.ap-desert_island {\n  background-position: -220px -280px; }\n\n.ap-national_park {\n  background-position: -220px -300px; }\n\n.ap-stadium {\n  background-position: -220px -320px; }\n\n.ap-house {\n  background-position: -220px -340px; }\n\n.ap-house_with_garden {\n  background-position: -220px -360px; }\n\n.ap-office {\n  background-position: -220px -380px; }\n\n.ap-post_office {\n  background-position: -220px -400px; }\n\n.ap-european_post_office {\n  background-position: -220px -420px; }\n\n.ap-hospital {\n  background-position: -220px -440px; }\n\n.ap-bank {\n  background-position: -220px -460px; }\n\n.ap-atm {\n  background-position: -220px -480px; }\n\n.ap-hotel {\n  background-position: -220px -500px; }\n\n.ap-love_hotel {\n  background-position: -220px -520px; }\n\n.ap-convenience_store {\n  background-position: -220px -540px; }\n\n.ap-school {\n  background-position: -220px -560px; }\n\n.ap-department_store {\n  background-position: -220px -580px; }\n\n.ap-factory {\n  background-position: -220px -600px; }\n\n.ap-izakaya_lantern {\n  background-position: -220px -620px; }\n\n.ap-japanese_castle {\n  background-position: -220px -640px; }\n\n.ap-european_castle {\n  background-position: -220px -660px; }\n\n.ap-waving_white_flag {\n  background-position: -220px -680px; }\n\n.ap-waving_black_flag {\n  background-position: -220px -700px; }\n\n.ap-rosette {\n  background-position: -220px -720px; }\n\n.ap-label {\n  background-position: -220px -740px; }\n\n.ap-badminton_racquet_and_shuttlecock {\n  background-position: -220px -760px; }\n\n.ap-bow_and_arrow {\n  background-position: -220px -780px; }\n\n.ap-amphora {\n  background-position: -220px -800px; }\n\n.ap-skin-tone-2 {\n  background-position: -240px -0px; }\n\n.ap-skin-tone-3 {\n  background-position: -240px -20px; }\n\n.ap-skin-tone-4 {\n  background-position: -240px -40px; }\n\n.ap-skin-tone-5 {\n  background-position: -240px -60px; }\n\n.ap-skin-tone-6 {\n  background-position: -240px -80px; }\n\n.ap-rat {\n  background-position: -240px -100px; }\n\n.ap-mouse2 {\n  background-position: -240px -120px; }\n\n.ap-ox {\n  background-position: -240px -140px; }\n\n.ap-water_buffalo {\n  background-position: -240px -160px; }\n\n.ap-cow2 {\n  background-position: -240px -180px; }\n\n.ap-tiger2 {\n  background-position: -240px -200px; }\n\n.ap-leopard {\n  background-position: -240px -220px; }\n\n.ap-rabbit2 {\n  background-position: -240px -240px; }\n\n.ap-cat2 {\n  background-position: -240px -260px; }\n\n.ap-dragon {\n  background-position: -240px -280px; }\n\n.ap-crocodile {\n  background-position: -240px -300px; }\n\n.ap-whale2 {\n  background-position: -240px -320px; }\n\n.ap-snail {\n  background-position: -240px -340px; }\n\n.ap-snake {\n  background-position: -240px -360px; }\n\n.ap-racehorse {\n  background-position: -240px -380px; }\n\n.ap-ram {\n  background-position: -240px -400px; }\n\n.ap-goat {\n  background-position: -240px -420px; }\n\n.ap-sheep {\n  background-position: -240px -440px; }\n\n.ap-monkey {\n  background-position: -240px -460px; }\n\n.ap-rooster {\n  background-position: -240px -480px; }\n\n.ap-chicken {\n  background-position: -240px -500px; }\n\n.ap-dog2 {\n  background-position: -240px -520px; }\n\n.ap-pig2 {\n  background-position: -240px -540px; }\n\n.ap-boar {\n  background-position: -240px -560px; }\n\n.ap-elephant {\n  background-position: -240px -580px; }\n\n.ap-octopus {\n  background-position: -240px -600px; }\n\n.ap-shell {\n  background-position: -240px -620px; }\n\n.ap-bug {\n  background-position: -240px -640px; }\n\n.ap-ant {\n  background-position: -240px -660px; }\n\n.ap-bee {\n  background-position: -240px -680px; }\n\n.ap-beetle {\n  background-position: -240px -700px; }\n\n.ap-fish {\n  background-position: -240px -720px; }\n\n.ap-tropical_fish {\n  background-position: -240px -740px; }\n\n.ap-blowfish {\n  background-position: -240px -760px; }\n\n.ap-turtle {\n  background-position: -240px -780px; }\n\n.ap-hatching_chick {\n  background-position: -240px -800px; }\n\n.ap-baby_chick {\n  background-position: -260px -0px; }\n\n.ap-hatched_chick {\n  background-position: -260px -20px; }\n\n.ap-bird {\n  background-position: -260px -40px; }\n\n.ap-penguin {\n  background-position: -260px -60px; }\n\n.ap-koala {\n  background-position: -260px -80px; }\n\n.ap-poodle {\n  background-position: -260px -100px; }\n\n.ap-dromedary_camel {\n  background-position: -260px -120px; }\n\n.ap-camel {\n  background-position: -260px -140px; }\n\n.ap-dolphin {\n  background-position: -260px -160px; }\n\n.ap-mouse {\n  background-position: -260px -180px; }\n\n.ap-cow {\n  background-position: -260px -200px; }\n\n.ap-tiger {\n  background-position: -260px -220px; }\n\n.ap-rabbit {\n  background-position: -260px -240px; }\n\n.ap-cat {\n  background-position: -260px -260px; }\n\n.ap-dragon_face {\n  background-position: -260px -280px; }\n\n.ap-whale {\n  background-position: -260px -300px; }\n\n.ap-horse {\n  background-position: -260px -320px; }\n\n.ap-monkey_face {\n  background-position: -260px -340px; }\n\n.ap-dog {\n  background-position: -260px -360px; }\n\n.ap-pig {\n  background-position: -260px -380px; }\n\n.ap-frog {\n  background-position: -260px -400px; }\n\n.ap-hamster {\n  background-position: -260px -420px; }\n\n.ap-wolf {\n  background-position: -260px -440px; }\n\n.ap-bear {\n  background-position: -260px -460px; }\n\n.ap-panda_face {\n  background-position: -260px -480px; }\n\n.ap-pig_nose {\n  background-position: -260px -500px; }\n\n.ap-feet {\n  background-position: -260px -520px; }\n\n.ap-chipmunk {\n  background-position: -260px -540px; }\n\n.ap-eyes {\n  background-position: -260px -560px; }\n\n.ap-eye {\n  background-position: -260px -580px; }\n\n.ap-ear {\n  background-position: -260px -600px; }\n\n.ap-nose {\n  background-position: -260px -720px; }\n\n.ap-lips {\n  background-position: -280px -20px; }\n\n.ap-tongue {\n  background-position: -280px -40px; }\n\n.ap-point_up_2 {\n  background-position: -280px -60px; }\n\n.ap-point_down {\n  background-position: -280px -180px; }\n\n.ap-point_left {\n  background-position: -280px -300px; }\n\n.ap-point_right {\n  background-position: -280px -420px; }\n\n.ap-facepunch {\n  background-position: -280px -540px; }\n\n.ap-wave {\n  background-position: -280px -660px; }\n\n.ap-ok_hand {\n  background-position: -280px -780px; }\n\n.ap-+1 {\n  background-position: -300px -80px; }\n\n.ap--1 {\n  background-position: -300px -200px; }\n\n.ap-clap {\n  background-position: -300px -320px; }\n\n.ap-open_hands {\n  background-position: -300px -440px; }\n\n.ap-crown {\n  background-position: -300px -560px; }\n\n.ap-womans_hat {\n  background-position: -300px -580px; }\n\n.ap-eyeglasses {\n  background-position: -300px -600px; }\n\n.ap-necktie {\n  background-position: -300px -620px; }\n\n.ap-shirt {\n  background-position: -300px -640px; }\n\n.ap-jeans {\n  background-position: -300px -660px; }\n\n.ap-dress {\n  background-position: -300px -680px; }\n\n.ap-kimono {\n  background-position: -300px -700px; }\n\n.ap-bikini {\n  background-position: -300px -720px; }\n\n.ap-womans_clothes {\n  background-position: -300px -740px; }\n\n.ap-purse {\n  background-position: -300px -760px; }\n\n.ap-handbag {\n  background-position: -300px -780px; }\n\n.ap-pouch {\n  background-position: -300px -800px; }\n\n.ap-mans_shoe {\n  background-position: -320px -0px; }\n\n.ap-athletic_shoe {\n  background-position: -320px -20px; }\n\n.ap-high_heel {\n  background-position: -320px -40px; }\n\n.ap-sandal {\n  background-position: -320px -60px; }\n\n.ap-boot {\n  background-position: -320px -80px; }\n\n.ap-footprints {\n  background-position: -320px -100px; }\n\n.ap-bust_in_silhouette {\n  background-position: -320px -120px; }\n\n.ap-busts_in_silhouette {\n  background-position: -320px -140px; }\n\n.ap-boy {\n  background-position: -320px -160px; }\n\n.ap-girl {\n  background-position: -320px -280px; }\n\n.ap-man {\n  background-position: -320px -400px; }\n\n.ap-woman {\n  background-position: -320px -520px; }\n\n.ap-family {\n  background-position: -320px -640px; }\n\n.ap-couple {\n  background-position: -320px -660px; }\n\n.ap-two_men_holding_hands {\n  background-position: -320px -680px; }\n\n.ap-two_women_holding_hands {\n  background-position: -320px -700px; }\n\n.ap-cop {\n  background-position: -320px -720px; }\n\n.ap-dancers {\n  background-position: -340px -20px; }\n\n.ap-bride_with_veil {\n  background-position: -340px -40px; }\n\n.ap-person_with_blond_hair {\n  background-position: -340px -160px; }\n\n.ap-man_with_gua_pi_mao {\n  background-position: -340px -280px; }\n\n.ap-man_with_turban {\n  background-position: -340px -400px; }\n\n.ap-older_man {\n  background-position: -340px -520px; }\n\n.ap-older_woman {\n  background-position: -340px -640px; }\n\n.ap-baby {\n  background-position: -340px -760px; }\n\n.ap-construction_worker {\n  background-position: -360px -60px; }\n\n.ap-princess {\n  background-position: -360px -180px; }\n\n.ap-japanese_ogre {\n  background-position: -360px -300px; }\n\n.ap-japanese_goblin {\n  background-position: -360px -320px; }\n\n.ap-ghost {\n  background-position: -360px -340px; }\n\n.ap-angel {\n  background-position: -360px -360px; }\n\n.ap-alien {\n  background-position: -360px -480px; }\n\n.ap-space_invader {\n  background-position: -360px -500px; }\n\n.ap-imp {\n  background-position: -360px -520px; }\n\n.ap-skull {\n  background-position: -360px -540px; }\n\n.ap-information_desk_person {\n  background-position: -360px -560px; }\n\n.ap-guardsman {\n  background-position: -360px -680px; }\n\n.ap-dancer {\n  background-position: -360px -800px; }\n\n.ap-lipstick {\n  background-position: -380px -100px; }\n\n.ap-nail_care {\n  background-position: -380px -120px; }\n\n.ap-massage {\n  background-position: -380px -240px; }\n\n.ap-haircut {\n  background-position: -380px -360px; }\n\n.ap-barber {\n  background-position: -380px -480px; }\n\n.ap-syringe {\n  background-position: -380px -500px; }\n\n.ap-pill {\n  background-position: -380px -520px; }\n\n.ap-kiss {\n  background-position: -380px -540px; }\n\n.ap-love_letter {\n  background-position: -380px -560px; }\n\n.ap-ring {\n  background-position: -380px -580px; }\n\n.ap-gem {\n  background-position: -380px -600px; }\n\n.ap-couplekiss {\n  background-position: -380px -620px; }\n\n.ap-bouquet {\n  background-position: -380px -640px; }\n\n.ap-couple_with_heart {\n  background-position: -380px -660px; }\n\n.ap-wedding {\n  background-position: -380px -680px; }\n\n.ap-heartbeat {\n  background-position: -380px -700px; }\n\n.ap-broken_heart {\n  background-position: -380px -720px; }\n\n.ap-two_hearts {\n  background-position: -380px -740px; }\n\n.ap-sparkling_heart {\n  background-position: -380px -760px; }\n\n.ap-heartpulse {\n  background-position: -380px -780px; }\n\n.ap-cupid {\n  background-position: -380px -800px; }\n\n.ap-blue_heart {\n  background-position: -400px -0px; }\n\n.ap-green_heart {\n  background-position: -400px -20px; }\n\n.ap-yellow_heart {\n  background-position: -400px -40px; }\n\n.ap-purple_heart {\n  background-position: -400px -60px; }\n\n.ap-gift_heart {\n  background-position: -400px -80px; }\n\n.ap-revolving_hearts {\n  background-position: -400px -100px; }\n\n.ap-heart_decoration {\n  background-position: -400px -120px; }\n\n.ap-diamond_shape_with_a_dot_inside {\n  background-position: -400px -140px; }\n\n.ap-bulb {\n  background-position: -400px -160px; }\n\n.ap-anger {\n  background-position: -400px -180px; }\n\n.ap-bomb {\n  background-position: -400px -200px; }\n\n.ap-zzz {\n  background-position: -400px -220px; }\n\n.ap-boom {\n  background-position: -400px -240px; }\n\n.ap-sweat_drops {\n  background-position: -400px -260px; }\n\n.ap-droplet {\n  background-position: -400px -280px; }\n\n.ap-dash {\n  background-position: -400px -300px; }\n\n.ap-hankey {\n  background-position: -400px -320px; }\n\n.ap-thumbsup {\n  background-position: -300px -80px; }\n\n.ap-thumbsdown {\n  background-position: -300px -200px; }\n\n.ap-muscle {\n  background-position: -400px -340px; }\n\n.ap-dizzy {\n  background-position: -400px -460px; }\n\n.ap-speech_balloon {\n  background-position: -400px -480px; }\n\n.ap-thought_balloon {\n  background-position: -400px -500px; }\n\n.ap-white_flower {\n  background-position: -400px -520px; }\n\n.ap-100 {\n  background-position: -400px -540px; }\n\n.ap-moneybag {\n  background-position: -400px -560px; }\n\n.ap-currency_exchange {\n  background-position: -400px -580px; }\n\n.ap-heavy_dollar_sign {\n  background-position: -400px -600px; }\n\n.ap-credit_card {\n  background-position: -400px -620px; }\n\n.ap-yen {\n  background-position: -400px -640px; }\n\n.ap-dollar {\n  background-position: -400px -660px; }\n\n.ap-euro {\n  background-position: -400px -680px; }\n\n.ap-pound {\n  background-position: -400px -700px; }\n\n.ap-money_with_wings {\n  background-position: -400px -720px; }\n\n.ap-chart {\n  background-position: -400px -740px; }\n\n.ap-seat {\n  background-position: -400px -760px; }\n\n.ap-computer {\n  background-position: -400px -780px; }\n\n.ap-briefcase {\n  background-position: -400px -800px; }\n\n.ap-minidisc {\n  background-position: -420px -0px; }\n\n.ap-floppy_disk {\n  background-position: -420px -20px; }\n\n.ap-cd {\n  background-position: -420px -40px; }\n\n.ap-dvd {\n  background-position: -420px -60px; }\n\n.ap-file_folder {\n  background-position: -420px -80px; }\n\n.ap-open_file_folder {\n  background-position: -420px -100px; }\n\n.ap-page_with_curl {\n  background-position: -420px -120px; }\n\n.ap-page_facing_up {\n  background-position: -420px -140px; }\n\n.ap-date {\n  background-position: -420px -160px; }\n\n.ap-calendar {\n  background-position: -420px -180px; }\n\n.ap-card_index {\n  background-position: -420px -200px; }\n\n.ap-chart_with_upwards_trend {\n  background-position: -420px -220px; }\n\n.ap-chart_with_downwards_trend {\n  background-position: -420px -240px; }\n\n.ap-bar_chart {\n  background-position: -420px -260px; }\n\n.ap-clipboard {\n  background-position: -420px -280px; }\n\n.ap-pushpin {\n  background-position: -420px -300px; }\n\n.ap-round_pushpin {\n  background-position: -420px -320px; }\n\n.ap-paperclip {\n  background-position: -420px -340px; }\n\n.ap-straight_ruler {\n  background-position: -420px -360px; }\n\n.ap-triangular_ruler {\n  background-position: -420px -380px; }\n\n.ap-bookmark_tabs {\n  background-position: -420px -400px; }\n\n.ap-ledger {\n  background-position: -420px -420px; }\n\n.ap-notebook {\n  background-position: -420px -440px; }\n\n.ap-notebook_with_decorative_cover {\n  background-position: -420px -460px; }\n\n.ap-closed_book {\n  background-position: -420px -480px; }\n\n.ap-book {\n  background-position: -420px -500px; }\n\n.ap-green_book {\n  background-position: -420px -520px; }\n\n.ap-blue_book {\n  background-position: -420px -540px; }\n\n.ap-orange_book {\n  background-position: -420px -560px; }\n\n.ap-books {\n  background-position: -420px -580px; }\n\n.ap-name_badge {\n  background-position: -420px -600px; }\n\n.ap-scroll {\n  background-position: -420px -620px; }\n\n.ap-memo {\n  background-position: -420px -640px; }\n\n.ap-telephone_receiver {\n  background-position: -420px -660px; }\n\n.ap-pager {\n  background-position: -420px -680px; }\n\n.ap-fax {\n  background-position: -420px -700px; }\n\n.ap-satellite_antenna {\n  background-position: -420px -720px; }\n\n.ap-loudspeaker {\n  background-position: -420px -740px; }\n\n.ap-mega {\n  background-position: -420px -760px; }\n\n.ap-outbox_tray {\n  background-position: -420px -780px; }\n\n.ap-inbox_tray {\n  background-position: -420px -800px; }\n\n.ap-package {\n  background-position: -440px -0px; }\n\n.ap-e-mail {\n  background-position: -440px -20px; }\n\n.ap-incoming_envelope {\n  background-position: -440px -40px; }\n\n.ap-envelope_with_arrow {\n  background-position: -440px -60px; }\n\n.ap-mailbox_closed {\n  background-position: -440px -80px; }\n\n.ap-mailbox {\n  background-position: -440px -100px; }\n\n.ap-mailbox_with_mail {\n  background-position: -440px -120px; }\n\n.ap-mailbox_with_no_mail {\n  background-position: -440px -140px; }\n\n.ap-postbox {\n  background-position: -440px -160px; }\n\n.ap-postal_horn {\n  background-position: -440px -180px; }\n\n.ap-newspaper {\n  background-position: -440px -200px; }\n\n.ap-iphone {\n  background-position: -440px -220px; }\n\n.ap-calling {\n  background-position: -440px -240px; }\n\n.ap-vibration_mode {\n  background-position: -440px -260px; }\n\n.ap-mobile_phone_off {\n  background-position: -440px -280px; }\n\n.ap-no_mobile_phones {\n  background-position: -440px -300px; }\n\n.ap-signal_strength {\n  background-position: -440px -320px; }\n\n.ap-camera {\n  background-position: -440px -340px; }\n\n.ap-camera_with_flash {\n  background-position: -440px -360px; }\n\n.ap-video_camera {\n  background-position: -440px -380px; }\n\n.ap-tv {\n  background-position: -440px -400px; }\n\n.ap-radio {\n  background-position: -440px -420px; }\n\n.ap-vhs {\n  background-position: -440px -440px; }\n\n.ap-film_projector {\n  background-position: -440px -460px; }\n\n.ap-prayer_beads {\n  background-position: -440px -480px; }\n\n.ap-twisted_rightwards_arrows {\n  background-position: -440px -500px; }\n\n.ap-repeat {\n  background-position: -440px -520px; }\n\n.ap-repeat_one {\n  background-position: -440px -540px; }\n\n.ap-arrows_clockwise {\n  background-position: -440px -560px; }\n\n.ap-arrows_counterclockwise {\n  background-position: -440px -580px; }\n\n.ap-low_brightness {\n  background-position: -440px -600px; }\n\n.ap-high_brightness {\n  background-position: -440px -620px; }\n\n.ap-mute {\n  background-position: -440px -640px; }\n\n.ap-speaker {\n  background-position: -440px -660px; }\n\n.ap-sound {\n  background-position: -440px -680px; }\n\n.ap-loud_sound {\n  background-position: -440px -700px; }\n\n.ap-battery {\n  background-position: -440px -720px; }\n\n.ap-electric_plug {\n  background-position: -440px -740px; }\n\n.ap-mag {\n  background-position: -440px -760px; }\n\n.ap-mag_right {\n  background-position: -440px -780px; }\n\n.ap-lock_with_ink_pen {\n  background-position: -440px -800px; }\n\n.ap-closed_lock_with_key {\n  background-position: -460px -0px; }\n\n.ap-key {\n  background-position: -460px -20px; }\n\n.ap-lock {\n  background-position: -460px -40px; }\n\n.ap-unlock {\n  background-position: -460px -60px; }\n\n.ap-bell {\n  background-position: -460px -80px; }\n\n.ap-no_bell {\n  background-position: -460px -100px; }\n\n.ap-bookmark {\n  background-position: -460px -120px; }\n\n.ap-link {\n  background-position: -460px -140px; }\n\n.ap-radio_button {\n  background-position: -460px -160px; }\n\n.ap-back {\n  background-position: -460px -180px; }\n\n.ap-end {\n  background-position: -460px -200px; }\n\n.ap-on {\n  background-position: -460px -220px; }\n\n.ap-soon {\n  background-position: -460px -240px; }\n\n.ap-top {\n  background-position: -460px -260px; }\n\n.ap-underage {\n  background-position: -460px -280px; }\n\n.ap-keycap_ten {\n  background-position: -460px -300px; }\n\n.ap-capital_abcd {\n  background-position: -460px -320px; }\n\n.ap-abcd {\n  background-position: -460px -340px; }\n\n.ap-1234 {\n  background-position: -460px -360px; }\n\n.ap-symbols {\n  background-position: -460px -380px; }\n\n.ap-abc {\n  background-position: -460px -400px; }\n\n.ap-fire {\n  background-position: -460px -420px; }\n\n.ap-flashlight {\n  background-position: -460px -440px; }\n\n.ap-wrench {\n  background-position: -460px -460px; }\n\n.ap-hammer {\n  background-position: -460px -480px; }\n\n.ap-nut_and_bolt {\n  background-position: -460px -500px; }\n\n.ap-hocho {\n  background-position: -460px -520px; }\n\n.ap-gun {\n  background-position: -460px -540px; }\n\n.ap-microscope {\n  background-position: -460px -560px; }\n\n.ap-telescope {\n  background-position: -460px -580px; }\n\n.ap-crystal_ball {\n  background-position: -460px -600px; }\n\n.ap-six_pointed_star {\n  background-position: -460px -620px; }\n\n.ap-beginner {\n  background-position: -460px -640px; }\n\n.ap-trident {\n  background-position: -460px -660px; }\n\n.ap-black_square_button {\n  background-position: -460px -680px; }\n\n.ap-white_square_button {\n  background-position: -460px -700px; }\n\n.ap-red_circle {\n  background-position: -460px -720px; }\n\n.ap-large_blue_circle {\n  background-position: -460px -740px; }\n\n.ap-large_orange_diamond {\n  background-position: -460px -760px; }\n\n.ap-large_blue_diamond {\n  background-position: -460px -780px; }\n\n.ap-small_orange_diamond {\n  background-position: -460px -800px; }\n\n.ap-small_blue_diamond {\n  background-position: -480px -0px; }\n\n.ap-small_red_triangle {\n  background-position: -480px -20px; }\n\n.ap-small_red_triangle_down {\n  background-position: -480px -40px; }\n\n.ap-arrow_up_small {\n  background-position: -480px -60px; }\n\n.ap-arrow_down_small {\n  background-position: -480px -80px; }\n\n.ap-om_symbol {\n  background-position: -480px -100px; }\n\n.ap-dove_of_peace {\n  background-position: -480px -120px; }\n\n.ap-kaaba {\n  background-position: -480px -140px; }\n\n.ap-mosque {\n  background-position: -480px -160px; }\n\n.ap-synagogue {\n  background-position: -480px -180px; }\n\n.ap-menorah_with_nine_branches {\n  background-position: -480px -200px; }\n\n.ap-clock1 {\n  background-position: -480px -220px; }\n\n.ap-clock2 {\n  background-position: -480px -240px; }\n\n.ap-clock3 {\n  background-position: -480px -260px; }\n\n.ap-clock4 {\n  background-position: -480px -280px; }\n\n.ap-clock5 {\n  background-position: -480px -300px; }\n\n.ap-clock6 {\n  background-position: -480px -320px; }\n\n.ap-clock7 {\n  background-position: -480px -340px; }\n\n.ap-clock8 {\n  background-position: -480px -360px; }\n\n.ap-clock9 {\n  background-position: -480px -380px; }\n\n.ap-clock10 {\n  background-position: -480px -400px; }\n\n.ap-clock11 {\n  background-position: -480px -420px; }\n\n.ap-clock12 {\n  background-position: -480px -440px; }\n\n.ap-clock130 {\n  background-position: -480px -460px; }\n\n.ap-clock230 {\n  background-position: -480px -480px; }\n\n.ap-clock330 {\n  background-position: -480px -500px; }\n\n.ap-clock430 {\n  background-position: -480px -520px; }\n\n.ap-clock530 {\n  background-position: -480px -540px; }\n\n.ap-clock630 {\n  background-position: -480px -560px; }\n\n.ap-clock730 {\n  background-position: -480px -580px; }\n\n.ap-clock830 {\n  background-position: -480px -600px; }\n\n.ap-clock930 {\n  background-position: -480px -620px; }\n\n.ap-clock1030 {\n  background-position: -480px -640px; }\n\n.ap-clock1130 {\n  background-position: -480px -660px; }\n\n.ap-clock1230 {\n  background-position: -480px -680px; }\n\n.ap-candle {\n  background-position: -480px -700px; }\n\n.ap-mantelpiece_clock {\n  background-position: -480px -720px; }\n\n.ap-hole {\n  background-position: -480px -740px; }\n\n.ap-man_in_business_suit_levitating {\n  background-position: -480px -760px; }\n\n.ap-sleuth_or_spy {\n  background-position: -480px -780px; }\n\n.ap-dark_sunglasses {\n  background-position: -500px -80px; }\n\n.ap-spider {\n  background-position: -500px -100px; }\n\n.ap-spider_web {\n  background-position: -500px -120px; }\n\n.ap-joystick {\n  background-position: -500px -140px; }\n\n.ap-linked_paperclips {\n  background-position: -500px -160px; }\n\n.ap-lower_left_ballpoint_pen {\n  background-position: -500px -180px; }\n\n.ap-lower_left_fountain_pen {\n  background-position: -500px -200px; }\n\n.ap-lower_left_paintbrush {\n  background-position: -500px -220px; }\n\n.ap-lower_left_crayon {\n  background-position: -500px -240px; }\n\n.ap-raised_hand_with_fingers_splayed {\n  background-position: -500px -260px; }\n\n.ap-middle_finger {\n  background-position: -500px -380px; }\n\n.ap-spock-hand {\n  background-position: -500px -500px; }\n\n.ap-desktop_computer {\n  background-position: -500px -620px; }\n\n.ap-printer {\n  background-position: -500px -640px; }\n\n.ap-three_button_mouse {\n  background-position: -500px -660px; }\n\n.ap-trackball {\n  background-position: -500px -680px; }\n\n.ap-frame_with_picture {\n  background-position: -500px -700px; }\n\n.ap-card_index_dividers {\n  background-position: -500px -720px; }\n\n.ap-card_file_box {\n  background-position: -500px -740px; }\n\n.ap-file_cabinet {\n  background-position: -500px -760px; }\n\n.ap-wastebasket {\n  background-position: -500px -780px; }\n\n.ap-spiral_note_pad {\n  background-position: -500px -800px; }\n\n.ap-spiral_calendar_pad {\n  background-position: -520px -0px; }\n\n.ap-compression {\n  background-position: -520px -20px; }\n\n.ap-old_key {\n  background-position: -520px -40px; }\n\n.ap-rolled_up_newspaper {\n  background-position: -520px -60px; }\n\n.ap-dagger_knife {\n  background-position: -520px -80px; }\n\n.ap-speaking_head_in_silhouette {\n  background-position: -520px -100px; }\n\n.ap-left_speech_bubble {\n  background-position: -520px -120px; }\n\n.ap-right_anger_bubble {\n  background-position: -520px -140px; }\n\n.ap-ballot_box_with_ballot {\n  background-position: -520px -160px; }\n\n.ap-world_map {\n  background-position: -520px -180px; }\n\n.ap-mount_fuji {\n  background-position: -520px -200px; }\n\n.ap-tokyo_tower {\n  background-position: -520px -220px; }\n\n.ap-statue_of_liberty {\n  background-position: -520px -240px; }\n\n.ap-japan {\n  background-position: -520px -260px; }\n\n.ap-moyai {\n  background-position: -520px -280px; }\n\n.ap-grinning {\n  background-position: -520px -300px; }\n\n.ap-grin {\n  background-position: -520px -320px; }\n\n.ap-joy {\n  background-position: -520px -340px; }\n\n.ap-smiley {\n  background-position: -520px -360px; }\n\n.ap-smile {\n  background-position: -520px -380px; }\n\n.ap-sweat_smile {\n  background-position: -520px -400px; }\n\n.ap-laughing {\n  background-position: -520px -420px; }\n\n.ap-innocent {\n  background-position: -520px -440px; }\n\n.ap-smiling_imp {\n  background-position: -520px -460px; }\n\n.ap-wink {\n  background-position: -520px -480px; }\n\n.ap-blush {\n  background-position: -520px -500px; }\n\n.ap-yum {\n  background-position: -520px -520px; }\n\n.ap-relieved {\n  background-position: -520px -540px; }\n\n.ap-heart_eyes {\n  background-position: -520px -560px; }\n\n.ap-sunglasses {\n  background-position: -520px -580px; }\n\n.ap-smirk {\n  background-position: -520px -600px; }\n\n.ap-neutral_face {\n  background-position: -520px -620px; }\n\n.ap-expressionless {\n  background-position: -520px -640px; }\n\n.ap-unamused {\n  background-position: -520px -660px; }\n\n.ap-sweat {\n  background-position: -520px -680px; }\n\n.ap-pensive {\n  background-position: -520px -700px; }\n\n.ap-confused {\n  background-position: -520px -720px; }\n\n.ap-confounded {\n  background-position: -520px -740px; }\n\n.ap-kissing {\n  background-position: -520px -760px; }\n\n.ap-kissing_heart {\n  background-position: -520px -780px; }\n\n.ap-kissing_smiling_eyes {\n  background-position: -520px -800px; }\n\n.ap-kissing_closed_eyes {\n  background-position: -540px -0px; }\n\n.ap-stuck_out_tongue {\n  background-position: -540px -20px; }\n\n.ap-stuck_out_tongue_winking_eye {\n  background-position: -540px -40px; }\n\n.ap-stuck_out_tongue_closed_eyes {\n  background-position: -540px -60px; }\n\n.ap-disappointed {\n  background-position: -540px -80px; }\n\n.ap-worried {\n  background-position: -540px -100px; }\n\n.ap-angry {\n  background-position: -540px -120px; }\n\n.ap-rage {\n  background-position: -540px -140px; }\n\n.ap-cry {\n  background-position: -540px -160px; }\n\n.ap-persevere {\n  background-position: -540px -180px; }\n\n.ap-triumph {\n  background-position: -540px -200px; }\n\n.ap-disappointed_relieved {\n  background-position: -540px -220px; }\n\n.ap-frowning {\n  background-position: -540px -240px; }\n\n.ap-anguished {\n  background-position: -540px -260px; }\n\n.ap-fearful {\n  background-position: -540px -280px; }\n\n.ap-weary {\n  background-position: -540px -300px; }\n\n.ap-sleepy {\n  background-position: -540px -320px; }\n\n.ap-tired_face {\n  background-position: -540px -340px; }\n\n.ap-grimacing {\n  background-position: -540px -360px; }\n\n.ap-sob {\n  background-position: -540px -380px; }\n\n.ap-open_mouth {\n  background-position: -540px -400px; }\n\n.ap-hushed {\n  background-position: -540px -420px; }\n\n.ap-cold_sweat {\n  background-position: -540px -440px; }\n\n.ap-scream {\n  background-position: -540px -460px; }\n\n.ap-astonished {\n  background-position: -540px -480px; }\n\n.ap-flushed {\n  background-position: -540px -500px; }\n\n.ap-sleeping {\n  background-position: -540px -520px; }\n\n.ap-dizzy_face {\n  background-position: -540px -540px; }\n\n.ap-no_mouth {\n  background-position: -540px -560px; }\n\n.ap-mask {\n  background-position: -540px -580px; }\n\n.ap-smile_cat {\n  background-position: -540px -600px; }\n\n.ap-joy_cat {\n  background-position: -540px -620px; }\n\n.ap-smiley_cat {\n  background-position: -540px -640px; }\n\n.ap-heart_eyes_cat {\n  background-position: -540px -660px; }\n\n.ap-smirk_cat {\n  background-position: -540px -680px; }\n\n.ap-kissing_cat {\n  background-position: -540px -700px; }\n\n.ap-pouting_cat {\n  background-position: -540px -720px; }\n\n.ap-crying_cat_face {\n  background-position: -540px -740px; }\n\n.ap-scream_cat {\n  background-position: -540px -760px; }\n\n.ap-slightly_frowning_face {\n  background-position: -540px -780px; }\n\n.ap-slightly_smiling_face {\n  background-position: -540px -800px; }\n\n.ap-upside_down_face {\n  background-position: -560px -0px; }\n\n.ap-face_with_rolling_eyes {\n  background-position: -560px -20px; }\n\n.ap-no_good {\n  background-position: -560px -40px; }\n\n.ap-ok_woman {\n  background-position: -560px -160px; }\n\n.ap-bow {\n  background-position: -560px -280px; }\n\n.ap-see_no_evil {\n  background-position: -560px -400px; }\n\n.ap-hear_no_evil {\n  background-position: -560px -420px; }\n\n.ap-speak_no_evil {\n  background-position: -560px -440px; }\n\n.ap-raising_hand {\n  background-position: -560px -460px; }\n\n.ap-raised_hands {\n  background-position: -560px -580px; }\n\n.ap-person_frowning {\n  background-position: -560px -700px; }\n\n.ap-person_with_pouting_face {\n  background-position: -580px -0px; }\n\n.ap-pray {\n  background-position: -580px -120px; }\n\n.ap-rocket {\n  background-position: -580px -240px; }\n\n.ap-helicopter {\n  background-position: -580px -260px; }\n\n.ap-steam_locomotive {\n  background-position: -580px -280px; }\n\n.ap-railway_car {\n  background-position: -580px -300px; }\n\n.ap-bullettrain_side {\n  background-position: -580px -320px; }\n\n.ap-bullettrain_front {\n  background-position: -580px -340px; }\n\n.ap-train2 {\n  background-position: -580px -360px; }\n\n.ap-metro {\n  background-position: -580px -380px; }\n\n.ap-light_rail {\n  background-position: -580px -400px; }\n\n.ap-station {\n  background-position: -580px -420px; }\n\n.ap-tram {\n  background-position: -580px -440px; }\n\n.ap-train {\n  background-position: -580px -460px; }\n\n.ap-bus {\n  background-position: -580px -480px; }\n\n.ap-oncoming_bus {\n  background-position: -580px -500px; }\n\n.ap-trolleybus {\n  background-position: -580px -520px; }\n\n.ap-busstop {\n  background-position: -580px -540px; }\n\n.ap-minibus {\n  background-position: -580px -560px; }\n\n.ap-ambulance {\n  background-position: -580px -580px; }\n\n.ap-fire_engine {\n  background-position: -580px -600px; }\n\n.ap-police_car {\n  background-position: -580px -620px; }\n\n.ap-oncoming_police_car {\n  background-position: -580px -640px; }\n\n.ap-taxi {\n  background-position: -580px -660px; }\n\n.ap-oncoming_taxi {\n  background-position: -580px -680px; }\n\n.ap-car {\n  background-position: -580px -700px; }\n\n.ap-oncoming_automobile {\n  background-position: -580px -720px; }\n\n.ap-blue_car {\n  background-position: -580px -740px; }\n\n.ap-truck {\n  background-position: -580px -760px; }\n\n.ap-articulated_lorry {\n  background-position: -580px -780px; }\n\n.ap-tractor {\n  background-position: -580px -800px; }\n\n.ap-monorail {\n  background-position: -600px -0px; }\n\n.ap-mountain_railway {\n  background-position: -600px -20px; }\n\n.ap-suspension_railway {\n  background-position: -600px -40px; }\n\n.ap-mountain_cableway {\n  background-position: -600px -60px; }\n\n.ap-aerial_tramway {\n  background-position: -600px -80px; }\n\n.ap-ship {\n  background-position: -600px -100px; }\n\n.ap-rowboat {\n  background-position: -600px -120px; }\n\n.ap-speedboat {\n  background-position: -600px -240px; }\n\n.ap-traffic_light {\n  background-position: -600px -260px; }\n\n.ap-vertical_traffic_light {\n  background-position: -600px -280px; }\n\n.ap-construction {\n  background-position: -600px -300px; }\n\n.ap-rotating_light {\n  background-position: -600px -320px; }\n\n.ap-triangular_flag_on_post {\n  background-position: -600px -340px; }\n\n.ap-door {\n  background-position: -600px -360px; }\n\n.ap-no_entry_sign {\n  background-position: -600px -380px; }\n\n.ap-smoking {\n  background-position: -600px -400px; }\n\n.ap-no_smoking {\n  background-position: -600px -420px; }\n\n.ap-put_litter_in_its_place {\n  background-position: -600px -440px; }\n\n.ap-do_not_litter {\n  background-position: -600px -460px; }\n\n.ap-potable_water {\n  background-position: -600px -480px; }\n\n.ap-non-potable_water {\n  background-position: -600px -500px; }\n\n.ap-bike {\n  background-position: -600px -520px; }\n\n.ap-no_bicycles {\n  background-position: -600px -540px; }\n\n.ap-bicyclist {\n  background-position: -600px -560px; }\n\n.ap-mountain_bicyclist {\n  background-position: -600px -680px; }\n\n.ap-walking {\n  background-position: -600px -800px; }\n\n.ap-no_pedestrians {\n  background-position: -620px -100px; }\n\n.ap-children_crossing {\n  background-position: -620px -120px; }\n\n.ap-mens {\n  background-position: -620px -140px; }\n\n.ap-womens {\n  background-position: -620px -160px; }\n\n.ap-restroom {\n  background-position: -620px -180px; }\n\n.ap-baby_symbol {\n  background-position: -620px -200px; }\n\n.ap-toilet {\n  background-position: -620px -220px; }\n\n.ap-wc {\n  background-position: -620px -240px; }\n\n.ap-shower {\n  background-position: -620px -260px; }\n\n.ap-bath {\n  background-position: -620px -280px; }\n\n.ap-bathtub {\n  background-position: -620px -400px; }\n\n.ap-passport_control {\n  background-position: -620px -420px; }\n\n.ap-customs {\n  background-position: -620px -440px; }\n\n.ap-baggage_claim {\n  background-position: -620px -460px; }\n\n.ap-left_luggage {\n  background-position: -620px -480px; }\n\n.ap-couch_and_lamp {\n  background-position: -620px -500px; }\n\n.ap-sleeping_accommodation {\n  background-position: -620px -520px; }\n\n.ap-shopping_bags {\n  background-position: -620px -540px; }\n\n.ap-bellhop_bell {\n  background-position: -620px -560px; }\n\n.ap-bed {\n  background-position: -620px -580px; }\n\n.ap-place_of_worship {\n  background-position: -620px -600px; }\n\n.ap-hammer_and_wrench {\n  background-position: -620px -620px; }\n\n.ap-shield {\n  background-position: -620px -640px; }\n\n.ap-oil_drum {\n  background-position: -620px -660px; }\n\n.ap-motorway {\n  background-position: -620px -680px; }\n\n.ap-railway_track {\n  background-position: -620px -700px; }\n\n.ap-motor_boat {\n  background-position: -620px -720px; }\n\n.ap-small_airplane {\n  background-position: -620px -740px; }\n\n.ap-airplane_departure {\n  background-position: -620px -760px; }\n\n.ap-airplane_arriving {\n  background-position: -620px -780px; }\n\n.ap-satellite {\n  background-position: -620px -800px; }\n\n.ap-passenger_ship {\n  background-position: -640px -0px; }\n\n.ap-zipper_mouth_face {\n  background-position: -640px -20px; }\n\n.ap-money_mouth_face {\n  background-position: -640px -40px; }\n\n.ap-face_with_thermometer {\n  background-position: -640px -60px; }\n\n.ap-nerd_face {\n  background-position: -640px -80px; }\n\n.ap-thinking_face {\n  background-position: -640px -100px; }\n\n.ap-face_with_head_bandage {\n  background-position: -640px -120px; }\n\n.ap-robot_face {\n  background-position: -640px -140px; }\n\n.ap-hugging_face {\n  background-position: -640px -160px; }\n\n.ap-the_horns {\n  background-position: -640px -180px; }\n\n.ap-crab {\n  background-position: -640px -300px; }\n\n.ap-lion_face {\n  background-position: -640px -320px; }\n\n.ap-scorpion {\n  background-position: -640px -340px; }\n\n.ap-turkey {\n  background-position: -640px -360px; }\n\n.ap-unicorn_face {\n  background-position: -640px -380px; }\n\n.ap-cheese_wedge {\n  background-position: -640px -400px; }\n\n.ap-hash {\n  background-position: -640px -420px; }\n\n.ap-keycap_star {\n  background-position: -640px -440px; }\n\n.ap-zero {\n  background-position: -640px -460px; }\n\n.ap-one {\n  background-position: -640px -480px; }\n\n.ap-two {\n  background-position: -640px -500px; }\n\n.ap-three {\n  background-position: -640px -520px; }\n\n.ap-four {\n  background-position: -640px -540px; }\n\n.ap-five {\n  background-position: -640px -560px; }\n\n.ap-six {\n  background-position: -640px -580px; }\n\n.ap-seven {\n  background-position: -640px -600px; }\n\n.ap-eight {\n  background-position: -640px -620px; }\n\n.ap-nine {\n  background-position: -640px -640px; }\n\n.ap-flag-ac {\n  background-position: -640px -660px; }\n\n.ap-flag-ad {\n  background-position: -640px -680px; }\n\n.ap-flag-ae {\n  background-position: -640px -700px; }\n\n.ap-flag-af {\n  background-position: -640px -720px; }\n\n.ap-flag-ag {\n  background-position: -640px -740px; }\n\n.ap-flag-ai {\n  background-position: -640px -760px; }\n\n.ap-flag-al {\n  background-position: -640px -780px; }\n\n.ap-flag-am {\n  background-position: -640px -800px; }\n\n.ap-flag-ao {\n  background-position: -660px -0px; }\n\n.ap-flag-aq {\n  background-position: -660px -20px; }\n\n.ap-flag-ar {\n  background-position: -660px -40px; }\n\n.ap-flag-as {\n  background-position: -660px -60px; }\n\n.ap-flag-at {\n  background-position: -660px -80px; }\n\n.ap-flag-au {\n  background-position: -660px -100px; }\n\n.ap-flag-aw {\n  background-position: -660px -120px; }\n\n.ap-flag-ax {\n  background-position: -660px -140px; }\n\n.ap-flag-az {\n  background-position: -660px -160px; }\n\n.ap-flag-ba {\n  background-position: -660px -180px; }\n\n.ap-flag-bb {\n  background-position: -660px -200px; }\n\n.ap-flag-bd {\n  background-position: -660px -220px; }\n\n.ap-flag-be {\n  background-position: -660px -240px; }\n\n.ap-flag-bf {\n  background-position: -660px -260px; }\n\n.ap-flag-bg {\n  background-position: -660px -280px; }\n\n.ap-flag-bh {\n  background-position: -660px -300px; }\n\n.ap-flag-bi {\n  background-position: -660px -320px; }\n\n.ap-flag-bj {\n  background-position: -660px -340px; }\n\n.ap-flag-bl {\n  background-position: -660px -360px; }\n\n.ap-flag-bm {\n  background-position: -660px -380px; }\n\n.ap-flag-bn {\n  background-position: -660px -400px; }\n\n.ap-flag-bo {\n  background-position: -660px -420px; }\n\n.ap-flag-bq {\n  background-position: -660px -440px; }\n\n.ap-flag-br {\n  background-position: -660px -460px; }\n\n.ap-flag-bs {\n  background-position: -660px -480px; }\n\n.ap-flag-bt {\n  background-position: -660px -500px; }\n\n.ap-flag-bv {\n  background-position: -660px -520px; }\n\n.ap-flag-bw {\n  background-position: -660px -540px; }\n\n.ap-flag-by {\n  background-position: -660px -560px; }\n\n.ap-flag-bz {\n  background-position: -660px -580px; }\n\n.ap-flag-ca {\n  background-position: -660px -600px; }\n\n.ap-flag-cc {\n  background-position: -660px -620px; }\n\n.ap-flag-cd {\n  background-position: -660px -640px; }\n\n.ap-flag-cf {\n  background-position: -660px -660px; }\n\n.ap-flag-cg {\n  background-position: -660px -680px; }\n\n.ap-flag-ch {\n  background-position: -660px -700px; }\n\n.ap-flag-ci {\n  background-position: -660px -720px; }\n\n.ap-flag-ck {\n  background-position: -660px -740px; }\n\n.ap-flag-cl {\n  background-position: -660px -760px; }\n\n.ap-flag-cm {\n  background-position: -660px -780px; }\n\n.ap-flag-cn {\n  background-position: -660px -800px; }\n\n.ap-flag-co {\n  background-position: -680px -0px; }\n\n.ap-flag-cp {\n  background-position: -680px -20px; }\n\n.ap-flag-cr {\n  background-position: -680px -40px; }\n\n.ap-flag-cu {\n  background-position: -680px -60px; }\n\n.ap-flag-cv {\n  background-position: -680px -80px; }\n\n.ap-flag-cw {\n  background-position: -680px -100px; }\n\n.ap-flag-cx {\n  background-position: -680px -120px; }\n\n.ap-flag-cy {\n  background-position: -680px -140px; }\n\n.ap-flag-cz {\n  background-position: -680px -160px; }\n\n.ap-flag-de {\n  background-position: -680px -180px; }\n\n.ap-flag-dg {\n  background-position: -680px -200px; }\n\n.ap-flag-dj {\n  background-position: -680px -220px; }\n\n.ap-flag-dk {\n  background-position: -680px -240px; }\n\n.ap-flag-dm {\n  background-position: -680px -260px; }\n\n.ap-flag-do {\n  background-position: -680px -280px; }\n\n.ap-flag-dz {\n  background-position: -680px -300px; }\n\n.ap-flag-ea {\n  background-position: -680px -320px; }\n\n.ap-flag-ec {\n  background-position: -680px -340px; }\n\n.ap-flag-ee {\n  background-position: -680px -360px; }\n\n.ap-flag-eg {\n  background-position: -680px -380px; }\n\n.ap-flag-eh {\n  background-position: -680px -400px; }\n\n.ap-flag-er {\n  background-position: -680px -420px; }\n\n.ap-flag-es {\n  background-position: -680px -440px; }\n\n.ap-flag-et {\n  background-position: -680px -460px; }\n\n.ap-flag-eu {\n  background-position: -680px -480px; }\n\n.ap-flag-fi {\n  background-position: -680px -500px; }\n\n.ap-flag-fj {\n  background-position: -680px -520px; }\n\n.ap-flag-fk {\n  background-position: -680px -540px; }\n\n.ap-flag-fm {\n  background-position: -680px -560px; }\n\n.ap-flag-fo {\n  background-position: -680px -580px; }\n\n.ap-flag-fr {\n  background-position: -680px -600px; }\n\n.ap-flag-ga {\n  background-position: -680px -620px; }\n\n.ap-flag-gb {\n  background-position: -680px -640px; }\n\n.ap-flag-gd {\n  background-position: -680px -660px; }\n\n.ap-flag-ge {\n  background-position: -680px -680px; }\n\n.ap-flag-gf {\n  background-position: -680px -700px; }\n\n.ap-flag-gg {\n  background-position: -680px -720px; }\n\n.ap-flag-gh {\n  background-position: -680px -740px; }\n\n.ap-flag-gi {\n  background-position: -680px -760px; }\n\n.ap-flag-gl {\n  background-position: -680px -780px; }\n\n.ap-flag-gm {\n  background-position: -680px -800px; }\n\n.ap-flag-gn {\n  background-position: -700px -0px; }\n\n.ap-flag-gp {\n  background-position: -700px -20px; }\n\n.ap-flag-gq {\n  background-position: -700px -40px; }\n\n.ap-flag-gr {\n  background-position: -700px -60px; }\n\n.ap-flag-gs {\n  background-position: -700px -80px; }\n\n.ap-flag-gt {\n  background-position: -700px -100px; }\n\n.ap-flag-gu {\n  background-position: -700px -120px; }\n\n.ap-flag-gw {\n  background-position: -700px -140px; }\n\n.ap-flag-gy {\n  background-position: -700px -160px; }\n\n.ap-flag-hk {\n  background-position: -700px -180px; }\n\n.ap-flag-hm {\n  background-position: -700px -200px; }\n\n.ap-flag-hn {\n  background-position: -700px -220px; }\n\n.ap-flag-hr {\n  background-position: -700px -240px; }\n\n.ap-flag-ht {\n  background-position: -700px -260px; }\n\n.ap-flag-hu {\n  background-position: -700px -280px; }\n\n.ap-flag-ic {\n  background-position: -700px -300px; }\n\n.ap-flag-id {\n  background-position: -700px -320px; }\n\n.ap-flag-ie {\n  background-position: -700px -340px; }\n\n.ap-flag-il {\n  background-position: -700px -360px; }\n\n.ap-flag-im {\n  background-position: -700px -380px; }\n\n.ap-flag-in {\n  background-position: -700px -400px; }\n\n.ap-flag-io {\n  background-position: -700px -420px; }\n\n.ap-flag-iq {\n  background-position: -700px -440px; }\n\n.ap-flag-ir {\n  background-position: -700px -460px; }\n\n.ap-flag-is {\n  background-position: -700px -480px; }\n\n.ap-flag-it {\n  background-position: -700px -500px; }\n\n.ap-flag-je {\n  background-position: -700px -520px; }\n\n.ap-flag-jm {\n  background-position: -700px -540px; }\n\n.ap-flag-jo {\n  background-position: -700px -560px; }\n\n.ap-flag-jp {\n  background-position: -700px -580px; }\n\n.ap-flag-ke {\n  background-position: -700px -600px; }\n\n.ap-flag-kg {\n  background-position: -700px -620px; }\n\n.ap-flag-kh {\n  background-position: -700px -640px; }\n\n.ap-flag-ki {\n  background-position: -700px -660px; }\n\n.ap-flag-km {\n  background-position: -700px -680px; }\n\n.ap-flag-kn {\n  background-position: -700px -700px; }\n\n.ap-flag-kp {\n  background-position: -700px -720px; }\n\n.ap-flag-kr {\n  background-position: -700px -740px; }\n\n.ap-flag-kw {\n  background-position: -700px -760px; }\n\n.ap-flag-ky {\n  background-position: -700px -780px; }\n\n.ap-flag-kz {\n  background-position: -700px -800px; }\n\n.ap-flag-la {\n  background-position: -720px -0px; }\n\n.ap-flag-lb {\n  background-position: -720px -20px; }\n\n.ap-flag-lc {\n  background-position: -720px -40px; }\n\n.ap-flag-li {\n  background-position: -720px -60px; }\n\n.ap-flag-lk {\n  background-position: -720px -80px; }\n\n.ap-flag-lr {\n  background-position: -720px -100px; }\n\n.ap-flag-ls {\n  background-position: -720px -120px; }\n\n.ap-flag-lt {\n  background-position: -720px -140px; }\n\n.ap-flag-lu {\n  background-position: -720px -160px; }\n\n.ap-flag-lv {\n  background-position: -720px -180px; }\n\n.ap-flag-ly {\n  background-position: -720px -200px; }\n\n.ap-flag-ma {\n  background-position: -720px -220px; }\n\n.ap-flag-mc {\n  background-position: -720px -240px; }\n\n.ap-flag-md {\n  background-position: -720px -260px; }\n\n.ap-flag-me {\n  background-position: -720px -280px; }\n\n.ap-flag-mf {\n  background-position: -720px -300px; }\n\n.ap-flag-mg {\n  background-position: -720px -320px; }\n\n.ap-flag-mh {\n  background-position: -720px -340px; }\n\n.ap-flag-mk {\n  background-position: -720px -360px; }\n\n.ap-flag-ml {\n  background-position: -720px -380px; }\n\n.ap-flag-mm {\n  background-position: -720px -400px; }\n\n.ap-flag-mn {\n  background-position: -720px -420px; }\n\n.ap-flag-mo {\n  background-position: -720px -440px; }\n\n.ap-flag-mp {\n  background-position: -720px -460px; }\n\n.ap-flag-mq {\n  background-position: -720px -480px; }\n\n.ap-flag-mr {\n  background-position: -720px -500px; }\n\n.ap-flag-ms {\n  background-position: -720px -520px; }\n\n.ap-flag-mt {\n  background-position: -720px -540px; }\n\n.ap-flag-mu {\n  background-position: -720px -560px; }\n\n.ap-flag-mv {\n  background-position: -720px -580px; }\n\n.ap-flag-mw {\n  background-position: -720px -600px; }\n\n.ap-flag-mx {\n  background-position: -720px -620px; }\n\n.ap-flag-my {\n  background-position: -720px -640px; }\n\n.ap-flag-mz {\n  background-position: -720px -660px; }\n\n.ap-flag-na {\n  background-position: -720px -680px; }\n\n.ap-flag-nc {\n  background-position: -720px -700px; }\n\n.ap-flag-ne {\n  background-position: -720px -720px; }\n\n.ap-flag-nf {\n  background-position: -720px -740px; }\n\n.ap-flag-ng {\n  background-position: -720px -760px; }\n\n.ap-flag-ni {\n  background-position: -720px -780px; }\n\n.ap-flag-nl {\n  background-position: -720px -800px; }\n\n.ap-flag-no {\n  background-position: -740px -0px; }\n\n.ap-flag-np {\n  background-position: -740px -20px; }\n\n.ap-flag-nr {\n  background-position: -740px -40px; }\n\n.ap-flag-nu {\n  background-position: -740px -60px; }\n\n.ap-flag-nz {\n  background-position: -740px -80px; }\n\n.ap-flag-om {\n  background-position: -740px -100px; }\n\n.ap-flag-pa {\n  background-position: -740px -120px; }\n\n.ap-flag-pe {\n  background-position: -740px -140px; }\n\n.ap-flag-pf {\n  background-position: -740px -160px; }\n\n.ap-flag-pg {\n  background-position: -740px -180px; }\n\n.ap-flag-ph {\n  background-position: -740px -200px; }\n\n.ap-flag-pk {\n  background-position: -740px -220px; }\n\n.ap-flag-pl {\n  background-position: -740px -240px; }\n\n.ap-flag-pm {\n  background-position: -740px -260px; }\n\n.ap-flag-pn {\n  background-position: -740px -280px; }\n\n.ap-flag-pr {\n  background-position: -740px -300px; }\n\n.ap-flag-ps {\n  background-position: -740px -320px; }\n\n.ap-flag-pt {\n  background-position: -740px -340px; }\n\n.ap-flag-pw {\n  background-position: -740px -360px; }\n\n.ap-flag-py {\n  background-position: -740px -380px; }\n\n.ap-flag-qa {\n  background-position: -740px -400px; }\n\n.ap-flag-re {\n  background-position: -740px -420px; }\n\n.ap-flag-ro {\n  background-position: -740px -440px; }\n\n.ap-flag-rs {\n  background-position: -740px -460px; }\n\n.ap-flag-ru {\n  background-position: -740px -480px; }\n\n.ap-flag-rw {\n  background-position: -740px -500px; }\n\n.ap-flag-sa {\n  background-position: -740px -520px; }\n\n.ap-flag-sb {\n  background-position: -740px -540px; }\n\n.ap-flag-sc {\n  background-position: -740px -560px; }\n\n.ap-flag-sd {\n  background-position: -740px -580px; }\n\n.ap-flag-se {\n  background-position: -740px -600px; }\n\n.ap-flag-sg {\n  background-position: -740px -620px; }\n\n.ap-flag-sh {\n  background-position: -740px -640px; }\n\n.ap-flag-si {\n  background-position: -740px -660px; }\n\n.ap-flag-sj {\n  background-position: -740px -680px; }\n\n.ap-flag-sk {\n  background-position: -740px -700px; }\n\n.ap-flag-sl {\n  background-position: -740px -720px; }\n\n.ap-flag-sm {\n  background-position: -740px -740px; }\n\n.ap-flag-sn {\n  background-position: -740px -760px; }\n\n.ap-flag-so {\n  background-position: -740px -780px; }\n\n.ap-flag-sr {\n  background-position: -740px -800px; }\n\n.ap-flag-ss {\n  background-position: -760px -0px; }\n\n.ap-flag-st {\n  background-position: -760px -20px; }\n\n.ap-flag-sv {\n  background-position: -760px -40px; }\n\n.ap-flag-sx {\n  background-position: -760px -60px; }\n\n.ap-flag-sy {\n  background-position: -760px -80px; }\n\n.ap-flag-sz {\n  background-position: -760px -100px; }\n\n.ap-flag-ta {\n  background-position: -760px -120px; }\n\n.ap-flag-tc {\n  background-position: -760px -140px; }\n\n.ap-flag-td {\n  background-position: -760px -160px; }\n\n.ap-flag-tf {\n  background-position: -760px -180px; }\n\n.ap-flag-tg {\n  background-position: -760px -200px; }\n\n.ap-flag-th {\n  background-position: -760px -220px; }\n\n.ap-flag-tj {\n  background-position: -760px -240px; }\n\n.ap-flag-tk {\n  background-position: -760px -260px; }\n\n.ap-flag-tl {\n  background-position: -760px -280px; }\n\n.ap-flag-tm {\n  background-position: -760px -300px; }\n\n.ap-flag-tn {\n  background-position: -760px -320px; }\n\n.ap-flag-to {\n  background-position: -760px -340px; }\n\n.ap-flag-tr {\n  background-position: -760px -360px; }\n\n.ap-flag-tt {\n  background-position: -760px -380px; }\n\n.ap-flag-tv {\n  background-position: -760px -400px; }\n\n.ap-flag-tw {\n  background-position: -760px -420px; }\n\n.ap-flag-tz {\n  background-position: -760px -440px; }\n\n.ap-flag-ua {\n  background-position: -760px -460px; }\n\n.ap-flag-ug {\n  background-position: -760px -480px; }\n\n.ap-flag-um {\n  background-position: -760px -500px; }\n\n.ap-flag-us {\n  background-position: -760px -520px; }\n\n.ap-flag-uy {\n  background-position: -760px -540px; }\n\n.ap-flag-uz {\n  background-position: -760px -560px; }\n\n.ap-flag-va {\n  background-position: -760px -580px; }\n\n.ap-flag-vc {\n  background-position: -760px -600px; }\n\n.ap-flag-ve {\n  background-position: -760px -620px; }\n\n.ap-flag-vg {\n  background-position: -760px -640px; }\n\n.ap-flag-vi {\n  background-position: -760px -660px; }\n\n.ap-flag-vn {\n  background-position: -760px -680px; }\n\n.ap-flag-vu {\n  background-position: -760px -700px; }\n\n.ap-flag-wf {\n  background-position: -760px -720px; }\n\n.ap-flag-ws {\n  background-position: -760px -740px; }\n\n.ap-flag-xk {\n  background-position: -760px -760px; }\n\n.ap-flag-ye {\n  background-position: -760px -780px; }\n\n.ap-flag-yt {\n  background-position: -760px -800px; }\n\n.ap-flag-za {\n  background-position: -780px -0px; }\n\n.ap-flag-zm {\n  background-position: -780px -20px; }\n\n.ap-flag-zw {\n  background-position: -780px -40px; }\n\n.ap-man-man-boy {\n  background-position: -780px -60px; }\n\n.ap-man-man-boy-boy {\n  background-position: -780px -80px; }\n\n.ap-man-man-girl {\n  background-position: -780px -100px; }\n\n.ap-man-man-girl-boy {\n  background-position: -780px -120px; }\n\n.ap-man-man-girl-girl {\n  background-position: -780px -140px; }\n\n.ap-man-woman-boy-boy {\n  background-position: -780px -160px; }\n\n.ap-man-woman-girl {\n  background-position: -780px -180px; }\n\n.ap-man-woman-girl-boy {\n  background-position: -780px -200px; }\n\n.ap-man-woman-girl-girl {\n  background-position: -780px -220px; }\n\n.ap-man-heart-man {\n  background-position: -780px -240px; }\n\n.ap-man-kiss-man {\n  background-position: -780px -260px; }\n\n.ap-woman-woman-boy {\n  background-position: -780px -280px; }\n\n.ap-woman-woman-boy-boy {\n  background-position: -780px -300px; }\n\n.ap-woman-woman-girl {\n  background-position: -780px -320px; }\n\n.ap-woman-woman-girl-boy {\n  background-position: -780px -340px; }\n\n.ap-woman-woman-girl-girl {\n  background-position: -780px -360px; }\n\n.ap-woman-heart-woman {\n  background-position: -780px -380px; }\n\n.ap-woman-kiss-woman {\n  background-position: -780px -400px; }\n\n.ap-beach_umbrella {\n  background-position: -40px -620px; }\n\n.ap-telephone {\n  background-position: -20px -100px; }\n", ""]);
+exports.push([module.i, "/*!\n * Quill Editor v1.3.4\n * https://quilljs.com/\n * Copyright (c) 2014, Jason Chen\n * Copyright (c) 2013, salesforce.com\n */\n.ql-container {\n  box-sizing: border-box;\n  font-family: Helvetica, Arial, sans-serif;\n  font-size: 13px;\n  height: 100%;\n  margin: 0px;\n  position: relative;\n}\n.ql-container.ql-disabled .ql-tooltip {\n  visibility: hidden;\n}\n.ql-container.ql-disabled .ql-editor ul[data-checked] > li::before {\n  pointer-events: none;\n}\n.ql-clipboard {\n  left: -100000px;\n  height: 1px;\n  overflow-y: hidden;\n  position: absolute;\n  top: 50%;\n}\n.ql-clipboard p {\n  margin: 0;\n  padding: 0;\n}\n.ql-editor {\n  box-sizing: border-box;\n  line-height: 1.42;\n  height: 100%;\n  outline: none;\n  overflow-y: auto;\n  padding: 12px 15px;\n  tab-size: 4;\n  -moz-tab-size: 4;\n  text-align: left;\n  white-space: pre-wrap;\n  word-wrap: break-word;\n}\n.ql-editor > * {\n  cursor: text;\n}\n.ql-editor p,\n.ql-editor ol,\n.ql-editor ul,\n.ql-editor pre,\n.ql-editor blockquote,\n.ql-editor h1,\n.ql-editor h2,\n.ql-editor h3,\n.ql-editor h4,\n.ql-editor h5,\n.ql-editor h6 {\n  margin: 0;\n  padding: 0;\n  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol,\n.ql-editor ul {\n  padding-left: 1.5em;\n}\n.ql-editor ol > li,\n.ql-editor ul > li {\n  list-style-type: none;\n}\n.ql-editor ul > li::before {\n  content: '\\2022';\n}\n.ql-editor ul[data-checked=true],\n.ql-editor ul[data-checked=false] {\n  pointer-events: none;\n}\n.ql-editor ul[data-checked=true] > li *,\n.ql-editor ul[data-checked=false] > li * {\n  pointer-events: all;\n}\n.ql-editor ul[data-checked=true] > li::before,\n.ql-editor ul[data-checked=false] > li::before {\n  color: #777;\n  cursor: pointer;\n  pointer-events: all;\n}\n.ql-editor ul[data-checked=true] > li::before {\n  content: '\\2611';\n}\n.ql-editor ul[data-checked=false] > li::before {\n  content: '\\2610';\n}\n.ql-editor li::before {\n  display: inline-block;\n  white-space: nowrap;\n  width: 1.2em;\n}\n.ql-editor li:not(.ql-direction-rtl)::before {\n  margin-left: -1.5em;\n  margin-right: 0.3em;\n  text-align: right;\n}\n.ql-editor li.ql-direction-rtl::before {\n  margin-left: 0.3em;\n  margin-right: -1.5em;\n}\n.ql-editor ol li:not(.ql-direction-rtl),\n.ql-editor ul li:not(.ql-direction-rtl) {\n  padding-left: 1.5em;\n}\n.ql-editor ol li.ql-direction-rtl,\n.ql-editor ul li.ql-direction-rtl {\n  padding-right: 1.5em;\n}\n.ql-editor ol li {\n  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n  counter-increment: list-0;\n}\n.ql-editor ol li:before {\n  content: counter(list-0, decimal) '. ';\n}\n.ql-editor ol li.ql-indent-1 {\n  counter-increment: list-1;\n}\n.ql-editor ol li.ql-indent-1:before {\n  content: counter(list-1, lower-alpha) '. ';\n}\n.ql-editor ol li.ql-indent-1 {\n  counter-reset: list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-2 {\n  counter-increment: list-2;\n}\n.ql-editor ol li.ql-indent-2:before {\n  content: counter(list-2, lower-roman) '. ';\n}\n.ql-editor ol li.ql-indent-2 {\n  counter-reset: list-3 list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-3 {\n  counter-increment: list-3;\n}\n.ql-editor ol li.ql-indent-3:before {\n  content: counter(list-3, decimal) '. ';\n}\n.ql-editor ol li.ql-indent-3 {\n  counter-reset: list-4 list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-4 {\n  counter-increment: list-4;\n}\n.ql-editor ol li.ql-indent-4:before {\n  content: counter(list-4, lower-alpha) '. ';\n}\n.ql-editor ol li.ql-indent-4 {\n  counter-reset: list-5 list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-5 {\n  counter-increment: list-5;\n}\n.ql-editor ol li.ql-indent-5:before {\n  content: counter(list-5, lower-roman) '. ';\n}\n.ql-editor ol li.ql-indent-5 {\n  counter-reset: list-6 list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-6 {\n  counter-increment: list-6;\n}\n.ql-editor ol li.ql-indent-6:before {\n  content: counter(list-6, decimal) '. ';\n}\n.ql-editor ol li.ql-indent-6 {\n  counter-reset: list-7 list-8 list-9;\n}\n.ql-editor ol li.ql-indent-7 {\n  counter-increment: list-7;\n}\n.ql-editor ol li.ql-indent-7:before {\n  content: counter(list-7, lower-alpha) '. ';\n}\n.ql-editor ol li.ql-indent-7 {\n  counter-reset: list-8 list-9;\n}\n.ql-editor ol li.ql-indent-8 {\n  counter-increment: list-8;\n}\n.ql-editor ol li.ql-indent-8:before {\n  content: counter(list-8, lower-roman) '. ';\n}\n.ql-editor ol li.ql-indent-8 {\n  counter-reset: list-9;\n}\n.ql-editor ol li.ql-indent-9 {\n  counter-increment: list-9;\n}\n.ql-editor ol li.ql-indent-9:before {\n  content: counter(list-9, decimal) '. ';\n}\n.ql-editor .ql-indent-1:not(.ql-direction-rtl) {\n  padding-left: 3em;\n}\n.ql-editor li.ql-indent-1:not(.ql-direction-rtl) {\n  padding-left: 4.5em;\n}\n.ql-editor .ql-indent-1.ql-direction-rtl.ql-align-right {\n  padding-right: 3em;\n}\n.ql-editor li.ql-indent-1.ql-direction-rtl.ql-align-right {\n  padding-right: 4.5em;\n}\n.ql-editor .ql-indent-2:not(.ql-direction-rtl) {\n  padding-left: 6em;\n}\n.ql-editor li.ql-indent-2:not(.ql-direction-rtl) {\n  padding-left: 7.5em;\n}\n.ql-editor .ql-indent-2.ql-direction-rtl.ql-align-right {\n  padding-right: 6em;\n}\n.ql-editor li.ql-indent-2.ql-direction-rtl.ql-align-right {\n  padding-right: 7.5em;\n}\n.ql-editor .ql-indent-3:not(.ql-direction-rtl) {\n  padding-left: 9em;\n}\n.ql-editor li.ql-indent-3:not(.ql-direction-rtl) {\n  padding-left: 10.5em;\n}\n.ql-editor .ql-indent-3.ql-direction-rtl.ql-align-right {\n  padding-right: 9em;\n}\n.ql-editor li.ql-indent-3.ql-direction-rtl.ql-align-right {\n  padding-right: 10.5em;\n}\n.ql-editor .ql-indent-4:not(.ql-direction-rtl) {\n  padding-left: 12em;\n}\n.ql-editor li.ql-indent-4:not(.ql-direction-rtl) {\n  padding-left: 13.5em;\n}\n.ql-editor .ql-indent-4.ql-direction-rtl.ql-align-right {\n  padding-right: 12em;\n}\n.ql-editor li.ql-indent-4.ql-direction-rtl.ql-align-right {\n  padding-right: 13.5em;\n}\n.ql-editor .ql-indent-5:not(.ql-direction-rtl) {\n  padding-left: 15em;\n}\n.ql-editor li.ql-indent-5:not(.ql-direction-rtl) {\n  padding-left: 16.5em;\n}\n.ql-editor .ql-indent-5.ql-direction-rtl.ql-align-right {\n  padding-right: 15em;\n}\n.ql-editor li.ql-indent-5.ql-direction-rtl.ql-align-right {\n  padding-right: 16.5em;\n}\n.ql-editor .ql-indent-6:not(.ql-direction-rtl) {\n  padding-left: 18em;\n}\n.ql-editor li.ql-indent-6:not(.ql-direction-rtl) {\n  padding-left: 19.5em;\n}\n.ql-editor .ql-indent-6.ql-direction-rtl.ql-align-right {\n  padding-right: 18em;\n}\n.ql-editor li.ql-indent-6.ql-direction-rtl.ql-align-right {\n  padding-right: 19.5em;\n}\n.ql-editor .ql-indent-7:not(.ql-direction-rtl) {\n  padding-left: 21em;\n}\n.ql-editor li.ql-indent-7:not(.ql-direction-rtl) {\n  padding-left: 22.5em;\n}\n.ql-editor .ql-indent-7.ql-direction-rtl.ql-align-right {\n  padding-right: 21em;\n}\n.ql-editor li.ql-indent-7.ql-direction-rtl.ql-align-right {\n  padding-right: 22.5em;\n}\n.ql-editor .ql-indent-8:not(.ql-direction-rtl) {\n  padding-left: 24em;\n}\n.ql-editor li.ql-indent-8:not(.ql-direction-rtl) {\n  padding-left: 25.5em;\n}\n.ql-editor .ql-indent-8.ql-direction-rtl.ql-align-right {\n  padding-right: 24em;\n}\n.ql-editor li.ql-indent-8.ql-direction-rtl.ql-align-right {\n  padding-right: 25.5em;\n}\n.ql-editor .ql-indent-9:not(.ql-direction-rtl) {\n  padding-left: 27em;\n}\n.ql-editor li.ql-indent-9:not(.ql-direction-rtl) {\n  padding-left: 28.5em;\n}\n.ql-editor .ql-indent-9.ql-direction-rtl.ql-align-right {\n  padding-right: 27em;\n}\n.ql-editor li.ql-indent-9.ql-direction-rtl.ql-align-right {\n  padding-right: 28.5em;\n}\n.ql-editor .ql-video {\n  display: block;\n  max-width: 100%;\n}\n.ql-editor .ql-video.ql-align-center {\n  margin: 0 auto;\n}\n.ql-editor .ql-video.ql-align-right {\n  margin: 0 0 0 auto;\n}\n.ql-editor .ql-bg-black {\n  background-color: #000;\n}\n.ql-editor .ql-bg-red {\n  background-color: #e60000;\n}\n.ql-editor .ql-bg-orange {\n  background-color: #f90;\n}\n.ql-editor .ql-bg-yellow {\n  background-color: #ff0;\n}\n.ql-editor .ql-bg-green {\n  background-color: #008a00;\n}\n.ql-editor .ql-bg-blue {\n  background-color: #06c;\n}\n.ql-editor .ql-bg-purple {\n  background-color: #93f;\n}\n.ql-editor .ql-color-white {\n  color: #fff;\n}\n.ql-editor .ql-color-red {\n  color: #e60000;\n}\n.ql-editor .ql-color-orange {\n  color: #f90;\n}\n.ql-editor .ql-color-yellow {\n  color: #ff0;\n}\n.ql-editor .ql-color-green {\n  color: #008a00;\n}\n.ql-editor .ql-color-blue {\n  color: #06c;\n}\n.ql-editor .ql-color-purple {\n  color: #93f;\n}\n.ql-editor .ql-font-serif {\n  font-family: Georgia, Times New Roman, serif;\n}\n.ql-editor .ql-font-monospace {\n  font-family: Monaco, Courier New, monospace;\n}\n.ql-editor .ql-size-small {\n  font-size: 0.75em;\n}\n.ql-editor .ql-size-large {\n  font-size: 1.5em;\n}\n.ql-editor .ql-size-huge {\n  font-size: 2.5em;\n}\n.ql-editor .ql-direction-rtl {\n  direction: rtl;\n  text-align: inherit;\n}\n.ql-editor .ql-align-center {\n  text-align: center;\n}\n.ql-editor .ql-align-justify {\n  text-align: justify;\n}\n.ql-editor .ql-align-right {\n  text-align: right;\n}\n.ql-editor.ql-blank::before {\n  color: rgba(0,0,0,0.6);\n  content: attr(data-placeholder);\n  font-style: italic;\n  left: 15px;\n  pointer-events: none;\n  position: absolute;\n  right: 15px;\n}\n.ql-snow.ql-toolbar:after,\n.ql-snow .ql-toolbar:after {\n  clear: both;\n  content: '';\n  display: table;\n}\n.ql-snow.ql-toolbar button,\n.ql-snow .ql-toolbar button {\n  background: none;\n  border: none;\n  cursor: pointer;\n  display: inline-block;\n  float: left;\n  height: 24px;\n  padding: 3px 5px;\n  width: 28px;\n}\n.ql-snow.ql-toolbar button svg,\n.ql-snow .ql-toolbar button svg {\n  float: left;\n  height: 100%;\n}\n.ql-snow.ql-toolbar button:active:hover,\n.ql-snow .ql-toolbar button:active:hover {\n  outline: none;\n}\n.ql-snow.ql-toolbar input.ql-image[type=file],\n.ql-snow .ql-toolbar input.ql-image[type=file] {\n  display: none;\n}\n.ql-snow.ql-toolbar button:hover,\n.ql-snow .ql-toolbar button:hover,\n.ql-snow.ql-toolbar button:focus,\n.ql-snow .ql-toolbar button:focus,\n.ql-snow.ql-toolbar button.ql-active,\n.ql-snow .ql-toolbar button.ql-active,\n.ql-snow.ql-toolbar .ql-picker-label:hover,\n.ql-snow .ql-toolbar .ql-picker-label:hover,\n.ql-snow.ql-toolbar .ql-picker-label.ql-active,\n.ql-snow .ql-toolbar .ql-picker-label.ql-active,\n.ql-snow.ql-toolbar .ql-picker-item:hover,\n.ql-snow .ql-toolbar .ql-picker-item:hover,\n.ql-snow.ql-toolbar .ql-picker-item.ql-selected,\n.ql-snow .ql-toolbar .ql-picker-item.ql-selected {\n  color: #06c;\n}\n.ql-snow.ql-toolbar button:hover .ql-fill,\n.ql-snow .ql-toolbar button:hover .ql-fill,\n.ql-snow.ql-toolbar button:focus .ql-fill,\n.ql-snow .ql-toolbar button:focus .ql-fill,\n.ql-snow.ql-toolbar button.ql-active .ql-fill,\n.ql-snow .ql-toolbar button.ql-active .ql-fill,\n.ql-snow.ql-toolbar .ql-picker-label:hover .ql-fill,\n.ql-snow .ql-toolbar .ql-picker-label:hover .ql-fill,\n.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-fill,\n.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-fill,\n.ql-snow.ql-toolbar .ql-picker-item:hover .ql-fill,\n.ql-snow .ql-toolbar .ql-picker-item:hover .ql-fill,\n.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-fill,\n.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-fill,\n.ql-snow.ql-toolbar button:hover .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar button:hover .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar button:focus .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar button:focus .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar button.ql-active .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar button.ql-active .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,\n.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill,\n.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill {\n  fill: #06c;\n}\n.ql-snow.ql-toolbar button:hover .ql-stroke,\n.ql-snow .ql-toolbar button:hover .ql-stroke,\n.ql-snow.ql-toolbar button:focus .ql-stroke,\n.ql-snow .ql-toolbar button:focus .ql-stroke,\n.ql-snow.ql-toolbar button.ql-active .ql-stroke,\n.ql-snow .ql-toolbar button.ql-active .ql-stroke,\n.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke,\n.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke,\n.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,\n.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke,\n.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke,\n.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke,\n.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke,\n.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke,\n.ql-snow.ql-toolbar button:hover .ql-stroke-miter,\n.ql-snow .ql-toolbar button:hover .ql-stroke-miter,\n.ql-snow.ql-toolbar button:focus .ql-stroke-miter,\n.ql-snow .ql-toolbar button:focus .ql-stroke-miter,\n.ql-snow.ql-toolbar button.ql-active .ql-stroke-miter,\n.ql-snow .ql-toolbar button.ql-active .ql-stroke-miter,\n.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke-miter,\n.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke-miter,\n.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,\n.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,\n.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke-miter,\n.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,\n.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,\n.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter {\n  stroke: #06c;\n}\n@media (pointer: coarse) {\n  .ql-snow.ql-toolbar button:hover:not(.ql-active),\n  .ql-snow .ql-toolbar button:hover:not(.ql-active) {\n    color: #444;\n  }\n  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-fill,\n  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-fill,\n  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill,\n  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill {\n    fill: #444;\n  }\n  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke,\n  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke,\n  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter,\n  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter {\n    stroke: #444;\n  }\n}\n.ql-snow {\n  box-sizing: border-box;\n}\n.ql-snow * {\n  box-sizing: border-box;\n}\n.ql-snow .ql-hidden {\n  display: none;\n}\n.ql-snow .ql-out-bottom,\n.ql-snow .ql-out-top {\n  visibility: hidden;\n}\n.ql-snow .ql-tooltip {\n  position: absolute;\n  transform: translateY(10px);\n}\n.ql-snow .ql-tooltip a {\n  cursor: pointer;\n  text-decoration: none;\n}\n.ql-snow .ql-tooltip.ql-flip {\n  transform: translateY(-10px);\n}\n.ql-snow .ql-formats {\n  display: inline-block;\n  vertical-align: middle;\n}\n.ql-snow .ql-formats:after {\n  clear: both;\n  content: '';\n  display: table;\n}\n.ql-snow .ql-stroke {\n  fill: none;\n  stroke: #444;\n  stroke-linecap: round;\n  stroke-linejoin: round;\n  stroke-width: 2;\n}\n.ql-snow .ql-stroke-miter {\n  fill: none;\n  stroke: #444;\n  stroke-miterlimit: 10;\n  stroke-width: 2;\n}\n.ql-snow .ql-fill,\n.ql-snow .ql-stroke.ql-fill {\n  fill: #444;\n}\n.ql-snow .ql-empty {\n  fill: none;\n}\n.ql-snow .ql-even {\n  fill-rule: evenodd;\n}\n.ql-snow .ql-thin,\n.ql-snow .ql-stroke.ql-thin {\n  stroke-width: 1;\n}\n.ql-snow .ql-transparent {\n  opacity: 0.4;\n}\n.ql-snow .ql-direction svg:last-child {\n  display: none;\n}\n.ql-snow .ql-direction.ql-active svg:last-child {\n  display: inline;\n}\n.ql-snow .ql-direction.ql-active svg:first-child {\n  display: none;\n}\n.ql-snow .ql-editor h1 {\n  font-size: 2em;\n}\n.ql-snow .ql-editor h2 {\n  font-size: 1.5em;\n}\n.ql-snow .ql-editor h3 {\n  font-size: 1.17em;\n}\n.ql-snow .ql-editor h4 {\n  font-size: 1em;\n}\n.ql-snow .ql-editor h5 {\n  font-size: 0.83em;\n}\n.ql-snow .ql-editor h6 {\n  font-size: 0.67em;\n}\n.ql-snow .ql-editor a {\n  text-decoration: underline;\n}\n.ql-snow .ql-editor blockquote {\n  border-left: 4px solid #ccc;\n  margin-bottom: 5px;\n  margin-top: 5px;\n  padding-left: 16px;\n}\n.ql-snow .ql-editor code,\n.ql-snow .ql-editor pre {\n  background-color: #f0f0f0;\n  border-radius: 3px;\n}\n.ql-snow .ql-editor pre {\n  white-space: pre-wrap;\n  margin-bottom: 5px;\n  margin-top: 5px;\n  padding: 5px 10px;\n}\n.ql-snow .ql-editor code {\n  font-size: 85%;\n  padding: 2px 4px;\n}\n.ql-snow .ql-editor pre.ql-syntax {\n  background-color: #23241f;\n  color: #f8f8f2;\n  overflow: visible;\n}\n.ql-snow .ql-editor img {\n  max-width: 100%;\n}\n.ql-snow .ql-picker {\n  color: #444;\n  display: inline-block;\n  float: left;\n  font-size: 14px;\n  font-weight: 500;\n  height: 24px;\n  position: relative;\n  vertical-align: middle;\n}\n.ql-snow .ql-picker-label {\n  cursor: pointer;\n  display: inline-block;\n  height: 100%;\n  padding-left: 8px;\n  padding-right: 2px;\n  position: relative;\n  width: 100%;\n}\n.ql-snow .ql-picker-label::before {\n  display: inline-block;\n  line-height: 22px;\n}\n.ql-snow .ql-picker-options {\n  background-color: #fff;\n  display: none;\n  min-width: 100%;\n  padding: 4px 8px;\n  position: absolute;\n  white-space: nowrap;\n}\n.ql-snow .ql-picker-options .ql-picker-item {\n  cursor: pointer;\n  display: block;\n  padding-bottom: 5px;\n  padding-top: 5px;\n}\n.ql-snow .ql-picker.ql-expanded .ql-picker-label {\n  color: #ccc;\n  z-index: 2;\n}\n.ql-snow .ql-picker.ql-expanded .ql-picker-label .ql-fill {\n  fill: #ccc;\n}\n.ql-snow .ql-picker.ql-expanded .ql-picker-label .ql-stroke {\n  stroke: #ccc;\n}\n.ql-snow .ql-picker.ql-expanded .ql-picker-options {\n  display: block;\n  margin-top: -1px;\n  top: 100%;\n  z-index: 1;\n}\n.ql-snow .ql-color-picker,\n.ql-snow .ql-icon-picker {\n  width: 28px;\n}\n.ql-snow .ql-color-picker .ql-picker-label,\n.ql-snow .ql-icon-picker .ql-picker-label {\n  padding: 2px 4px;\n}\n.ql-snow .ql-color-picker .ql-picker-label svg,\n.ql-snow .ql-icon-picker .ql-picker-label svg {\n  right: 4px;\n}\n.ql-snow .ql-icon-picker .ql-picker-options {\n  padding: 4px 0px;\n}\n.ql-snow .ql-icon-picker .ql-picker-item {\n  height: 24px;\n  width: 24px;\n  padding: 2px 4px;\n}\n.ql-snow .ql-color-picker .ql-picker-options {\n  padding: 3px 5px;\n  width: 152px;\n}\n.ql-snow .ql-color-picker .ql-picker-item {\n  border: 1px solid transparent;\n  float: left;\n  height: 16px;\n  margin: 2px;\n  padding: 0px;\n  width: 16px;\n}\n.ql-snow .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) svg {\n  position: absolute;\n  margin-top: -9px;\n  right: 0;\n  top: 50%;\n  width: 18px;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-label]:not([data-label=''])::before,\n.ql-snow .ql-picker.ql-font .ql-picker-label[data-label]:not([data-label=''])::before,\n.ql-snow .ql-picker.ql-size .ql-picker-label[data-label]:not([data-label=''])::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-label]:not([data-label=''])::before,\n.ql-snow .ql-picker.ql-font .ql-picker-item[data-label]:not([data-label=''])::before,\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-label]:not([data-label=''])::before {\n  content: attr(data-label);\n}\n.ql-snow .ql-picker.ql-header {\n  width: 98px;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item::before {\n  content: 'Normal';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"1\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"1\"]::before {\n  content: 'Heading 1';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"2\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"2\"]::before {\n  content: 'Heading 2';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"3\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"3\"]::before {\n  content: 'Heading 3';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"4\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"4\"]::before {\n  content: 'Heading 4';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"5\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"5\"]::before {\n  content: 'Heading 5';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-label[data-value=\"6\"]::before,\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"6\"]::before {\n  content: 'Heading 6';\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"1\"]::before {\n  font-size: 2em;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"2\"]::before {\n  font-size: 1.5em;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"3\"]::before {\n  font-size: 1.17em;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"4\"]::before {\n  font-size: 1em;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"5\"]::before {\n  font-size: 0.83em;\n}\n.ql-snow .ql-picker.ql-header .ql-picker-item[data-value=\"6\"]::before {\n  font-size: 0.67em;\n}\n.ql-snow .ql-picker.ql-font {\n  width: 108px;\n}\n.ql-snow .ql-picker.ql-font .ql-picker-label::before,\n.ql-snow .ql-picker.ql-font .ql-picker-item::before {\n  content: 'Sans Serif';\n}\n.ql-snow .ql-picker.ql-font .ql-picker-label[data-value=serif]::before,\n.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=serif]::before {\n  content: 'Serif';\n}\n.ql-snow .ql-picker.ql-font .ql-picker-label[data-value=monospace]::before,\n.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=monospace]::before {\n  content: 'Monospace';\n}\n.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=serif]::before {\n  font-family: Georgia, Times New Roman, serif;\n}\n.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=monospace]::before {\n  font-family: Monaco, Courier New, monospace;\n}\n.ql-snow .ql-picker.ql-size {\n  width: 98px;\n}\n.ql-snow .ql-picker.ql-size .ql-picker-label::before,\n.ql-snow .ql-picker.ql-size .ql-picker-item::before {\n  content: 'Normal';\n}\n.ql-snow .ql-picker.ql-size .ql-picker-label[data-value=small]::before,\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=small]::before {\n  content: 'Small';\n}\n.ql-snow .ql-picker.ql-size .ql-picker-label[data-value=large]::before,\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=large]::before {\n  content: 'Large';\n}\n.ql-snow .ql-picker.ql-size .ql-picker-label[data-value=huge]::before,\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=huge]::before {\n  content: 'Huge';\n}\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=small]::before {\n  font-size: 10px;\n}\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=large]::before {\n  font-size: 18px;\n}\n.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=huge]::before {\n  font-size: 32px;\n}\n.ql-snow .ql-color-picker.ql-background .ql-picker-item {\n  background-color: #fff;\n}\n.ql-snow .ql-color-picker.ql-color .ql-picker-item {\n  background-color: #000;\n}\n.ql-toolbar.ql-snow {\n  border: 1px solid #ccc;\n  box-sizing: border-box;\n  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n  padding: 8px;\n}\n.ql-toolbar.ql-snow .ql-formats {\n  margin-right: 15px;\n}\n.ql-toolbar.ql-snow .ql-picker-label {\n  border: 1px solid transparent;\n}\n.ql-toolbar.ql-snow .ql-picker-options {\n  border: 1px solid transparent;\n  box-shadow: rgba(0,0,0,0.2) 0 2px 8px;\n}\n.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {\n  border-color: #ccc;\n}\n.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {\n  border-color: #ccc;\n}\n.ql-toolbar.ql-snow .ql-color-picker .ql-picker-item.ql-selected,\n.ql-toolbar.ql-snow .ql-color-picker .ql-picker-item:hover {\n  border-color: #000;\n}\n.ql-toolbar.ql-snow + .ql-container.ql-snow {\n  border-top: 0px;\n}\n.ql-snow .ql-tooltip {\n  background-color: #fff;\n  border: 1px solid #ccc;\n  box-shadow: 0px 0px 5px #ddd;\n  color: #444;\n  padding: 5px 12px;\n  white-space: nowrap;\n}\n.ql-snow .ql-tooltip::before {\n  content: \"Visit URL:\";\n  line-height: 26px;\n  margin-right: 8px;\n}\n.ql-snow .ql-tooltip input[type=text] {\n  display: none;\n  border: 1px solid #ccc;\n  font-size: 13px;\n  height: 26px;\n  margin: 0px;\n  padding: 3px 5px;\n  width: 170px;\n}\n.ql-snow .ql-tooltip a.ql-preview {\n  display: inline-block;\n  max-width: 200px;\n  overflow-x: hidden;\n  text-overflow: ellipsis;\n  vertical-align: top;\n}\n.ql-snow .ql-tooltip a.ql-action::after {\n  border-right: 1px solid #ccc;\n  content: 'Edit';\n  margin-left: 16px;\n  padding-right: 8px;\n}\n.ql-snow .ql-tooltip a.ql-remove::before {\n  content: 'Remove';\n  margin-left: 8px;\n}\n.ql-snow .ql-tooltip a {\n  line-height: 26px;\n}\n.ql-snow .ql-tooltip.ql-editing a.ql-preview,\n.ql-snow .ql-tooltip.ql-editing a.ql-remove {\n  display: none;\n}\n.ql-snow .ql-tooltip.ql-editing input[type=text] {\n  display: inline-block;\n}\n.ql-snow .ql-tooltip.ql-editing a.ql-action::after {\n  border-right: 0px;\n  content: 'Save';\n  padding-right: 0px;\n}\n.ql-snow .ql-tooltip[data-mode=link]::before {\n  content: \"Enter link:\";\n}\n.ql-snow .ql-tooltip[data-mode=formula]::before {\n  content: \"Enter formula:\";\n}\n.ql-snow .ql-tooltip[data-mode=video]::before {\n  content: \"Enter video:\";\n}\n.ql-snow a {\n  color: #06c;\n}\n.ql-container.ql-snow {\n  border: 1px solid #ccc;\n}\n", ""]);
 
 // exports
 
@@ -39073,6 +39070,8 @@ exports.push([module.i, "/* sass-loader doesnt like absolute imports*/\n#quill-e
 
 exports = module.exports = __webpack_require__(16)(undefined);
 // imports
+exports.i(__webpack_require__(119), "");
+exports.i(__webpack_require__(120), "");
 exports.i(__webpack_require__(117), "");
 
 // module
@@ -39290,7 +39289,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Options = __webpack_require__(62);
+var _Options = __webpack_require__(61);
 
 Object.defineProperty(exports, 'DefaultOptions', {
   enumerable: true,
@@ -39317,7 +39316,7 @@ Object.defineProperty(exports, 'Action', {
   }
 });
 
-var _AlignAction = __webpack_require__(46);
+var _AlignAction = __webpack_require__(45);
 
 Object.defineProperty(exports, 'AlignAction', {
   enumerable: true,
@@ -39326,7 +39325,7 @@ Object.defineProperty(exports, 'AlignAction', {
   }
 });
 
-var _DefaultAligner = __webpack_require__(63);
+var _DefaultAligner = __webpack_require__(62);
 
 Object.defineProperty(exports, 'DefaultAligner', {
   enumerable: true,
@@ -39335,7 +39334,7 @@ Object.defineProperty(exports, 'DefaultAligner', {
   }
 });
 
-var _DefaultToolbar = __webpack_require__(64);
+var _DefaultToolbar = __webpack_require__(63);
 
 Object.defineProperty(exports, 'DefaultToolbar', {
   enumerable: true,
@@ -39344,7 +39343,7 @@ Object.defineProperty(exports, 'DefaultToolbar', {
   }
 });
 
-var _DeleteAction = __webpack_require__(44);
+var _DeleteAction = __webpack_require__(43);
 
 Object.defineProperty(exports, 'DeleteAction', {
   enumerable: true,
@@ -39353,7 +39352,7 @@ Object.defineProperty(exports, 'DeleteAction', {
   }
 });
 
-var _ResizeAction = __webpack_require__(45);
+var _ResizeAction = __webpack_require__(44);
 
 Object.defineProperty(exports, 'ResizeAction', {
   enumerable: true,
@@ -39371,7 +39370,7 @@ Object.defineProperty(exports, 'BlotSpec', {
   }
 });
 
-var _ImageSpec = __webpack_require__(47);
+var _ImageSpec = __webpack_require__(46);
 
 Object.defineProperty(exports, 'ImageSpec', {
   enumerable: true,
@@ -39380,7 +39379,7 @@ Object.defineProperty(exports, 'ImageSpec', {
   }
 });
 
-var _UnclickableBlotSpec = __webpack_require__(67);
+var _UnclickableBlotSpec = __webpack_require__(66);
 
 Object.defineProperty(exports, 'UnclickableBlotSpec', {
   enumerable: true,
@@ -39389,7 +39388,7 @@ Object.defineProperty(exports, 'UnclickableBlotSpec', {
   }
 });
 
-var _IframeVideoSpec = __webpack_require__(66);
+var _IframeVideoSpec = __webpack_require__(65);
 
 Object.defineProperty(exports, 'IframeVideoSpec', {
   enumerable: true,
@@ -39540,9 +39539,9 @@ __WEBPACK_IMPORTED_MODULE_0_quill___default.a.register({'formats/bolt': EmojiBlo
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_quill__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_quill___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_quill__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fuse_js__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fuse_js__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fuse_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_fuse_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__n_emoji_list_js__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__n_emoji_list_js__ = __webpack_require__(47);
 
 
 
@@ -39838,9 +39837,9 @@ __WEBPACK_IMPORTED_MODULE_0_quill___default.a.register('modules/short_name_emoji
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_quill__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_quill___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_quill__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fuse_js__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fuse_js__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fuse_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_fuse_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__n_emoji_list_js__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__n_emoji_list_js__ = __webpack_require__(47);
 
 
 
@@ -40015,9 +40014,9 @@ __WEBPACK_IMPORTED_MODULE_0_quill___default.a.register({'modules/textarea_emoji'
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_quill__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_quill___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_quill__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fuse_js__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fuse_js__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_fuse_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_fuse_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__n_emoji_list_js__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__n_emoji_list_js__ = __webpack_require__(47);
 
 
 
@@ -40226,7 +40225,7 @@ __WEBPACK_IMPORTED_MODULE_0_quill___default.a.register({'modules/toolbar_emoji':
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__scss_base_scss__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__scss_base_scss__ = __webpack_require__(137);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__scss_base_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__scss_base_scss__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__n_formats_blot__ = __webpack_require__(127);
 /* unused harmony reexport emojiBlot */
@@ -40264,7 +40263,7 @@ module.exports = __webpack_require__.p + "static/sheet_apple_20.png";
 
 
 /* styles */
-__webpack_require__(140)
+__webpack_require__(138)
 
 var Component = __webpack_require__(135)(
   /* script */
@@ -40401,59 +40400,7 @@ var content = __webpack_require__(118);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(26)("3a8079a0", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../css-loader/index.js?-autoprefixer!../../postcss-loader/index.js!./quill.core.css", function() {
-     var newContent = require("!!../../css-loader/index.js?-autoprefixer!../../postcss-loader/index.js!./quill.core.css");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 138 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(119);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(26)("d22a7388", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../css-loader/index.js?-autoprefixer!../../postcss-loader/index.js!./quill.snow.css", function() {
-     var newContent = require("!!../../css-loader/index.js?-autoprefixer!../../postcss-loader/index.js!./quill.snow.css");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 139 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(120);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(26)("6115d921", content, false);
+var update = __webpack_require__(67)("6115d921", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -40469,7 +40416,7 @@ if(false) {
 }
 
 /***/ }),
-/* 140 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -40479,7 +40426,7 @@ var content = __webpack_require__(121);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(26)("8be957c0", content, false);
+var update = __webpack_require__(67)("8be957c0", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -40495,7 +40442,7 @@ if(false) {
 }
 
 /***/ }),
-/* 141 */
+/* 139 */
 /***/ (function(module, exports) {
 
 /**
@@ -40528,7 +40475,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 142 */
+/* 140 */
 /***/ (function(module, exports) {
 
 var g;
@@ -40555,7 +40502,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 143 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(68);
