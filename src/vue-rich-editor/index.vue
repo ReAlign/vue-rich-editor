@@ -256,6 +256,7 @@ export default {
 }
 
 .quill-wrapper {
+  line-height: 26px;
   .ql-disabled {
     cursor: not-allowed;
     user-select: none;
