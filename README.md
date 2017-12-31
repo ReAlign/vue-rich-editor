@@ -5,6 +5,8 @@
 [npm-image]: https://img.shields.io/npm/v/vue-rich-editor.svg
 [npm-url]: https://www.npmjs.com/package/vue-rich-editor
 
+![]()
+
 ![demo](http://olz3b8fm9.bkt.clouddn.com/17-12-26/22851530.jpg)
 > a vue rich text editor，based on quill
 
