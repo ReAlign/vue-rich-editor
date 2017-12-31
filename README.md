@@ -10,11 +10,13 @@
 
 ### Introduction
 
-* [x] Based on the quill
-* [x] Configurable module
-    * inline style
-    * reset size
-    * [image resize](https://github.com/Fandom-OSS/quill-blot-formatter)
+* Based on the quill
+* Configurable module
+    * [x] inline style
+    * [x] reset size
+    * [x] [image resize](https://github.com/Fandom-OSS/quill-blot-formatter)
+    * [ ] image drop
+    * [ ] emoji
 
 ### Demo
 
