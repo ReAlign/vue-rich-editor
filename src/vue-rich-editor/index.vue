@@ -29,13 +29,13 @@ import ResizeAction from 'n-quill-blot-formatter/dist/actions/ResizeAction';
 import AlignAction from 'n-quill-blot-formatter/dist/actions/align/AlignAction';
 import DeleteAction from 'n-quill-blot-formatter/dist/actions/DeleteAction';
 
-import {
-  emojiBlot,
-  emojiBlotTwo,
-  shortNameEmoji,
-  toolbarEmoji,
-  textAreaEmoji
-} from 'n-quill-emoji';
+// import {
+//   emojiBlot,
+//   emojiBlotTwo,
+//   shortNameEmoji,
+//   toolbarEmoji,
+//   textAreaEmoji
+// } from 'n-quill-emoji';
 
 let gValue = { value: '' };
 
@@ -45,13 +45,13 @@ let defaultToolbar = {
     [ { color: [] } ],
     [ { list: 'bullet' }, { list: 'ordered' } ],
     [ 'image' ],
-    [ 'emoji' ],
+    // [ 'emoji' ],
     [ { size: ['32px', '24px', '18px', '16px', '13px', '12px', false] } ],
     [ 'clean' ]
   ],
-  handlers: {
-      'emoji': function () {}
-  }
+  // handlers: {
+  //     'emoji': function () {}
+  // }
 };
 
 let ENUM_MAP = {
@@ -183,7 +183,7 @@ export default {
 
       let _modulesConf = {
         toolbar: this.toolbar,
-        toolbar_emoji: true
+        // toolbar_emoji: true
       };
 
       if((this.quillRegisterKeys
@@ -249,7 +249,7 @@ export default {
 <style lang='scss'>
 @import './../../node_modules/quill/dist/quill.core.css';
 @import './../../node_modules/quill/dist/quill.snow.css';
-@import './../../node_modules/n-quill-emoji/dist/n-quill-emoji.css';
+// @import './../../node_modules/n-quill-emoji/dist/n-quill-emoji.css';
 .ql-editor {
   min-height: 200px;
   font-size: 14px;
