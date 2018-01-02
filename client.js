@@ -104,7 +104,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "ve-container"
   }, [_c('h3', [_vm._v("vue rich editor example")]), _vm._v(" "), _c('vue-rich-editor', {
     attrs: {
-      "id": "editor",
+      "id": _vm.editorId,
       "quillRegisterKeys": _vm.quillRegisterKeys,
       "useCustomImageHandler": "",
       "disabled": _vm.editorIsDisabled
@@ -126,6 +126,40 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": function($event) {
         _vm.saveContent(_vm.editorContent)
+      }
+    }
+  }, [_vm._v("\n        save content\n      ")]), _vm._v(" "), _c('button', {
+    staticClass: "ve-button",
+    on: {
+      "click": function($event) {
+        _vm.setEditor(_vm.setEditorDemo)
+      }
+    }
+  }, [_vm._v("\n        set editor\n      ")])])], 1), _vm._v(" "), _c('div', {
+    staticClass: "ve-container"
+  }, [_c('h3', [_vm._v("vue rich editor example2")]), _vm._v(" "), _c('vue-rich-editor', {
+    attrs: {
+      "id": _vm.editorId1,
+      "useCustomImageHandler": "",
+      "disabled": _vm.editorIsDisabled
+    },
+    on: {
+      "imageAdded": _vm.uploadImage
+    },
+    model: {
+      value: (_vm.editorContent1),
+      callback: function($$v) {
+        _vm.editorContent1 = $$v
+      },
+      expression: "editorContent1"
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "ve-button-area"
+  }, [_c('button', {
+    staticClass: "ve-button",
+    on: {
+      "click": function($event) {
+        _vm.saveContent(_vm.editorContent1)
       }
     }
   }, [_vm._v("\n        save content\n      ")]), _vm._v(" "), _c('button', {
@@ -266,6 +300,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -277,7 +334,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   data: function data() {
     return {
+      editorId: 'editor1222',
+      editorId1: 'editor0',
       editorContent: 'demo string<img src="https://olx7tg2rm.qnssl.com/new.png" />',
+      editorContent1: 'demo1',
       setEditorDemo: '<h1>hahahah</h1>',
       editorIsDisabled: false,
       quillRegisterKeys: ['inline', 'size', 'imageResize']
@@ -398,7 +458,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //   textAreaEmoji
 // } from 'n-quill-emoji';
 
-var gValue = { value: '' };
+var gValue = { value: '', id: '' };
 
 var defaultToolbar = {
   container: [['link', 'bold', 'italic', 'underline'], [{ color: [] }], [{ list: 'bullet' }, { list: 'ordered' }], ['image'],
@@ -444,7 +504,9 @@ var MyResizeAction = function (_ResizeAction) {
   __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass___default()(MyResizeAction, [{
     key: 'onUpdate',
     value: function onUpdate() {
-      gValue.value = __WEBPACK_IMPORTED_MODULE_6_jquery___default()('.vre-editor-sign-only .ql-editor')[0].innerHTML;
+      console.log(gValue.id);
+      console.log(__WEBPACK_IMPORTED_MODULE_6_jquery___default()('#' + gValue.id + ' .ql-editor')[0]);
+      gValue.value = __WEBPACK_IMPORTED_MODULE_6_jquery___default()('#' + gValue.id + ' .ql-editor')[0].innerHTML;
     }
   }]);
 
@@ -476,6 +538,7 @@ var MyImageSpec = function (_ImageSpec) {
     value: String,
     id: {
       type: String,
+      required: true,
       default: 'quill-container'
     },
     disabled: Boolean,
@@ -505,6 +568,9 @@ var MyImageSpec = function (_ImageSpec) {
     this.initRegisterModules();
     this.initializeVueRichEditor();
     this.handleUpdatedEditor();
+  },
+  created: function created() {
+    gValue.id = this.id;
   },
 
 
@@ -559,7 +625,7 @@ var MyImageSpec = function (_ImageSpec) {
       }
 
       this.quill = new __WEBPACK_IMPORTED_MODULE_5_quill___default.a(this.$refs.quillContainer, {
-        bounds: '.vre-editor-sign-only',
+        bounds: '#' + this.id,
         modules: _modulesConf,
         placeholder: this.placeholder,
         theme: 'snow',
