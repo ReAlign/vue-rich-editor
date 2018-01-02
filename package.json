@@ -1,6 +1,6 @@
 {
   "name": "vue-rich-editor",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "a vue rich text editor，based on quill",
   "main": "dist/index.js",
   "scripts": {
