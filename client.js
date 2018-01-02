@@ -504,8 +504,6 @@ var MyResizeAction = function (_ResizeAction) {
   __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass___default()(MyResizeAction, [{
     key: 'onUpdate',
     value: function onUpdate() {
-      console.log(gValue.id);
-      console.log(__WEBPACK_IMPORTED_MODULE_6_jquery___default()('#' + gValue.id + ' .ql-editor')[0]);
       gValue.value = __WEBPACK_IMPORTED_MODULE_6_jquery___default()('#' + gValue.id + ' .ql-editor')[0].innerHTML;
     }
   }]);
@@ -752,7 +750,9 @@ var BoldStyleAttributor = function (_Parchment$Attributor) {
   return BoldStyleAttributor;
 }(Parchment.Attributor.Style);
 
-var BoldStyle = new BoldStyleAttributor('bold', 'font-weight');
+var BoldStyle = new BoldStyleAttributor('bold', 'font-weight', {
+  scope: Parchment.Scope.INLINE
+});
 
 /* harmony default export */ __webpack_exports__["a"] = (BoldStyle);
 
@@ -820,7 +820,9 @@ var ItalicStyleAttributor = function (_Parchment$Attributor) {
   return ItalicStyleAttributor;
 }(Parchment.Attributor.Style);
 
-var ItalicStyle = new ItalicStyleAttributor('italic', 'font-style');
+var ItalicStyle = new ItalicStyleAttributor('italic', 'font-style', {
+  scope: Parchment.Scope.INLINE
+});
 
 /* harmony default export */ __webpack_exports__["a"] = (ItalicStyle);
 
@@ -903,7 +905,9 @@ var UnderlineStyleAttributor = function (_Parchment$Attributor) {
   return UnderlineStyleAttributor;
 }(Parchment.Attributor.Style);
 
-var UnderlineStyle = new UnderlineStyleAttributor('underline', 'text-decoration');
+var UnderlineStyle = new UnderlineStyleAttributor('underline', 'text-decoration', {
+  scope: Parchment.Scope.INLINE
+});
 
 /* harmony default export */ __webpack_exports__["a"] = (UnderlineStyle);
 
