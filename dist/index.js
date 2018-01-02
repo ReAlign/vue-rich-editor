@@ -24014,7 +24014,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //   textAreaEmoji
 // } from 'n-quill-emoji';
 
-var gValue = { value: '' };
+var gValue = { value: '', id: '' };
 
 var defaultToolbar = {
   container: [['link', 'bold', 'italic', 'underline'], [{ color: [] }], [{ list: 'bullet' }, { list: 'ordered' }], ['image'],
@@ -24060,7 +24060,7 @@ var MyResizeAction = function (_ResizeAction) {
   __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass___default()(MyResizeAction, [{
     key: 'onUpdate',
     value: function onUpdate() {
-      gValue.value = __WEBPACK_IMPORTED_MODULE_6_jquery___default()('#' + this.id + ' .ql-editor')[0].innerHTML;
+      gValue.value = __WEBPACK_IMPORTED_MODULE_6_jquery___default()('#' + gValue.id + ' .ql-editor')[0].innerHTML;
     }
   }]);
 
@@ -24122,6 +24122,9 @@ var MyImageSpec = function (_ImageSpec) {
     this.initRegisterModules();
     this.initializeVueRichEditor();
     this.handleUpdatedEditor();
+  },
+  created: function created() {
+    gValue.id = this.id;
   },
 
 
