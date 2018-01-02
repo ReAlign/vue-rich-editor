@@ -90,7 +90,7 @@ let defaultQuillRegisterKeys = [
 
 class MyResizeAction extends ResizeAction {
   onUpdate() {
-    gValue.value = $('.vre-editor-sign-only .ql-editor')[0].innerHTML;
+    gValue.value = $('#' + this.id + ' .ql-editor')[0].innerHTML;
   }
 }
 
@@ -108,6 +108,7 @@ export default {
     value: String,
     id: {
       type: String,
+      required: true,
       default: 'quill-container'
     },
     disabled: Boolean,
@@ -198,7 +199,7 @@ export default {
       }
 
       this.quill = new Quill(this.$refs.quillContainer, {
-        bounds: '.vre-editor-sign-only',
+        bounds: '#' + this.id,
         modules: _modulesConf,
         placeholder: this.placeholder,
         theme: 'snow',

@@ -24060,7 +24060,7 @@ var MyResizeAction = function (_ResizeAction) {
   __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass___default()(MyResizeAction, [{
     key: 'onUpdate',
     value: function onUpdate() {
-      gValue.value = __WEBPACK_IMPORTED_MODULE_6_jquery___default()('.vre-editor-sign-only .ql-editor')[0].innerHTML;
+      gValue.value = __WEBPACK_IMPORTED_MODULE_6_jquery___default()('#' + this.id + ' .ql-editor')[0].innerHTML;
     }
   }]);
 
@@ -24092,6 +24092,7 @@ var MyImageSpec = function (_ImageSpec) {
     value: String,
     id: {
       type: String,
+      required: true,
       default: 'quill-container'
     },
     disabled: Boolean,
@@ -24175,7 +24176,7 @@ var MyImageSpec = function (_ImageSpec) {
       }
 
       this.quill = new __WEBPACK_IMPORTED_MODULE_5_quill___default.a(this.$refs.quillContainer, {
-        bounds: '.vre-editor-sign-only',
+        bounds: '#' + this.id,
         modules: _modulesConf,
         placeholder: this.placeholder,
         theme: 'snow',
