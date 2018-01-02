@@ -19,6 +19,8 @@ class BoldStyleAttributor extends Parchment.Attributor.Style {
   }
 }
 
-let BoldStyle = new BoldStyleAttributor('bold', 'font-weight');
+let BoldStyle = new BoldStyleAttributor('bold', 'font-weight', {
+  scope: Parchment.Scope.INLINE
+});
 
 export default BoldStyle;

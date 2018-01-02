@@ -18,6 +18,8 @@ class ItalicStyleAttributor extends Parchment.Attributor.Style {
   }
 }
 
-let ItalicStyle = new ItalicStyleAttributor('italic', 'font-style');
+let ItalicStyle = new ItalicStyleAttributor('italic', 'font-style', {
+  scope: Parchment.Scope.INLINE
+});
 
 export default ItalicStyle;

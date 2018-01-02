@@ -24284,7 +24284,9 @@ var BoldStyleAttributor = function (_Parchment$Attributor) {
   return BoldStyleAttributor;
 }(Parchment.Attributor.Style);
 
-var BoldStyle = new BoldStyleAttributor('bold', 'font-weight');
+var BoldStyle = new BoldStyleAttributor('bold', 'font-weight', {
+  scope: Parchment.Scope.INLINE
+});
 
 /* harmony default export */ __webpack_exports__["a"] = (BoldStyle);
 
@@ -24351,7 +24353,9 @@ var ItalicStyleAttributor = function (_Parchment$Attributor) {
   return ItalicStyleAttributor;
 }(Parchment.Attributor.Style);
 
-var ItalicStyle = new ItalicStyleAttributor('italic', 'font-style');
+var ItalicStyle = new ItalicStyleAttributor('italic', 'font-style', {
+  scope: Parchment.Scope.INLINE
+});
 
 /* harmony default export */ __webpack_exports__["a"] = (ItalicStyle);
 
@@ -24432,7 +24436,9 @@ var UnderlineStyleAttributor = function (_Parchment$Attributor) {
   return UnderlineStyleAttributor;
 }(Parchment.Attributor.Style);
 
-var UnderlineStyle = new UnderlineStyleAttributor('underline', 'text-decoration');
+var UnderlineStyle = new UnderlineStyleAttributor('underline', 'text-decoration', {
+  scope: Parchment.Scope.INLINE
+});
 
 /* harmony default export */ __webpack_exports__["a"] = (UnderlineStyle);
 
