@@ -3,7 +3,7 @@
   <div class='ve-container'>
     <h3>vue rich editor example</h3>
     <vue-rich-editor
-      id='editor'
+      :id='editorId'
       :quillRegisterKeys='quillRegisterKeys'
       useCustomImageHandler
       :disabled='editorIsDisabled'
@@ -27,7 +27,7 @@
   <div class='ve-container'>
     <h3>vue rich editor example2</h3>
     <vue-rich-editor
-      id='editor1'
+      :id='editorId1'
       useCustomImageHandler
       :disabled='editorIsDisabled'
       v-model='editorContent1'
@@ -60,6 +60,8 @@ export default {
   },
   data() {
     return {
+      editorId: 'editor1222',
+      editorId1: 'editor0',
       editorContent: 'demo string<img src="https://olx7tg2rm.qnssl.com/new.png" />',
       editorContent1: 'demo1',
       setEditorDemo: '<h1>hahahah</h1>',

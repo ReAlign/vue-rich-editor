@@ -37,7 +37,7 @@ import DeleteAction from 'n-quill-blot-formatter/dist/actions/DeleteAction';
 //   textAreaEmoji
 // } from 'n-quill-emoji';
 
-let gValue = { value: '' };
+let gValue = { value: '', id: '' };
 
 let defaultToolbar = {
   container: [
@@ -90,7 +90,7 @@ let defaultQuillRegisterKeys = [
 
 class MyResizeAction extends ResizeAction {
   onUpdate() {
-    gValue.value = $('#' + this.id + ' .ql-editor')[0].innerHTML;
+    gValue.value = $('#' + gValue.id + ' .ql-editor')[0].innerHTML;
   }
 }
 
@@ -137,6 +137,10 @@ export default {
     this.initRegisterModules();
     this.initializeVueRichEditor();
     this.handleUpdatedEditor();
+  },
+
+  created() {
+    gValue.id = this.id;
   },
 
   watch: {
