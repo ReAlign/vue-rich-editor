@@ -23,29 +23,6 @@
       </button>
     </div>
   </div>
-
-  <div class='ve-container'>
-    <h3>vue rich editor example2</h3>
-    <vue-rich-editor
-      :id='editorId1'
-      useCustomImageHandler
-      :disabled='editorIsDisabled'
-      v-model='editorContent1'
-      @imageAdded='uploadImage' />
-    <div class='ve-button-area'>
-      <button
-        class='ve-button'
-        @click='saveContent(editorContent1)'>
-        save content
-      </button>
-
-      <button
-        class='ve-button'
-        @click='setEditor(setEditorDemo)'>
-        set editor
-      </button>
-    </div>
-  </div>
 </div>
 </template>
 
@@ -60,10 +37,8 @@ export default {
   },
   data() {
     return {
-      editorId: 'editor1222',
-      editorId1: 'editor0',
+      editorId: 'editor',
       editorContent: 'demo string<img src="https://olx7tg2rm.qnssl.com/new.png" />',
-      editorContent1: 'demo1',
       setEditorDemo: '<h1>hahahah</h1>',
       editorIsDisabled: false,
       quillRegisterKeys: ['inline', 'size', 'imageResize']
