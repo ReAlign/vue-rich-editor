@@ -135,40 +135,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.setEditor(_vm.setEditorDemo)
       }
     }
-  }, [_vm._v("\n        set editor\n      ")])])], 1), _vm._v(" "), _c('div', {
-    staticClass: "ve-container"
-  }, [_c('h3', [_vm._v("vue rich editor example2")]), _vm._v(" "), _c('vue-rich-editor', {
-    attrs: {
-      "id": _vm.editorId1,
-      "useCustomImageHandler": "",
-      "disabled": _vm.editorIsDisabled
-    },
-    on: {
-      "imageAdded": _vm.uploadImage
-    },
-    model: {
-      value: (_vm.editorContent1),
-      callback: function($$v) {
-        _vm.editorContent1 = $$v
-      },
-      expression: "editorContent1"
-    }
-  }), _vm._v(" "), _c('div', {
-    staticClass: "ve-button-area"
-  }, [_c('button', {
-    staticClass: "ve-button",
-    on: {
-      "click": function($event) {
-        _vm.saveContent(_vm.editorContent1)
-      }
-    }
-  }, [_vm._v("\n        save content\n      ")]), _vm._v(" "), _c('button', {
-    staticClass: "ve-button",
-    on: {
-      "click": function($event) {
-        _vm.setEditor(_vm.setEditorDemo)
-      }
-    }
   }, [_vm._v("\n        set editor\n      ")])])], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
@@ -300,29 +266,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -334,10 +277,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   data: function data() {
     return {
-      editorId: 'editor1222',
-      editorId1: 'editor0',
+      editorId: 'editor',
       editorContent: 'demo string<img src="https://olx7tg2rm.qnssl.com/new.png" />',
-      editorContent1: 'demo1',
       setEditorDemo: '<h1>hahahah</h1>',
       editorIsDisabled: false,
       quillRegisterKeys: ['inline', 'size', 'imageResize']
