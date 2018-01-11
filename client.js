@@ -278,7 +278,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       editorId: 'editor',
-      editorContent: 'demo string<img src="https://olx7tg2rm.qnssl.com/new.png" />',
+      editorContent: 'demo string<img src="http://olz3b8fm9.bkt.clouddn.com/18-1-11/17450321.jpg" />',
       setEditorDemo: '<h1>hahahah</h1>',
       editorIsDisabled: false,
       quillRegisterKeys: ['inline', 'size', 'imageResize']
@@ -347,14 +347,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__rewrite_set_style_method_size__ = __webpack_require__(98);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_n_quill_blot_formatter__ = __webpack_require__(149);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_n_quill_blot_formatter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_n_quill_blot_formatter__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_actions_ResizeAction__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_actions_ResizeAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_actions_ResizeAction__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_align_AlignAction__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_align_AlignAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_align_AlignAction__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_DeleteAction__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_DeleteAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_DeleteAction__);
 
 
 
@@ -388,7 +386,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-
+// import AlignAction from 'n-quill-blot-formatter/dist/actions/align/AlignAction';
 
 
 // import {
@@ -464,7 +462,9 @@ var MyImageSpec = function (_ImageSpec) {
   __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass___default()(MyImageSpec, [{
     key: 'getActions',
     value: function getActions() {
-      return [MyResizeAction, __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_align_AlignAction___default.a, __WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction___default.a];
+      return [
+      // MyResizeAction, AlignAction, DeleteAction
+      MyResizeAction, __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_DeleteAction___default.a];
     }
   }]);
 
