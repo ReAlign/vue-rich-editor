@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       editorId: 'editor',
-      editorContent: 'demo string<img src="https://olx7tg2rm.qnssl.com/new.png" />',
+      editorContent: 'demo string<img src="http://olz3b8fm9.bkt.clouddn.com/18-1-11/17450321.jpg" />',
       setEditorDemo: '<h1>hahahah</h1>',
       editorIsDisabled: false,
       quillRegisterKeys: ['inline', 'size', 'imageResize']

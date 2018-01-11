@@ -26,7 +26,7 @@ import MySizeStyle from './rewrite/set-style-method/size';
 import BlotFormatter from 'n-quill-blot-formatter';
 import ImageSpec from 'n-quill-blot-formatter/dist/specs/ImageSpec';
 import ResizeAction from 'n-quill-blot-formatter/dist/actions/ResizeAction';
-import AlignAction from 'n-quill-blot-formatter/dist/actions/align/AlignAction';
+// import AlignAction from 'n-quill-blot-formatter/dist/actions/align/AlignAction';
 import DeleteAction from 'n-quill-blot-formatter/dist/actions/DeleteAction';
 
 // import {
@@ -97,7 +97,8 @@ class MyResizeAction extends ResizeAction {
 class MyImageSpec extends ImageSpec {
   getActions() {
     return [
-      MyResizeAction, AlignAction, DeleteAction
+      // MyResizeAction, AlignAction, DeleteAction
+      MyResizeAction, DeleteAction
     ];
   }
 }
@@ -301,6 +302,9 @@ export default {
   }
 
   .ql-snow {
+    .ql-editor img, .ql-editor p img, .ql-editor * img {
+      max-width: 10000%;
+    }
     .ql-picker.ql-size {
       height: 24px;
       line-height: 24px;

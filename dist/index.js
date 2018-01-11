@@ -93,7 +93,7 @@ var _deepmerge = __webpack_require__(117);
 
 var _deepmerge2 = _interopRequireDefault(_deepmerge);
 
-var _Options = __webpack_require__(59);
+var _Options = __webpack_require__(58);
 
 var _Options2 = _interopRequireDefault(_Options);
 
@@ -290,7 +290,7 @@ module.exports = function (it, key) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(14);
-var IE8_DOM_DEFINE = __webpack_require__(50);
+var IE8_DOM_DEFINE = __webpack_require__(49);
 var toPrimitive = __webpack_require__(38);
 var dP = Object.defineProperty;
 
@@ -325,7 +325,7 @@ module.exports = function (it) {
 
 var global = __webpack_require__(2);
 var core = __webpack_require__(1);
-var ctx = __webpack_require__(48);
+var ctx = __webpack_require__(47);
 var hide = __webpack_require__(8);
 var PROTOTYPE = 'prototype';
 
@@ -11876,7 +11876,7 @@ var _Action = __webpack_require__(11);
 
 var _Action2 = _interopRequireDefault(_Action);
 
-var _AlignAction = __webpack_require__(44);
+var _AlignAction = __webpack_require__(59);
 
 var _AlignAction2 = _interopRequireDefault(_AlignAction);
 
@@ -11997,7 +11997,7 @@ var _create = __webpack_require__(71);
 
 var _create2 = _interopRequireDefault(_create);
 
-var _typeof2 = __webpack_require__(46);
+var _typeof2 = __webpack_require__(45);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -12028,7 +12028,7 @@ exports.default = function (subClass, superClass) {
 
 exports.__esModule = true;
 
-var _typeof2 = __webpack_require__(46);
+var _typeof2 = __webpack_require__(45);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -22428,7 +22428,7 @@ var PROTOTYPE = 'prototype';
 // Create object with fake `null` prototype: use iframe Object with cleared prototype
 var createDict = function () {
   // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(49)('iframe');
+  var iframe = __webpack_require__(48)('iframe');
   var i = enumBugKeys.length;
   var lt = '<';
   var gt = '>';
@@ -22469,7 +22469,7 @@ var createDesc = __webpack_require__(21);
 var toIObject = __webpack_require__(6);
 var toPrimitive = __webpack_require__(38);
 var has = __webpack_require__(4);
-var IE8_DOM_DEFINE = __webpack_require__(50);
+var IE8_DOM_DEFINE = __webpack_require__(49);
 var gOPD = Object.getOwnPropertyDescriptor;
 
 exports.f = __webpack_require__(3) ? gOPD : function getOwnPropertyDescriptor(O, P) {
@@ -22487,7 +22487,7 @@ exports.f = __webpack_require__(3) ? gOPD : function getOwnPropertyDescriptor(O,
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(55);
+var $keys = __webpack_require__(54);
 var enumBugKeys = __webpack_require__(27);
 
 module.exports = Object.keys || function keys(O) {
@@ -22950,84 +22950,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Action2 = __webpack_require__(11);
-
-var _Action3 = _interopRequireDefault(_Action2);
-
-var _BlotFormatter = __webpack_require__(0);
-
-var _BlotFormatter2 = _interopRequireDefault(_BlotFormatter);
-
-var _DefaultAligner = __webpack_require__(60);
-
-var _DefaultAligner2 = _interopRequireDefault(_DefaultAligner);
-
-var _Aligner = __webpack_require__(24);
-
-var _Toolbar = __webpack_require__(62);
-
-var _DefaultToolbar = __webpack_require__(61);
-
-var _DefaultToolbar2 = _interopRequireDefault(_DefaultToolbar);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var AlignAction = function (_Action) {
-  _inherits(AlignAction, _Action);
-
-  function AlignAction(formatter) {
-    _classCallCheck(this, AlignAction);
-
-    var _this = _possibleConstructorReturn(this, (AlignAction.__proto__ || Object.getPrototypeOf(AlignAction)).call(this, formatter));
-
-    _this.aligner = new _DefaultAligner2.default(formatter.options.align);
-    _this.toolbar = new _DefaultToolbar2.default();
-    return _this;
-  }
-
-  _createClass(AlignAction, [{
-    key: 'onCreate',
-    value: function onCreate() {
-      var toolbar = this.toolbar.create(this.formatter, this.aligner);
-      this.formatter.overlay.appendChild(toolbar);
-    }
-  }, {
-    key: 'onDestroy',
-    value: function onDestroy() {
-      var toolbar = this.toolbar.getElement();
-      if (!toolbar) {
-        return;
-      }
-
-      this.formatter.overlay.removeChild(toolbar);
-      this.toolbar.destroy();
-    }
-  }]);
-
-  return AlignAction;
-}(_Action3.default);
-
-exports.default = AlignAction;
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _BlotSpec2 = __webpack_require__(16);
 
 var _BlotSpec3 = _interopRequireDefault(_BlotSpec2);
@@ -23090,7 +23012,7 @@ var ImageSpec = function (_BlotSpec) {
 exports.default = ImageSpec;
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23117,7 +23039,7 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 };
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -23128,7 +23050,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
@@ -23154,7 +23076,7 @@ module.exports = function (fn, that, length) {
 
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(9);
@@ -23167,29 +23089,29 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = !__webpack_require__(3) && !__webpack_require__(15)(function () {
-  return Object.defineProperty(__webpack_require__(49)('div'), 'a', { get: function () { return 7; } }).a != 7;
+  return Object.defineProperty(__webpack_require__(48)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
 
 /***/ }),
-/* 51 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var LIBRARY = __webpack_require__(29);
 var $export = __webpack_require__(7);
-var redefine = __webpack_require__(57);
+var redefine = __webpack_require__(56);
 var hide = __webpack_require__(8);
 var has = __webpack_require__(4);
 var Iterators = __webpack_require__(28);
 var $iterCreate = __webpack_require__(93);
 var setToStringTag = __webpack_require__(34);
-var getPrototypeOf = __webpack_require__(54);
+var getPrototypeOf = __webpack_require__(53);
 var ITERATOR = __webpack_require__(10)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
@@ -23253,11 +23175,11 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 
 /***/ }),
-/* 52 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = __webpack_require__(55);
+var $keys = __webpack_require__(54);
 var hiddenKeys = __webpack_require__(27).concat('length', 'prototype');
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
@@ -23266,19 +23188,19 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports) {
 
 exports.f = Object.getOwnPropertySymbols;
 
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(4);
-var toObject = __webpack_require__(58);
+var toObject = __webpack_require__(57);
 var IE_PROTO = __webpack_require__(35)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
@@ -23292,7 +23214,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 /***/ }),
-/* 55 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(4);
@@ -23315,7 +23237,7 @@ module.exports = function (object, names) {
 
 
 /***/ }),
-/* 56 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // most Object methods by ES6 should accept primitives
@@ -23331,14 +23253,14 @@ module.exports = function (KEY, exec) {
 
 
 /***/ }),
-/* 57 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(8);
 
 
 /***/ }),
-/* 58 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
@@ -23349,7 +23271,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 59 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23363,7 +23285,7 @@ var _BlotSpec = __webpack_require__(16);
 
 var _BlotSpec2 = _interopRequireDefault(_BlotSpec);
 
-var _ImageSpec = __webpack_require__(45);
+var _ImageSpec = __webpack_require__(44);
 
 var _ImageSpec2 = _interopRequireDefault(_ImageSpec);
 
@@ -23445,6 +23367,84 @@ var DefaultOptions = {
 };
 
 exports.default = DefaultOptions;
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Action2 = __webpack_require__(11);
+
+var _Action3 = _interopRequireDefault(_Action2);
+
+var _BlotFormatter = __webpack_require__(0);
+
+var _BlotFormatter2 = _interopRequireDefault(_BlotFormatter);
+
+var _DefaultAligner = __webpack_require__(60);
+
+var _DefaultAligner2 = _interopRequireDefault(_DefaultAligner);
+
+var _Aligner = __webpack_require__(24);
+
+var _Toolbar = __webpack_require__(62);
+
+var _DefaultToolbar = __webpack_require__(61);
+
+var _DefaultToolbar2 = _interopRequireDefault(_DefaultToolbar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AlignAction = function (_Action) {
+  _inherits(AlignAction, _Action);
+
+  function AlignAction(formatter) {
+    _classCallCheck(this, AlignAction);
+
+    var _this = _possibleConstructorReturn(this, (AlignAction.__proto__ || Object.getPrototypeOf(AlignAction)).call(this, formatter));
+
+    _this.aligner = new _DefaultAligner2.default(formatter.options.align);
+    _this.toolbar = new _DefaultToolbar2.default();
+    return _this;
+  }
+
+  _createClass(AlignAction, [{
+    key: 'onCreate',
+    value: function onCreate() {
+      var toolbar = this.toolbar.create(this.formatter, this.aligner);
+      this.formatter.overlay.appendChild(toolbar);
+    }
+  }, {
+    key: 'onDestroy',
+    value: function onDestroy() {
+      var toolbar = this.toolbar.getElement();
+      if (!toolbar) {
+        return;
+      }
+
+      this.formatter.overlay.removeChild(toolbar);
+      this.toolbar.destroy();
+    }
+  }]);
+
+  return AlignAction;
+}(_Action3.default);
+
+exports.default = AlignAction;
 
 /***/ }),
 /* 60 */
@@ -23962,14 +23962,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__rewrite_set_style_method_size__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_n_quill_blot_formatter__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_n_quill_blot_formatter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_n_quill_blot_formatter__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_actions_ResizeAction__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_actions_ResizeAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_actions_ResizeAction__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_align_AlignAction__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_align_AlignAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_align_AlignAction__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_DeleteAction__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_DeleteAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_DeleteAction__);
 
 
 
@@ -24003,7 +24001,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-
+// import AlignAction from 'n-quill-blot-formatter/dist/actions/align/AlignAction';
 
 
 // import {
@@ -24079,7 +24077,9 @@ var MyImageSpec = function (_ImageSpec) {
   __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass___default()(MyImageSpec, [{
     key: 'getActions',
     value: function getActions() {
-      return [MyResizeAction, __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_align_AlignAction___default.a, __WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction___default.a];
+      return [
+      // MyResizeAction, AlignAction, DeleteAction
+      MyResizeAction, __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_DeleteAction___default.a];
     }
   }]);
 
@@ -26517,7 +26517,7 @@ module.exports = function (IS_INCLUDES) {
 
 // all enumerable object keys, includes symbols
 var getKeys = __webpack_require__(32);
-var gOPS = __webpack_require__(53);
+var gOPS = __webpack_require__(52);
 var pIE = __webpack_require__(33);
 module.exports = function (it) {
   var result = getKeys(it);
@@ -26545,7 +26545,7 @@ module.exports = document && document.documentElement;
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(47);
+var cof = __webpack_require__(46);
 // eslint-disable-next-line no-prototype-builtins
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
   return cof(it) == 'String' ? it.split('') : Object(it);
@@ -26557,7 +26557,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
-var cof = __webpack_require__(47);
+var cof = __webpack_require__(46);
 module.exports = Array.isArray || function isArray(arg) {
   return cof(arg) == 'Array';
 };
@@ -26676,7 +26676,7 @@ module.exports = __webpack_require__(3) ? Object.defineProperties : function def
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var toIObject = __webpack_require__(6);
-var gOPN = __webpack_require__(52).f;
+var gOPN = __webpack_require__(51).f;
 var toString = {}.toString;
 
 var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -26711,7 +26711,7 @@ module.exports = {
   set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
     function (test, buggy, set) {
       try {
-        set = __webpack_require__(48)(Function.call, __webpack_require__(31).f(Object.prototype, '__proto__').set, 2);
+        set = __webpack_require__(47)(Function.call, __webpack_require__(31).f(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch (e) { buggy = true; }
@@ -26789,7 +26789,7 @@ var toIObject = __webpack_require__(6);
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(51)(Array, 'Array', function (iterated, kind) {
+module.exports = __webpack_require__(50)(Array, 'Array', function (iterated, kind) {
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -26841,7 +26841,7 @@ $export($export.S + $export.F * !__webpack_require__(3), 'Object', { definePrope
 var toIObject = __webpack_require__(6);
 var $getOwnPropertyDescriptor = __webpack_require__(31).f;
 
-__webpack_require__(56)('getOwnPropertyDescriptor', function () {
+__webpack_require__(55)('getOwnPropertyDescriptor', function () {
   return function getOwnPropertyDescriptor(it, key) {
     return $getOwnPropertyDescriptor(toIObject(it), key);
   };
@@ -26853,10 +26853,10 @@ __webpack_require__(56)('getOwnPropertyDescriptor', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 Object.getPrototypeOf(O)
-var toObject = __webpack_require__(58);
-var $getPrototypeOf = __webpack_require__(54);
+var toObject = __webpack_require__(57);
+var $getPrototypeOf = __webpack_require__(53);
 
-__webpack_require__(56)('getPrototypeOf', function () {
+__webpack_require__(55)('getPrototypeOf', function () {
   return function getPrototypeOf(it) {
     return $getPrototypeOf(toObject(it));
   };
@@ -26887,7 +26887,7 @@ $export($export.S, 'Object', { setPrototypeOf: __webpack_require__(98).set });
 var $at = __webpack_require__(99)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(51)(String, 'String', function (iterated) {
+__webpack_require__(50)(String, 'String', function (iterated) {
   this._t = String(iterated); // target
   this._i = 0;                // next index
 // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -26913,7 +26913,7 @@ var global = __webpack_require__(2);
 var has = __webpack_require__(4);
 var DESCRIPTORS = __webpack_require__(3);
 var $export = __webpack_require__(7);
-var redefine = __webpack_require__(57);
+var redefine = __webpack_require__(56);
 var META = __webpack_require__(95).KEY;
 var $fails = __webpack_require__(15);
 var shared = __webpack_require__(36);
@@ -27056,9 +27056,9 @@ if (!USE_NATIVE) {
 
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
-  __webpack_require__(52).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(51).f = gOPNExt.f = $getOwnPropertyNames;
   __webpack_require__(33).f = $propertyIsEnumerable;
-  __webpack_require__(53).f = $getOwnPropertySymbols;
+  __webpack_require__(52).f = $getOwnPropertySymbols;
 
   if (DESCRIPTORS && !__webpack_require__(29)) {
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
@@ -27220,7 +27220,7 @@ exports.i(__webpack_require__(114), "");
 exports.i(__webpack_require__(115), "");
 
 // module
-exports.push([module.i, "\n@charset \"UTF-8\";\n.ql-editor {\n  min-height: 200px;\n  font-size: 14px;\n}\n.quill-wrapper {\n  line-height: 26px;\n}\n.quill-wrapper .ql-disabled {\n    cursor: not-allowed;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n}\n.quill-wrapper .ql-editor ul[data-checked='true'] > li::before,\n  .quill-wrapper .ql-editor ul[data-checked='false'] > li::before {\n    font-size: 14px;\n    vertical-align: baseline;\n    bottom: 0;\n    font-weight: 900;\n    color: #222;\n}\n.quill-wrapper .ql-snow.ql-toolbar {\n    padding-top: 8px;\n    padding-bottom: 4px;\n    line-height: 26px;\n}\n.quill-wrapper .ql-snow.ql-toolbar button svg {\n      width: 18px;\n      height: 18px;\n}\n.quill-wrapper .ql-snow.ql-toolbar .ql-formats {\n      border: 1px solid #ccc;\n      margin-bottom: 4px;\n}\n.quill-wrapper .ql-snow.ql-toolbar .ql-formats button {\n        margin: 0;\n}\n.quill-wrapper .ql-snow.ql-toolbar .ql-formats button:not(:last-child) {\n        border-right: 1px solid #ccc;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size {\n    height: 24px;\n    line-height: 24px;\n}\n.quill-wrapper .ql-snow .ql-thin, .quill-wrapper .ql-snow .ql-stroke.ql-thin {\n    stroke-width: 1px !important;\n}\n.quill-wrapper .ql-snow .ql-stroke {\n    stroke: rgba(63, 63, 63, 0.95);\n    stroke-linecap: square;\n    stroke-linejoin: initial;\n    stroke-width: 1.7px;\n}\n.quill-wrapper .ql-snow .ql-active .ql-stroke {\n    stroke-width: 2.25px;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='12px']::before,\n  .quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='12px']::before {\n    content: '12px';\n    font-size: 12px;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='13px']::before,\n  .quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='13px']::before {\n    content: '13px';\n    font-size: 13px;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='16px']::before,\n  .quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='16px']::before {\n    content: '16px';\n    font-size: 14px;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='18px']::before,\n  .quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='18px']::before {\n    content: '18px';\n    font-size: 15px;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='24px']::before,\n  .quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='24px']::before {\n    content: '24px';\n    font-size: 16px;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='32px']::before,\n  .quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='32px']::before {\n    content: '32px';\n    font-size: 18px;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-label::before,\n  .quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-item::before {\n    content: '\\6B63\\5E38';\n    font-size: 14px;\n}\n.quill-wrapper .ql-snow .ql-tooltip[data-mode='link']::before {\n    content: '\\8F93\\5165\\94FE\\63A5:';\n}\n.quill-wrapper .ql-snow .ql-tooltip::before {\n    content: '\\8BBF\\95EE\\94FE\\63A5:';\n}\n.quill-wrapper .ql-snow .ql-tooltip.ql-editing a.ql-action::after {\n    content: '\\4FDD\\5B58';\n}\n.quill-wrapper .ql-snow .ql-tooltip a.ql-action::after {\n    content: '\\7F16\\8F91';\n}\n.quill-wrapper .ql-snow .ql-tooltip a.ql-remove::before {\n    content: '\\79FB\\9664';\n}\n", ""]);
+exports.push([module.i, "\n@charset \"UTF-8\";\n.ql-editor {\n  min-height: 200px;\n  font-size: 14px;\n}\n.quill-wrapper {\n  line-height: 26px;\n}\n.quill-wrapper .ql-disabled {\n    cursor: not-allowed;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n}\n.quill-wrapper .ql-editor ul[data-checked='true'] > li::before,\n  .quill-wrapper .ql-editor ul[data-checked='false'] > li::before {\n    font-size: 14px;\n    vertical-align: baseline;\n    bottom: 0;\n    font-weight: 900;\n    color: #222;\n}\n.quill-wrapper .ql-snow.ql-toolbar {\n    padding-top: 8px;\n    padding-bottom: 4px;\n    line-height: 26px;\n}\n.quill-wrapper .ql-snow.ql-toolbar button svg {\n      width: 18px;\n      height: 18px;\n}\n.quill-wrapper .ql-snow.ql-toolbar .ql-formats {\n      border: 1px solid #ccc;\n      margin-bottom: 4px;\n}\n.quill-wrapper .ql-snow.ql-toolbar .ql-formats button {\n        margin: 0;\n}\n.quill-wrapper .ql-snow.ql-toolbar .ql-formats button:not(:last-child) {\n        border-right: 1px solid #ccc;\n}\n.quill-wrapper .ql-snow .ql-editor img, .quill-wrapper .ql-snow .ql-editor p img, .quill-wrapper .ql-snow .ql-editor * img {\n    max-width: 10000%;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size {\n    height: 24px;\n    line-height: 24px;\n}\n.quill-wrapper .ql-snow .ql-thin, .quill-wrapper .ql-snow .ql-stroke.ql-thin {\n    stroke-width: 1px !important;\n}\n.quill-wrapper .ql-snow .ql-stroke {\n    stroke: rgba(63, 63, 63, 0.95);\n    stroke-linecap: square;\n    stroke-linejoin: initial;\n    stroke-width: 1.7px;\n}\n.quill-wrapper .ql-snow .ql-active .ql-stroke {\n    stroke-width: 2.25px;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='12px']::before,\n  .quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='12px']::before {\n    content: '12px';\n    font-size: 12px;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='13px']::before,\n  .quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='13px']::before {\n    content: '13px';\n    font-size: 13px;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='16px']::before,\n  .quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='16px']::before {\n    content: '16px';\n    font-size: 14px;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='18px']::before,\n  .quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='18px']::before {\n    content: '18px';\n    font-size: 15px;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='24px']::before,\n  .quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='24px']::before {\n    content: '24px';\n    font-size: 16px;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-label[data-value='32px']::before,\n  .quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-item[data-value='32px']::before {\n    content: '32px';\n    font-size: 18px;\n}\n.quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-label::before,\n  .quill-wrapper .ql-snow .ql-picker.ql-size .ql-picker-item::before {\n    content: '\\6B63\\5E38';\n    font-size: 14px;\n}\n.quill-wrapper .ql-snow .ql-tooltip[data-mode='link']::before {\n    content: '\\8F93\\5165\\94FE\\63A5:';\n}\n.quill-wrapper .ql-snow .ql-tooltip::before {\n    content: '\\8BBF\\95EE\\94FE\\63A5:';\n}\n.quill-wrapper .ql-snow .ql-tooltip.ql-editing a.ql-action::after {\n    content: '\\4FDD\\5B58';\n}\n.quill-wrapper .ql-snow .ql-tooltip a.ql-action::after {\n    content: '\\7F16\\8F91';\n}\n.quill-wrapper .ql-snow .ql-tooltip a.ql-remove::before {\n    content: '\\79FB\\9664';\n}\n", ""]);
 
 // exports
 
@@ -27434,7 +27434,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Options = __webpack_require__(59);
+var _Options = __webpack_require__(58);
 
 Object.defineProperty(exports, 'DefaultOptions', {
   enumerable: true,
@@ -27461,7 +27461,7 @@ Object.defineProperty(exports, 'Action', {
   }
 });
 
-var _AlignAction = __webpack_require__(44);
+var _AlignAction = __webpack_require__(59);
 
 Object.defineProperty(exports, 'AlignAction', {
   enumerable: true,
@@ -27515,7 +27515,7 @@ Object.defineProperty(exports, 'BlotSpec', {
   }
 });
 
-var _ImageSpec = __webpack_require__(45);
+var _ImageSpec = __webpack_require__(44);
 
 Object.defineProperty(exports, 'ImageSpec', {
   enumerable: true,
