@@ -138,6 +138,7 @@ export default {
     this.initRegisterModules();
     this.initializeVueRichEditor();
     this.handleUpdatedEditor();
+    this.listenStateChangeEditor();
   },
 
   created() {
@@ -232,8 +233,25 @@ export default {
     },
 
     handleUpdatedEditor() {
+      const self = this;
       this.quill.on('text-change', () => {
-        this.$emit('input', this.editor.innerHTML);
+        self.$emit('input', this.editor.innerHTML);
+      });
+    },
+
+    listenStateChangeEditor() {
+      const self = this;
+      this.quill.on('selection-change', (range, oldRange, source) => {
+        if (range) {
+          if (range.length == 0) {
+            self.$emit('reFocus', range);
+          } else {
+            let text = self.quill.getText(range.index, range.length);
+            self.$emit('reHighlighted', text, range);
+          }
+        } else {
+          self.$emit('reBlur');
+        }
       });
     },
 
@@ -246,7 +264,7 @@ export default {
       let Editor = this.quill;
       let range = Editor.getSelection();
       let cursorLocation = range.index;
-      this.$emit('imageAdded', file, Editor, cursorLocation);
+      this.$emit('reImageAdded', file, Editor, cursorLocation);
     }
   }
 };

@@ -30,6 +30,29 @@
 
 [example](https://github.com/ReAlign/vue-rich-editor/tree/master/example)
 
+### Methods
+
+[example](https://github.com/ReAlign/vue-rich-editor/tree/master/example)
+#### State
+
+```
+reFocus(range)
+```
+
+```
+reHighlighted(text, range)
+```
+
+```
+reBlur()
+```
+
+#### Image
+
+```
+reImageAdded(file, Editor, cursorLocation)
+```
+
 ### TODO
 
 * [x] inline-style

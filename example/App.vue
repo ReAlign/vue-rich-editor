@@ -1,24 +1,27 @@
 <template>
-<div id='app'>
-  <div class='ve-container'>
+<div id="app">
+  <div class="ve-container">
     <h3>vue rich editor example</h3>
     <vue-rich-editor
-      :id='editorId'
-      :quillRegisterKeys='quillRegisterKeys'
+      :id="editorId"
+      :quillRegisterKeys="quillRegisterKeys"
       useCustomImageHandler
-      :disabled='editorIsDisabled'
-      v-model='editorContent'
-      @imageAdded='uploadImage' />
-    <div class='ve-button-area'>
+      :disabled="editorIsDisabled"
+      v-model="editorContent"
+      @reBlur="editorBlurEvt"
+      @reFocus="editorFocusEvt"
+      @reHighlighted="editorHighlightedEvt"
+      @reImageAdded="uploadImage" />
+    <div class="ve-button-area">
       <button
-        class='ve-button'
-        @click='saveContent(editorContent)'>
+        class="ve-button"
+        @click="saveContent(editorContent)">
         save content
       </button>
 
       <button
-        class='ve-button'
-        @click='setEditor(setEditorDemo)'>
+        class="ve-button"
+        @click="setEditor(setEditorDemo)">
         set editor
       </button>
     </div>
@@ -51,6 +54,19 @@ export default {
 
     saveContent(content = '') {
       console.log(content);
+    },
+
+    editorFocusEvt(range) {
+      console.log(range);
+      console.log('Cursor in the editor');
+    },
+
+    editorBlurEvt() {
+      console.log('Cursor not in the editor');
+    },
+    editorHighlightedEvt(text, range) {
+      console.log('User has highlighted: ', text);
+      console.log(range);
     },
 
     uploadImage(file, Editor, cursorLocation) {
