@@ -24122,6 +24122,7 @@ var MyImageSpec = function (_ImageSpec) {
     this.initRegisterModules();
     this.initializeVueRichEditor();
     this.handleUpdatedEditor();
+    this.listenStateChangeEditor();
   },
   created: function created() {
     gValue.id = this.id;
@@ -24204,8 +24205,24 @@ var MyImageSpec = function (_ImageSpec) {
     handleUpdatedEditor: function handleUpdatedEditor() {
       var _this3 = this;
 
+      var self = this;
       this.quill.on('text-change', function () {
-        _this3.$emit('input', _this3.editor.innerHTML);
+        self.$emit('input', _this3.editor.innerHTML);
+      });
+    },
+    listenStateChangeEditor: function listenStateChangeEditor() {
+      var self = this;
+      this.quill.on('selection-change', function (range, oldRange, source) {
+        if (range) {
+          if (range.length == 0) {
+            self.$emit('reFocus', range);
+          } else {
+            var text = self.quill.getText(range.index, range.length);
+            self.$emit('reHighlighted', text, range);
+          }
+        } else {
+          self.$emit('reBlur');
+        }
       });
     },
     customImageHandler: function customImageHandler(image, callback) {
@@ -24216,7 +24233,7 @@ var MyImageSpec = function (_ImageSpec) {
       var Editor = this.quill;
       var range = Editor.getSelection();
       var cursorLocation = range.index;
-      this.$emit('imageAdded', file, Editor, cursorLocation);
+      this.$emit('reImageAdded', file, Editor, cursorLocation);
     }
   }
 });
