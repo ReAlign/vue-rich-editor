@@ -24051,6 +24051,8 @@ var defaultQuillRegisterKeys = ['inline', 'size', 'imageResize'];
 
 var defaultClipboardFormatsList = ['link', 'bold', 'italic', 'underline', 'color', 'list', 'image', 'size', 'header'];
 
+var defaultLinkPlaceholder = 'input link';
+
 var MyResizeAction = function (_ResizeAction) {
   __WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits___default()(MyResizeAction, _ResizeAction);
 
@@ -24128,6 +24130,14 @@ var MyImageSpec = function (_ImageSpec) {
       default: function _default() {
         return [];
       }
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    linkPlaceholder: {
+      type: String,
+      default: defaultLinkPlaceholder
     }
   },
 
@@ -24137,8 +24147,7 @@ var MyImageSpec = function (_ImageSpec) {
       quill: null,
       editor: null,
       toolbar: __WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_typeof___default()(this.editorToolbar) == 'object' && this.editorToolbar.length ? this.editorToolbar : defaultToolbar,
-      clipboardFormats: __WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_typeof___default()(this.clipboardFormatsList) == 'object' && this.clipboardFormatsList.length ? this.clipboardFormatsList : defaultClipboardFormatsList,
-      placeholder: this.placeholder ? this.placeholder : ''
+      clipboardFormats: __WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_typeof___default()(this.clipboardFormatsList) == 'object' && this.clipboardFormatsList.length ? this.clipboardFormatsList : defaultClipboardFormatsList
     };
   },
   mounted: function mounted() {
@@ -24213,6 +24222,11 @@ var MyImageSpec = function (_ImageSpec) {
         placeholder: this.placeholder,
         readOnly: this.disabled ? this.disabled : false
       });
+
+      // change the link placeholder to www.github.com
+      var tooltip = this.quill.theme.tooltip;
+      var input = tooltip.root.querySelector("input[data-link]");
+      input.dataset.link = this.linkPlaceholder;
 
       this.checkForCustomImageHandler();
     },

@@ -63,7 +63,8 @@ let ENUM_MAP = {
     {
       key: 'formats/italic',
       value: MyItalic
-    },{
+    },
+    {
       key: 'formats/underline',
       value: MyUnderline
     }
@@ -99,6 +100,8 @@ let defaultClipboardFormatsList = [
   'size',
   'header'
 ];
+
+let defaultLinkPlaceholder = 'input link';
 
 class MyResizeAction extends ResizeAction {
   onUpdate() {
@@ -146,6 +149,14 @@ export default {
     clipboardFormatsList: {
       type: Array,
       default: () => []
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    linkPlaceholder: {
+      type: String,
+      default: defaultLinkPlaceholder
     }
   },
 
@@ -161,8 +172,7 @@ export default {
       clipboardFormats: typeof this.clipboardFormatsList == 'object'
                         && this.clipboardFormatsList.length
                           ? this.clipboardFormatsList
-                          : defaultClipboardFormatsList,
-      placeholder: this.placeholder ? this.placeholder : ''
+                          : defaultClipboardFormatsList
     };
   },
 
@@ -247,6 +257,11 @@ export default {
         placeholder: this.placeholder,
         readOnly: this.disabled ? this.disabled : false
       });
+
+      // change the link placeholder to www.github.com
+      let tooltip = this.quill.theme.tooltip;
+      let input = tooltip.root.querySelector("input[data-link]");
+      input.dataset.link = this.linkPlaceholder;
 
       this.checkForCustomImageHandler();
     },

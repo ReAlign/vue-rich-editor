@@ -38,6 +38,8 @@
 * editorToolbar: defaultToolBar
 * quillRegisterKeys: null
 * clipboardFormatsList: defaultClipboardFormatsList
+* placeholder: ''
+* linkPlaceholder: 'input link'
 
 ```
 defaultToolBar = [
@@ -96,3 +98,4 @@ reImageAdded(file, Editor, cursorLocation)
 
 [clipboard formats about](https://github.com/quilljs/quill/issues/1687)
 [matchvisual](https://quilljs.com/docs/modules/clipboard/#matchvisual)
+[link placeholder](https://github.com/quilljs/quill/issues/1107)

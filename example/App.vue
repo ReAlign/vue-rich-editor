@@ -7,6 +7,7 @@
       :quillRegisterKeys="quillRegisterKeys"
       useCustomImageHandler
       :disabled="editorIsDisabled"
+      :linkPlaceholder="linkPlaceholder"
       v-model="editorContent"
       @reBlur="editorBlurEvt"
       @reFocus="editorFocusEvt"
@@ -44,7 +45,8 @@ export default {
       editorContent: 'demo string<img src="http://olz3b8fm9.bkt.clouddn.com/18-1-11/17450321.jpg" />',
       setEditorDemo: '<h1>hahahah</h1>',
       editorIsDisabled: false,
-      quillRegisterKeys: ['inline', 'size', 'imageResize']
+      quillRegisterKeys: ['inline', 'size', 'imageResize'],
+      linkPlaceholder: '请输入链接'
     };
   },
   methods: {
