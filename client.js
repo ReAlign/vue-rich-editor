@@ -107,7 +107,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": _vm.editorId,
       "quillRegisterKeys": _vm.quillRegisterKeys,
       "useCustomImageHandler": "",
-      "disabled": _vm.editorIsDisabled
+      "disabled": _vm.editorIsDisabled,
+      "linkPlaceholder": _vm.linkPlaceholder
     },
     on: {
       "reBlur": _vm.editorBlurEvt,
@@ -272,6 +273,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -287,7 +289,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       editorContent: 'demo string<img src="http://olz3b8fm9.bkt.clouddn.com/18-1-11/17450321.jpg" />',
       setEditorDemo: '<h1>hahahah</h1>',
       editorIsDisabled: false,
-      quillRegisterKeys: ['inline', 'size', 'imageResize']
+      quillRegisterKeys: ['inline', 'size', 'imageResize'],
+      linkPlaceholder: '请输入链接'
     };
   },
 
@@ -453,6 +456,8 @@ var defaultQuillRegisterKeys = ['inline', 'size', 'imageResize'];
 
 var defaultClipboardFormatsList = ['link', 'bold', 'italic', 'underline', 'color', 'list', 'image', 'size', 'header'];
 
+var defaultLinkPlaceholder = 'input link';
+
 var MyResizeAction = function (_ResizeAction) {
   __WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits___default()(MyResizeAction, _ResizeAction);
 
@@ -530,6 +535,14 @@ var MyImageSpec = function (_ImageSpec) {
       default: function _default() {
         return [];
       }
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    linkPlaceholder: {
+      type: String,
+      default: defaultLinkPlaceholder
     }
   },
 
@@ -539,8 +552,7 @@ var MyImageSpec = function (_ImageSpec) {
       quill: null,
       editor: null,
       toolbar: __WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_typeof___default()(this.editorToolbar) == 'object' && this.editorToolbar.length ? this.editorToolbar : defaultToolbar,
-      clipboardFormats: __WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_typeof___default()(this.clipboardFormatsList) == 'object' && this.clipboardFormatsList.length ? this.clipboardFormatsList : defaultClipboardFormatsList,
-      placeholder: this.placeholder ? this.placeholder : ''
+      clipboardFormats: __WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_typeof___default()(this.clipboardFormatsList) == 'object' && this.clipboardFormatsList.length ? this.clipboardFormatsList : defaultClipboardFormatsList
     };
   },
   mounted: function mounted() {
@@ -615,6 +627,11 @@ var MyImageSpec = function (_ImageSpec) {
         placeholder: this.placeholder,
         readOnly: this.disabled ? this.disabled : false
       });
+
+      // change the link placeholder to www.github.com
+      var tooltip = this.quill.theme.tooltip;
+      var input = tooltip.root.querySelector("input[data-link]");
+      input.dataset.link = this.linkPlaceholder;
 
       this.checkForCustomImageHandler();
     },
