@@ -5,6 +5,7 @@
     <vue-rich-editor
       :id="editorId"
       :quillRegisterKeys="quillRegisterKeys"
+      :clipboardFormatsList="clipboardFormatsList"
       useCustomImageHandler
       :disabled="editorIsDisabled"
       v-model="editorContent"
@@ -44,7 +45,8 @@ export default {
       editorContent: 'demo string<img src="http://olz3b8fm9.bkt.clouddn.com/18-1-11/17450321.jpg" />',
       setEditorDemo: '<h1>hahahah</h1>',
       editorIsDisabled: false,
-      quillRegisterKeys: ['inline', 'size', 'imageResize']
+      quillRegisterKeys: ['inline', 'size', 'imageResize'],
+      clipboardFormatsList: ['bold', 'italic']
     };
   },
   methods: {

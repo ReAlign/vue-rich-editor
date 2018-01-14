@@ -88,6 +88,8 @@ let defaultQuillRegisterKeys = [
   'imageResize'
 ];
 
+let defaultClipboardFormatsList = [];
+
 class MyResizeAction extends ResizeAction {
   onUpdate() {
     gValue.value = $('#' + gValue.id + ' .ql-editor')[0].innerHTML;
@@ -106,14 +108,23 @@ class MyImageSpec extends ImageSpec {
 export default {
   name: 'vue-rich-editor',
   props: {
-    value: String,
+    value: {
+      type: String,
+      default: ''
+    },
     id: {
       type: String,
       required: true,
       default: 'quill-container'
     },
-    disabled: Boolean,
-    editorToolbar: Array,
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    editorToolbar: {
+      type: Array,
+      default: () => []
+    },
     useCustomImageHandler: {
       type: Boolean,
       default: false
@@ -122,6 +133,10 @@ export default {
       type: Array,
       default: () => null
     },
+    clipboardFormatsList: {
+      type: Array,
+      default: () => []
+    }
   },
 
   data() {
@@ -129,7 +144,14 @@ export default {
       gValue,
       quill: null,
       editor: null,
-      toolbar: this.editorToolbar ? this.editorToolbar : defaultToolbar,
+      toolbar: this.editorToolbar
+                && this.editorToolbar.length
+                ? this.editorToolbar
+                : defaultToolbar,
+      clipboardFormatsList: this.clipboardFormatsList
+                            && this.clipboardFormatsList.length
+                              ? this.clipboardFormatsList
+                              : defaultClipboardFormatsList,
       placeholder: this.placeholder ? this.placeholder : ''
     };
   },
@@ -190,6 +212,9 @@ export default {
 
       let _modulesConf = {
         toolbar: this.toolbar,
+        clipboard: {
+          matchVisual: false
+        },
         // toolbar_emoji: true
       };
 
@@ -206,6 +231,7 @@ export default {
 
       this.quill = new Quill(this.$refs.quillContainer, {
         bounds: '#' + this.id,
+        formats: this.clipboardFormatsList,
         modules: _modulesConf,
         placeholder: this.placeholder,
         theme: 'snow',

@@ -24046,6 +24046,8 @@ var ENUM_MAP = {
 
 var defaultQuillRegisterKeys = ['inline', 'size', 'imageResize'];
 
+var defaultClipboardFormatsList = [];
+
 var MyResizeAction = function (_ResizeAction) {
   __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits___default()(MyResizeAction, _ResizeAction);
 
@@ -24089,14 +24091,25 @@ var MyImageSpec = function (_ImageSpec) {
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'vue-rich-editor',
   props: {
-    value: String,
+    value: {
+      type: String,
+      default: ''
+    },
     id: {
       type: String,
       required: true,
       default: 'quill-container'
     },
-    disabled: Boolean,
-    editorToolbar: Array,
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    editorToolbar: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
     useCustomImageHandler: {
       type: Boolean,
       default: false
@@ -24106,6 +24119,12 @@ var MyImageSpec = function (_ImageSpec) {
       default: function _default() {
         return null;
       }
+    },
+    clipboardFormatsList: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
     }
   },
 
@@ -24114,7 +24133,8 @@ var MyImageSpec = function (_ImageSpec) {
       gValue: gValue,
       quill: null,
       editor: null,
-      toolbar: this.editorToolbar ? this.editorToolbar : defaultToolbar,
+      toolbar: this.editorToolbar && this.editorToolbar.length ? this.editorToolbar : defaultToolbar,
+      clipboardFormatsList: this.clipboardFormatsList && this.clipboardFormatsList.length ? this.clipboardFormatsList : defaultClipboardFormatsList,
       placeholder: this.placeholder ? this.placeholder : ''
     };
   },
@@ -24169,7 +24189,10 @@ var MyImageSpec = function (_ImageSpec) {
       var self = this;
 
       var _modulesConf = {
-        toolbar: this.toolbar
+        toolbar: this.toolbar,
+        clipboard: {
+          matchVisual: false
+        }
         // toolbar_emoji: true
       };
 
@@ -24181,6 +24204,7 @@ var MyImageSpec = function (_ImageSpec) {
 
       this.quill = new __WEBPACK_IMPORTED_MODULE_5_quill___default.a(this.$refs.quillContainer, {
         bounds: '#' + this.id,
+        formats: this.clipboardFormatsList,
         modules: _modulesConf,
         placeholder: this.placeholder,
         theme: 'snow',
