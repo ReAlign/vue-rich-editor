@@ -32,17 +32,21 @@
 
 ### Props
 
-* value: ''
-* id: 'quill-container'
-* disabled: false
-* editorToolbar: defaultToolBar
-* quillRegisterKeys: null
-* clipboardFormatsList: defaultClipboardFormatsList
-* placeholder: ''
-* linkPlaceholder: 'input link'
+| key | default | type | note |
+| --- | --- | --- | --- |
+| value | '' | string | content |
+| id | 'quill-container' | string | *, only tag |
+| disabled | false | boolean |  |
+| editorToolbar | ↓ toolBar | array |  |
+| quillRegisterKeys | null | array |  |
+| clipboardFormatsList | ↓ CFList | array |  |
+| placeholder | '' | string | |
+| linkPlaceholder | 'input link' | string |  |
+
+table extra value:
 
 ```
-defaultToolBar = [
+toolBar = [
     [ 'link', 'bold' , 'italic', 'underline' ],
     [ { color: [] } ],
     [ { list: 'bullet' }, { list: 'ordered' } ],
@@ -51,7 +55,7 @@ defaultToolBar = [
     [ 'clean' ]
 ];
 
-defaultClipboardFormatsList = [
+CFList = [
   'link',
   'bold',
   'italic',
@@ -99,3 +103,4 @@ reImageAdded(file, Editor, cursorLocation)
 [clipboard formats about](https://github.com/quilljs/quill/issues/1687)
 [matchvisual](https://quilljs.com/docs/modules/clipboard/#matchvisual)
 [link placeholder](https://github.com/quilljs/quill/issues/1107)
+
