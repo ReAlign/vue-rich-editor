@@ -37,15 +37,29 @@
 * disabled: false
 * editorToolbar: defaultToolBar
 * quillRegisterKeys: null
-* clipboardFormatsList: []
+* clipboardFormatsList: defaultClipboardFormatsList
 
 ```
-defaultToolBar = [ 'link', 'bold' , 'italic', 'underline' ],
+defaultToolBar = [
+    [ 'link', 'bold' , 'italic', 'underline' ],
     [ { color: [] } ],
     [ { list: 'bullet' }, { list: 'ordered' } ],
     [ 'image' ],
     [ { size: ['32px', '24px', '18px', '16px', '13px', '12px', false] } ],
     [ 'clean' ]
+];
+
+defaultClipboardFormatsList = [
+  'link',
+  'bold',
+  'italic',
+  'underline',
+  'color',
+  'list',
+  'image',
+  'size',
+  'header'
+]
 ```
 
 ### Methods

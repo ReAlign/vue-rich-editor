@@ -41,7 +41,7 @@ let gValue = { value: '', id: '' };
 
 let defaultToolbar = {
   container: [
-    [ 'link', 'bold' , 'italic', 'underline' ],
+    [ 'link', 'bold', 'italic', 'underline' ],
     [ { color: [] } ],
     [ { list: 'bullet' }, { list: 'ordered' } ],
     [ 'image' ],
@@ -88,7 +88,17 @@ let defaultQuillRegisterKeys = [
   'imageResize'
 ];
 
-let defaultClipboardFormatsList = [];
+let defaultClipboardFormatsList = [
+  'link',
+  'bold',
+  'italic',
+  'underline',
+  'color',
+  'list',
+  'image',
+  'size',
+  'header'
+];
 
 class MyResizeAction extends ResizeAction {
   onUpdate() {
@@ -144,14 +154,14 @@ export default {
       gValue,
       quill: null,
       editor: null,
-      toolbar: this.editorToolbar
+      toolbar: typeof this.editorToolbar == 'object'
                 && this.editorToolbar.length
                 ? this.editorToolbar
                 : defaultToolbar,
-      clipboardFormatsList: this.clipboardFormatsList
-                            && this.clipboardFormatsList.length
-                              ? this.clipboardFormatsList
-                              : defaultClipboardFormatsList,
+      clipboardFormats: typeof this.clipboardFormatsList == 'object'
+                        && this.clipboardFormatsList.length
+                          ? this.clipboardFormatsList
+                          : defaultClipboardFormatsList,
       placeholder: this.placeholder ? this.placeholder : ''
     };
   },
@@ -230,11 +240,11 @@ export default {
       }
 
       this.quill = new Quill(this.$refs.quillContainer, {
+        theme: 'snow',
         bounds: '#' + this.id,
-        formats: this.clipboardFormatsList,
+        formats: this.clipboardFormats,
         modules: _modulesConf,
         placeholder: this.placeholder,
-        theme: 'snow',
         readOnly: this.disabled ? this.disabled : false
       });
 
