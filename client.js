@@ -106,7 +106,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": _vm.editorId,
       "quillRegisterKeys": _vm.quillRegisterKeys,
-      "clipboardFormatsList": _vm.clipboardFormatsList,
       "useCustomImageHandler": "",
       "disabled": _vm.editorIsDisabled
     },
@@ -273,7 +272,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -289,8 +287,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       editorContent: 'demo string<img src="http://olz3b8fm9.bkt.clouddn.com/18-1-11/17450321.jpg" />',
       setEditorDemo: '<h1>hahahah</h1>',
       editorIsDisabled: false,
-      quillRegisterKeys: ['inline', 'size', 'imageResize'],
-      clipboardFormatsList: ['bold', 'italic']
+      quillRegisterKeys: ['inline', 'size', 'imageResize']
     };
   },
 
@@ -347,32 +344,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_core_js_object_get_prototype_of__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_classCallCheck__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_quill__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_quill___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_quill__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jquery__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__rewrite_set_style_method_bold__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__rewrite_set_style_method_italic__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__rewrite_set_style_method_underline__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__rewrite_set_style_method_size__ = __webpack_require__(98);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_n_quill_blot_formatter__ = __webpack_require__(149);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_n_quill_blot_formatter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_n_quill_blot_formatter__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_actions_ResizeAction__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_actions_ResizeAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_actions_ResizeAction__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_DeleteAction__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_DeleteAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_DeleteAction__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_typeof__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_typeof__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_core_js_object_get_prototype_of__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_classCallCheck__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_quill__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_quill___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_quill__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_jquery__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__rewrite_set_style_method_bold__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__rewrite_set_style_method_italic__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__rewrite_set_style_method_underline__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__rewrite_set_style_method_size__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_specs_ImageSpec__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_specs_ImageSpec___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_specs_ImageSpec__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_ResizeAction__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_ResizeAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_ResizeAction__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction__);
+
 
 
 
@@ -431,67 +431,67 @@ var defaultToolbar = {
 var ENUM_MAP = {
   inline: [{
     key: 'formats/bold',
-    value: __WEBPACK_IMPORTED_MODULE_7__rewrite_set_style_method_bold__["a" /* default */]
+    value: __WEBPACK_IMPORTED_MODULE_8__rewrite_set_style_method_bold__["a" /* default */]
   }, {
     key: 'formats/italic',
-    value: __WEBPACK_IMPORTED_MODULE_8__rewrite_set_style_method_italic__["a" /* default */]
+    value: __WEBPACK_IMPORTED_MODULE_9__rewrite_set_style_method_italic__["a" /* default */]
   }, {
     key: 'formats/underline',
-    value: __WEBPACK_IMPORTED_MODULE_9__rewrite_set_style_method_underline__["a" /* default */]
+    value: __WEBPACK_IMPORTED_MODULE_10__rewrite_set_style_method_underline__["a" /* default */]
   }],
   size: [{
     key: 'formats/size',
-    value: __WEBPACK_IMPORTED_MODULE_10__rewrite_set_style_method_size__["a" /* default */]
+    value: __WEBPACK_IMPORTED_MODULE_11__rewrite_set_style_method_size__["a" /* default */]
   }],
   imageResize: [{
     key: 'modules/blotFormatter',
-    value: __WEBPACK_IMPORTED_MODULE_11_n_quill_blot_formatter___default.a
+    value: __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter___default.a
   }]
 };
 
 var defaultQuillRegisterKeys = ['inline', 'size', 'imageResize'];
 
-var defaultClipboardFormatsList = [];
+var defaultClipboardFormatsList = ['link', 'bold', 'italic', 'underline', 'color', 'list', 'image', 'size', 'header'];
 
 var MyResizeAction = function (_ResizeAction) {
-  __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits___default()(MyResizeAction, _ResizeAction);
+  __WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits___default()(MyResizeAction, _ResizeAction);
 
   function MyResizeAction() {
-    __WEBPACK_IMPORTED_MODULE_1__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_classCallCheck___default()(this, MyResizeAction);
+    __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_classCallCheck___default()(this, MyResizeAction);
 
-    return __WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn___default()(this, (MyResizeAction.__proto__ || __WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_core_js_object_get_prototype_of___default()(MyResizeAction)).apply(this, arguments));
+    return __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn___default()(this, (MyResizeAction.__proto__ || __WEBPACK_IMPORTED_MODULE_1__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_core_js_object_get_prototype_of___default()(MyResizeAction)).apply(this, arguments));
   }
 
-  __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass___default()(MyResizeAction, [{
+  __WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass___default()(MyResizeAction, [{
     key: 'onUpdate',
     value: function onUpdate() {
-      gValue.value = __WEBPACK_IMPORTED_MODULE_6_jquery___default()('#' + gValue.id + ' .ql-editor')[0].innerHTML;
+      gValue.value = __WEBPACK_IMPORTED_MODULE_7_jquery___default()('#' + gValue.id + ' .ql-editor')[0].innerHTML;
     }
   }]);
 
   return MyResizeAction;
-}(__WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_actions_ResizeAction___default.a);
+}(__WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_ResizeAction___default.a);
 
 var MyImageSpec = function (_ImageSpec) {
-  __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits___default()(MyImageSpec, _ImageSpec);
+  __WEBPACK_IMPORTED_MODULE_5__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_inherits___default()(MyImageSpec, _ImageSpec);
 
   function MyImageSpec() {
-    __WEBPACK_IMPORTED_MODULE_1__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_classCallCheck___default()(this, MyImageSpec);
+    __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_classCallCheck___default()(this, MyImageSpec);
 
-    return __WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn___default()(this, (MyImageSpec.__proto__ || __WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_core_js_object_get_prototype_of___default()(MyImageSpec)).apply(this, arguments));
+    return __WEBPACK_IMPORTED_MODULE_4__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_possibleConstructorReturn___default()(this, (MyImageSpec.__proto__ || __WEBPACK_IMPORTED_MODULE_1__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_core_js_object_get_prototype_of___default()(MyImageSpec)).apply(this, arguments));
   }
 
-  __WEBPACK_IMPORTED_MODULE_2__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass___default()(MyImageSpec, [{
+  __WEBPACK_IMPORTED_MODULE_3__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_createClass___default()(MyImageSpec, [{
     key: 'getActions',
     value: function getActions() {
       return [
       // MyResizeAction, AlignAction, DeleteAction
-      MyResizeAction, __WEBPACK_IMPORTED_MODULE_14_n_quill_blot_formatter_dist_actions_DeleteAction___default.a];
+      MyResizeAction, __WEBPACK_IMPORTED_MODULE_15_n_quill_blot_formatter_dist_actions_DeleteAction___default.a];
     }
   }]);
 
   return MyImageSpec;
-}(__WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_specs_ImageSpec___default.a);
+}(__WEBPACK_IMPORTED_MODULE_13_n_quill_blot_formatter_dist_specs_ImageSpec___default.a);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'vue-rich-editor',
@@ -538,8 +538,8 @@ var MyImageSpec = function (_ImageSpec) {
       gValue: gValue,
       quill: null,
       editor: null,
-      toolbar: this.editorToolbar && this.editorToolbar.length ? this.editorToolbar : defaultToolbar,
-      clipboardFormatsList: this.clipboardFormatsList && this.clipboardFormatsList.length ? this.clipboardFormatsList : defaultClipboardFormatsList,
+      toolbar: __WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_typeof___default()(this.editorToolbar) == 'object' && this.editorToolbar.length ? this.editorToolbar : defaultToolbar,
+      clipboardFormats: __WEBPACK_IMPORTED_MODULE_0__Users_seewater_NOTE_my_github_vue_rich_editor_node_modules_babel_runtime_helpers_typeof___default()(this.clipboardFormatsList) == 'object' && this.clipboardFormatsList.length ? this.clipboardFormatsList : defaultClipboardFormatsList,
       placeholder: this.placeholder ? this.placeholder : ''
     };
   },
@@ -582,7 +582,7 @@ var MyImageSpec = function (_ImageSpec) {
           }
         });
 
-        __WEBPACK_IMPORTED_MODULE_5_quill___default.a.register(_modules, true);
+        __WEBPACK_IMPORTED_MODULE_6_quill___default.a.register(_modules, true);
       }
     },
     initializeVueRichEditor: function initializeVueRichEditor() {
@@ -607,12 +607,12 @@ var MyImageSpec = function (_ImageSpec) {
         };
       }
 
-      this.quill = new __WEBPACK_IMPORTED_MODULE_5_quill___default.a(this.$refs.quillContainer, {
+      this.quill = new __WEBPACK_IMPORTED_MODULE_6_quill___default.a(this.$refs.quillContainer, {
+        theme: 'snow',
         bounds: '#' + this.id,
-        formats: this.clipboardFormatsList,
+        formats: this.clipboardFormats,
         modules: _modulesConf,
         placeholder: this.placeholder,
-        theme: 'snow',
         readOnly: this.disabled ? this.disabled : false
       });
 
