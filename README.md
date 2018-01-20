@@ -16,9 +16,10 @@
 * Configurable module
     * [x] inline style
     * [x] reset size
+        * [ ] it has problems when multiple instances in one page
     * [x] [image resize](https://github.com/Fandom-OSS/quill-blot-formatter)
     * [ ] image drop
-    * [ ] emoji
+    * [ ] emoji (img source)
 
 ### Demo
 
@@ -94,9 +95,10 @@ reImageAdded(file, Editor, cursorLocation)
 ### TODO
 
 * [x] inline-style
-* [x] image-resize
+* [ ] image-resize
+    * [ ] it has problems when multiple instances in one page
 * [x] link and style conflict
-* [ ] placeholder
+* [x] link placeholder
 
 ### issues
 
