@@ -102,7 +102,7 @@ reImageAdded(file, Editor, cursorLocation)
 
 ### issues
 
-[clipboard formats about](https://github.com/quilljs/quill/issues/1687)
-[matchvisual](https://quilljs.com/docs/modules/clipboard/#matchvisual)
-[link placeholder](https://github.com/quilljs/quill/issues/1107)
+* [clipboard formats about](https://github.com/quilljs/quill/issues/1687)
+* [matchvisual](https://quilljs.com/docs/modules/clipboard/#matchvisual)
+* [link placeholder](https://github.com/quilljs/quill/issues/1107)
 
