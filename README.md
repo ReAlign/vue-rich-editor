@@ -20,6 +20,8 @@
     * [x] [image resize](https://github.com/Fandom-OSS/quill-blot-formatter)
     * [ ] [image drop](https://github.com/kensnyder/quill-image-drop-module)
     * [ ] emoji (img source)
+    * [ ] support via the url to upload pictures
+    * [ ] support the clipboard to paste pictures
 
 ## Demo
 
