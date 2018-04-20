@@ -1,0 +1,123 @@
+.ql-editor {
+  min-height: 200px;
+  font-size: 14px;
+}
+
+.quill-wrapper {
+    line-height: 26px;
+    .ql-disabled {
+        cursor: not-allowed;
+        user-select: none;
+    }
+    .ql-editor ul {
+        &[data-checked='true'] > li::before,
+        &[data-checked='false'] > li::before {
+            font-size: 14px;
+            vertical-align: baseline;
+            bottom: 0;
+            font-weight: 900;
+            color: #222;
+        }
+    }
+    .ql-snow.ql-toolbar {
+        padding-top: 8px;
+        padding-bottom: 4px;
+        line-height: 26px;
+        button {
+            // margin: 1px;
+            svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+        .ql-formats {
+            border: 1px solid #ccc;
+            margin-bottom: 4px;
+            button {
+                margin: 0;
+            }
+            button:not(:last-child) {
+                border-right: 1px solid #ccc;
+            }
+        }
+    }
+    .ql-snow {
+        .ql-editor img,
+        .ql-editor p img,
+        .ql-editor * img {
+            max-width: 10000%;
+        }
+        .ql-picker.ql-size {
+            height: 24px;
+            line-height: 24px;
+        }
+        .ql-thin,
+        .ql-stroke.ql-thin {
+            stroke-width: 1px !important;
+        }
+        .ql-stroke {
+            stroke: rgba(63, 63, 63, 0.95);
+            stroke-linecap: square;
+            stroke-linejoin: initial;
+            stroke-width: 1.7px;
+        }
+        .ql-active .ql-stroke {
+            stroke-width: 2.25px;
+        }
+        .ql-picker.ql-size {
+            .ql-picker-label[data-value='12px']::before,
+            .ql-picker-item[data-value='12px']::before {
+                content: '12px';
+                font-size: 12px;
+            }
+            .ql-picker-label[data-value='13px']::before,
+            .ql-picker-item[data-value='13px']::before {
+                content: '13px';
+                font-size: 13px;
+            }
+            .ql-picker-label[data-value='16px']::before,
+            .ql-picker-item[data-value='16px']::before {
+                content: '16px';
+                font-size: 14px;
+            }
+            .ql-picker-label[data-value='18px']::before,
+            .ql-picker-item[data-value='18px']::before {
+                content: '18px';
+                font-size: 15px;
+            }
+            .ql-picker-label[data-value='24px']::before,
+            .ql-picker-item[data-value='24px']::before {
+                content: '24px';
+                font-size: 16px;
+            }
+            .ql-picker-label[data-value='32px']::before,
+            .ql-picker-item[data-value='32px']::before {
+                content: '32px';
+                font-size: 18px;
+            }
+            //默认的样式
+            .ql-picker-label::before,
+            .ql-picker-item::before {
+                content: '正常';
+                font-size: 14px;
+            }
+        }
+        .ql-tooltip[data-mode='link']::before {
+            content: '输入链接:';
+        }
+        .ql-tooltip::before {
+            content: '访问链接:';
+        }
+        .ql-tooltip.ql-editing a.ql-action::after {
+            content: '保存';
+        }
+        .ql-tooltip {
+            a.ql-action::after {
+                content: '编辑';
+            }
+            a.ql-remove::before {
+                content: '移除';
+            }
+        }
+    }
+}

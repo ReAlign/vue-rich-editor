@@ -15,12 +15,9 @@
 1. Based on the quill
 2. Configurable module
     * [x] inline style
-    * [x] reset size
-        * [ ] it has problems when multiple instances in one page
     * [x] [image resize](https://github.com/Fandom-OSS/quill-blot-formatter)
     * [ ] [image drop](https://github.com/kensnyder/quill-image-drop-module)
-    * [ ] emoji (img source)
-    * [ ] support via the url to upload pictures
+    * [x] support via the url to upload pictures
     * [ ] support the clipboard to paste pictures
 
 ## Demo
@@ -42,7 +39,8 @@
 | disabled | false | boolean |  |
 | quillRegisterKeys | null | array |  |
 | placeholder | '' | string | |
-| linkPlaceholder | 'input link' | string |  |
+| linkPlaceholder | '请输入链接' | string |  |
+| editorContainer | [] | array |  |
 
 table extra value:
 
@@ -70,14 +68,17 @@ reBlur()
 reImageAdded(file, Editor, cursorLocation)
 ```
 
+```javascript
+reImageLink(Editor, cursorLocation)
+```
+
 ### TODO
 
 1. [x] inline-style
-2. [ ] image-resize
-    * [ ] it has problems when multiple instances in one page
+2. [x] image-resize
 3. [x] link and style conflict
 4. [x] link placeholder
-5. [ ] use the url to upload image
+5. [x] use the url to upload image
 6. [ ] [image drop](https://github.com/kensnyder/quill-image-drop-module)
 
 ## issues
