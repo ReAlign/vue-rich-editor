@@ -1,7 +1,7 @@
 import Quill from 'quill';
 import $ from 'jquery';
 
-let Parchment = Quill.import('parchment');
+const Parchment = Quill.import('parchment');
 
 class ItalicStyleAttributor extends Parchment.Attributor.Style {
     value(domNode) {
@@ -19,7 +19,7 @@ class ItalicStyleAttributor extends Parchment.Attributor.Style {
     }
 }
 
-let ItalicStyle = new ItalicStyleAttributor('italic', 'font-style', {
+const ItalicStyle = new ItalicStyleAttributor('italic', 'font-style', {
     scope: Parchment.Scope.INLINE
 });
 

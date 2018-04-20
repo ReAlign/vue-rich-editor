@@ -1,7 +1,7 @@
 import Quill from 'quill';
 import $ from 'jquery';
 
-let Parchment = Quill.import('parchment');
+const Parchment = Quill.import('parchment');
 
 class UnderlineStyleAttributor extends Parchment.Attributor.Style {
     value(domNode) {
@@ -18,7 +18,7 @@ class UnderlineStyleAttributor extends Parchment.Attributor.Style {
     }
 }
 
-let UnderlineStyle = new UnderlineStyleAttributor('underline', 'text-decoration', {
+const UnderlineStyle = new UnderlineStyleAttributor('underline', 'text-decoration', {
     scope: Parchment.Scope.INLINE
 });
 

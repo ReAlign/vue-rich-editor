@@ -65,7 +65,7 @@ export default {
         return {
             quill: null,
             editor: null,
-            toolbarContainer: (_.typeof(this.editorContainer) === 'array'
+            toolbarContainer: ((_.typeof(this.editorContainer) === 'array')
                                 && this.editorContainer.length)
                                 ? this.editorContainer
                                 : Config.defaultEditorContainer,
@@ -97,8 +97,7 @@ export default {
 
     watch: {
         value(val) {
-            if (val != this.editor.innerHTML
-                && !this.quill.hasFocus()) {
+            if(val != this.editor.innerHTML && !this.quill.hasFocus()) {
                 this.editor.innerHTML = val;
             }
         },
@@ -109,7 +108,7 @@ export default {
 
     methods: {
         initRegisterModules() {
-            if (!this.quillRegisterKeys
+            if(!this.quillRegisterKeys
                 || (this.quillRegisterKeys
                     && this.quillRegisterKeys.length)) {
                 const _keys = (this.quillRegisterKeys
@@ -120,7 +119,7 @@ export default {
                 let _modules = {};
 
                 _keys.forEach(item => {
-                    if (Config.ENUM_MAP[item]) {
+                    if(Config.ENUM_MAP[item]) {
                         Config.ENUM_MAP[item].forEach(that => {
                             _modules[that.key] = that.value;
                         });
@@ -164,12 +163,9 @@ export default {
                 formats: Config.defaultClipboardFormats,
                 modules: _modulesConf,
                 placeholder: this.placeholder,
-                readOnly: this.disabled
-                            ? this.disabled
-                            : false
+                readOnly: this.disabled ? this.disabled : false
             });
 
-            // change the link placeholder to www.github.com
             const tooltip = this.quill.theme.tooltip;
             const input = tooltip.root.querySelector('input[data-link]');
             input.dataset.link = this.linkPlaceholder;
@@ -205,10 +201,11 @@ export default {
 
         listenStateChangeEditor() {
             const self = this;
+
             this.quill.on('selection-change', (range, oldRange, source) => {
                 console.log(source);
-                if (range) {
-                    if (range.length == 0) {
+                if(range) {
+                    if(range.length == 0) {
                         self.$emit('reFocus', range);
                     } else {
                         const text = self.quill.getText(range.index, range.length);

@@ -17,6 +17,7 @@
         "precommit": "lint-staged"
     },
     "lint-staged": {
+        "gitDir": ".",
         "linters": {
             "src/**/*.{js,vue}": [
                 "eslint --fix",

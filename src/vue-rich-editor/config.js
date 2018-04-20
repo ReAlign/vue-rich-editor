@@ -21,7 +21,9 @@ config.defaultEditorContainer = [
     ],
     ['image', 'image-link'],
     [
-        { size: ['32px', '24px', '18px', '16px', '13px', '12px', false] }
+        {
+            size: ['32px', '24px', '18px', '16px', '13px', '12px', false]
+        }
     ],
     ['clean']
 ];
