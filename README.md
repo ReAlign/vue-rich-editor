@@ -40,36 +40,11 @@
 | value | '' | string | content |
 | id | 'quill-container' | string | *, only tag |
 | disabled | false | boolean |  |
-| editorToolbar | ↓ toolBar | array |  |
 | quillRegisterKeys | null | array |  |
-| clipboardFormatsList | ↓ CFList | array |  |
 | placeholder | '' | string | |
 | linkPlaceholder | 'input link' | string |  |
 
 table extra value:
-
-```javascript
-toolBar = [
-    [ 'link', 'bold' , 'italic', 'underline' ],
-    [ { color: [] } ],
-    [ { list: 'bullet' }, { list: 'ordered' } ],
-    [ 'image' ],
-    [ { size: ['32px', '24px', '18px', '16px', '13px', '12px', false] } ],
-    [ 'clean' ]
-];
-
-CFList = [
-  'link',
-  'bold',
-  'italic',
-  'underline',
-  'color',
-  'list',
-  'image',
-  'size',
-  'header'
-]
-```
 
 ## Methods
 

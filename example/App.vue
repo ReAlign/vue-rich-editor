@@ -1,18 +1,20 @@
 <template>
 <div id="app">
   <div class="ve-container">
-    <h3>vue rich editor example</h3>
+    <h3>vue rich editor example1</h3>
     <vue-rich-editor
       :id="editorId"
       :quillRegisterKeys="quillRegisterKeys"
       useCustomImageHandler
+      useCustomImageLinkHandler
       :disabled="editorIsDisabled"
       :linkPlaceholder="linkPlaceholder"
       v-model="editorContent"
       @reBlur="editorBlurEvt"
       @reFocus="editorFocusEvt"
       @reHighlighted="editorHighlightedEvt"
-      @reImageAdded="uploadImage" />
+      @reImageAdded="uploadImage"
+      @reImageLink="addImageLink" />
     <div class="ve-button-area">
       <button
         class="ve-button"
@@ -26,6 +28,20 @@
         set editor
       </button>
     </div>
+  </div>
+
+  <div class="ve-container">
+    <h3>vue rich editor example2</h3>
+    <vue-rich-editor
+      :id="editorId1"
+      :quillRegisterKeys="quillRegisterKeys1"
+      useCustomImageHandler
+      useCustomImageLinkHandler
+      :disabled="editorIsDisabled1"
+      :linkPlaceholder="linkPlaceholder1"
+      v-model="editorContent1"
+      @reImageAdded="uploadImage1"
+      @reImageLink="addImageLink1" />
   </div>
 </div>
 </template>
@@ -42,11 +58,19 @@ export default {
   data() {
     return {
       editorId: 'editor',
-      editorContent: 'demo string<img src="http://olz3b8fm9.bkt.clouddn.com/18-1-11/17450321.jpg" />',
+      editorContent: 'demo string',
       setEditorDemo: '<h1>hahahah</h1>',
       editorIsDisabled: false,
-      quillRegisterKeys: ['inline', 'size', 'imageResize'],
-      linkPlaceholder: '请输入链接'
+      quillRegisterKeys: ['inline', 'size', 'imageResize', 'imageLink'],
+      linkPlaceholder: '请输入链接',
+
+      //
+      editorId1: 'editor1',
+      editorContent1: 'demo1',
+      setEditorDemo1: '<h2>hahahah</h2>',
+      editorIsDisabled1: false,
+      quillRegisterKeys1: ['inline', 'size', 'imageLink'],
+      linkPlaceholder1: '请输入链接1'
     };
   },
   methods: {
@@ -93,6 +117,26 @@ export default {
           self.editorIsDisabled = false;
           console.log(err);
         });
+    },
+
+    addImageLink(url) {
+      debugger;
+      console.log(url);
+    },
+
+    //
+
+    uploadImage1(file, Editor, cursorLocation) {
+      //
+    },
+
+    addImageLink1(url) {
+      debugger;
+      if(!url) {
+        alert('url 必填哈');
+      } else {
+        alert(url);
+      }
     }
   }
 };

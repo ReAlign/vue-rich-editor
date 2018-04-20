@@ -1,18 +1,19 @@
 <template>
-<div class='quill-wrapper'>
-  <div
-    ref='quillContainer'
-    class='vre-editor-sign-only'
-    :id='id'>
-  </div>
-  <input
-    ref='fileInput'
-    id='file-upload'
-    type='file'
-    style='display:none'
-    v-if='useCustomImageHandler'
-    @change='emitImageInfo($event)' />
-</div>
+    <div class='quill-wrapper'>
+        <div
+            ref='quillContainer'
+            class='vre-editor-sign-only'
+            :id='id'>
+        </div>
+        <input
+            ref='fileInput'
+            id='file-upload'
+            type='file'
+            style='display:none'
+            v-if='useCustomImageHandler'
+            @change='emitImageInfo($event)'
+        />
+    </div>
 </template>
 
 <script>
@@ -26,33 +27,60 @@ import MySizeStyle from './rewrite/set-style-method/size';
 import BlotFormatter from 'n-quill-blot-formatter';
 import ImageSpec from 'n-quill-blot-formatter/dist/specs/ImageSpec';
 import ResizeAction from 'n-quill-blot-formatter/dist/actions/ResizeAction';
-// import AlignAction from 'n-quill-blot-formatter/dist/actions/align/AlignAction';
 import DeleteAction from 'n-quill-blot-formatter/dist/actions/DeleteAction';
 
-// import {
-//   emojiBlot,
-//   emojiBlotTwo,
-//   shortNameEmoji,
-//   toolbarEmoji,
-//   textAreaEmoji
-// } from 'n-quill-emoji';
+import ImageLink from './custom-modules/image-link/index';
 
-let gValue = { value: '', id: '' };
-
-let defaultToolbar = {
-  container: [
-    [ 'link', 'bold', 'italic', 'underline' ],
-    [ { color: [] } ],
-    [ { list: 'bullet' }, { list: 'ordered' } ],
-    [ 'image' ],
-    // [ 'emoji' ],
-    [ { size: ['32px', '24px', '18px', '16px', '13px', '12px', false] } ],
-    [ 'clean' ]
-  ],
-  // handlers: {
-  //     'emoji': function () {}
-  // }
+let gValue = {
+  value: '',
+  id: ''
 };
+
+let _defaultToolbar = that => ({
+  container: [
+    ['link', 'bold', 'italic', 'underline'],
+    [
+      {
+        color: []
+      }
+    ],
+    [
+      {
+        list: 'bullet'
+      },
+      {
+        list: 'ordered'
+      }
+    ],
+    ['image', 'image-link'],
+    [
+      {
+        size: ['32px', '24px', '18px', '16px', '13px', '12px', false]
+      }
+    ],
+    ['clean']
+  ],
+  handlers: {
+    'image-link': () => {
+      let imageLinkUrl = prompt('输入图片链接：', 'https://');
+      that.$emit('reImageLink', imageLinkUrl);
+    }
+  }
+});
+
+let _defaultClipboardFormatsList = () => [
+  'link',
+  'bold',
+  'italic',
+  'underline',
+  'color',
+  'list',
+  'image',
+  'width',
+  'height',
+  'size',
+  'header'
+];
 
 let ENUM_MAP = {
   inline: [
@@ -80,41 +108,28 @@ let ENUM_MAP = {
       key: 'modules/blotFormatter',
       value: BlotFormatter
     }
+  ],
+  imageLink: [
+    {
+      key: 'modules/imageLink',
+      value: ImageLink
+    }
   ]
 };
 
-let defaultQuillRegisterKeys = [
-  'inline',
-  'size',
-  'imageResize'
-];
-
-let defaultClipboardFormatsList = [
-  'link',
-  'bold',
-  'italic',
-  'underline',
-  'color',
-  'list',
-  'image',
-  'size',
-  'header'
-];
+let defaultQuillRegisterKeys = ['inline', 'size', 'imageResize', 'imageLink'];
 
 let defaultLinkPlaceholder = 'input link';
 
 class MyResizeAction extends ResizeAction {
   onUpdate() {
-    gValue.value = $('#' + gValue.id + ' .ql-editor')[0].innerHTML;
+    gValue.value = $(`#${gValue.id} .ql-editor`)[0].innerHTML;
   }
 }
 
 class MyImageSpec extends ImageSpec {
   getActions() {
-    return [
-      // MyResizeAction, AlignAction, DeleteAction
-      MyResizeAction, DeleteAction
-    ];
+    return [MyResizeAction, DeleteAction];
   }
 }
 
@@ -165,14 +180,8 @@ export default {
       gValue,
       quill: null,
       editor: null,
-      toolbar: typeof this.editorToolbar == 'object'
-                && this.editorToolbar.length
-                ? this.editorToolbar
-                : defaultToolbar,
-      clipboardFormats: typeof this.clipboardFormatsList == 'object'
-                        && this.clipboardFormatsList.length
-                          ? this.clipboardFormatsList
-                          : defaultClipboardFormatsList
+      toolbar: _defaultToolbar(this),
+      clipboardFormats: _defaultClipboardFormatsList()
     };
   },
 
@@ -196,22 +205,26 @@ export default {
     disabled(status) {
       this.quill.enable(!status);
     },
-    'gValue.value'(val) {
+    'gValue.value': function(val) {
       this.$emit('input', val);
     }
   },
 
   methods: {
     initRegisterModules() {
-      if(!this.quillRegisterKeys || this.quillRegisterKeys && this.quillRegisterKeys.length) {
-        let _keys = this.quillRegisterKeys && this.quillRegisterKeys.length
-                    ? this.quillRegisterKeys
-                    : defaultQuillRegisterKeys;
+      if (
+        !this.quillRegisterKeys ||
+        (this.quillRegisterKeys && this.quillRegisterKeys.length)
+      ) {
+        let _keys =
+          this.quillRegisterKeys && this.quillRegisterKeys.length
+            ? this.quillRegisterKeys
+            : defaultQuillRegisterKeys;
         let _modules = {};
 
-        _keys.forEach((item) => {
-          if(ENUM_MAP[item]) {
-            ENUM_MAP[item].forEach((that) => {
+        _keys.forEach(item => {
+          if (ENUM_MAP[item]) {
+            ENUM_MAP[item].forEach(that => {
               _modules[that.key] = that.value;
             });
           }
@@ -235,23 +248,23 @@ export default {
         clipboard: {
           matchVisual: false
         },
-        // toolbar_emoji: true
+        imageLink: true
       };
 
-      if((this.quillRegisterKeys
-          && this.quillRegisterKeys.length
-          && this.quillRegisterKeys.indexOf('imageResize') != -1)
-        || !this.quillRegisterKeys) {
+      if (
+        (this.quillRegisterKeys &&
+          this.quillRegisterKeys.length &&
+          this.quillRegisterKeys.indexOf('imageResize') != -1) ||
+        !this.quillRegisterKeys
+      ) {
         _modulesConf.blotFormatter = {
-          specs: [
-            MyImageSpec,
-          ],
+          specs: [MyImageSpec]
         };
       }
 
       this.quill = new Quill(this.$refs.quillContainer, {
         theme: 'snow',
-        bounds: '#' + this.id,
+        bounds: `#${this.id}`,
         formats: this.clipboardFormats,
         modules: _modulesConf,
         placeholder: this.placeholder,
@@ -260,7 +273,7 @@ export default {
 
       // change the link placeholder to www.github.com
       let tooltip = this.quill.theme.tooltip;
-      let input = tooltip.root.querySelector("input[data-link]");
+      let input = tooltip.root.querySelector('input[data-link]');
       input.dataset.link = this.linkPlaceholder;
 
       this.checkForCustomImageHandler();
@@ -324,7 +337,6 @@ export default {
 <style lang='scss'>
 @import './../../node_modules/quill/dist/quill.core.css';
 @import './../../node_modules/quill/dist/quill.snow.css';
-// @import './../../node_modules/n-quill-emoji/dist/n-quill-emoji.css';
 .ql-editor {
   min-height: 200px;
   font-size: 14px;
@@ -346,7 +358,6 @@ export default {
       color: #222;
     }
   }
-
   .ql-snow.ql-toolbar {
     padding-top: 8px;
     padding-bottom: 4px;
@@ -369,16 +380,18 @@ export default {
       }
     }
   }
-
   .ql-snow {
-    .ql-editor img, .ql-editor p img, .ql-editor * img {
+    .ql-editor img,
+    .ql-editor p img,
+    .ql-editor * img {
       max-width: 10000%;
     }
     .ql-picker.ql-size {
       height: 24px;
       line-height: 24px;
     }
-    .ql-thin, .ql-stroke.ql-thin {
+    .ql-thin,
+    .ql-stroke.ql-thin {
       stroke-width: 1px !important;
     }
     .ql-stroke {
@@ -387,48 +400,40 @@ export default {
       stroke-linejoin: initial;
       stroke-width: 1.7px;
     }
-
     .ql-active .ql-stroke {
       stroke-width: 2.25px;
     }
-
     .ql-picker.ql-size {
       .ql-picker-label[data-value='12px']::before,
       .ql-picker-item[data-value='12px']::before {
         content: '12px';
         font-size: 12px;
       }
-
       .ql-picker-label[data-value='13px']::before,
       .ql-picker-item[data-value='13px']::before {
         content: '13px';
         font-size: 13px;
       }
-
       .ql-picker-label[data-value='16px']::before,
       .ql-picker-item[data-value='16px']::before {
         content: '16px';
         font-size: 14px;
       }
-
       .ql-picker-label[data-value='18px']::before,
       .ql-picker-item[data-value='18px']::before {
         content: '18px';
         font-size: 15px;
       }
-
       .ql-picker-label[data-value='24px']::before,
       .ql-picker-item[data-value='24px']::before {
         content: '24px';
         font-size: 16px;
       }
-
       .ql-picker-label[data-value='32px']::before,
       .ql-picker-item[data-value='32px']::before {
         content: '32px';
         font-size: 18px;
       }
-
       //默认的样式
       .ql-picker-label::before,
       .ql-picker-item::before {
@@ -436,19 +441,15 @@ export default {
         font-size: 14px;
       }
     }
-
     .ql-tooltip[data-mode='link']::before {
       content: '输入链接:';
     }
-
     .ql-tooltip::before {
       content: '访问链接:';
     }
-
     .ql-tooltip.ql-editing a.ql-action::after {
       content: '保存';
     }
-
     .ql-tooltip {
       a.ql-action::after {
         content: '编辑';
