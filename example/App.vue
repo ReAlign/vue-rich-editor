@@ -97,8 +97,13 @@ export default {
             console.log(range);
         },
 
-        uploadImage(file, Editor, cursorLocation) {
+        uploadImage(options) {
             const self = this;
+            const {
+                file,
+                Editor,
+                cursorLocation
+            } = options;
             let formData = new FormData();
             formData.append(Config.imageFileName, file);
 
@@ -121,22 +126,30 @@ export default {
                 });
         },
 
-        addImageLink(Editor, cursorLocation) {
-            const url = prompt('请输入链接', 'https://');
-            if(url != null && url != '') {
-                Editor.insertEmbed(cursorLocation, 'image', url);
+        addImageLink(type = 'ok', options) {
+            const {
+                url,
+                Editor,
+                cursorLocation
+            } = options;
+            if(type == 'cancel') {
+                return false;
+            }
+            if(type == 'ok') {
+                if(url != '') {
+                    alert(url);
+                } else {
+                    alert('url 必填哈');
+                }
             }
         },
 
-        uploadImage1(file, Editor, cursorLocation) {
-            console.log(cursorLocation);
+        uploadImage1(options) {
+            console.log(options);
         },
 
-        addImageLink1(Editor, cursorLocation) {
-            const url = prompt('请输入链接s', 'https://');
-            if(url != null && url != '') {
-                Editor.insertEmbed(cursorLocation, 'image', url);
-            }
+        addImageLink1(type, options) {
+            console.log(type, options);
         },
     }
 };

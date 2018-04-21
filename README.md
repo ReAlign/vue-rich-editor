@@ -2,38 +2,39 @@
 
 [![NPM version][npm-image]][npm-url]
 
-[npm-image]: https://img.shields.io/npm/v/vue-rich-editor.svg
+[npm-image]: https://img.shields.io/npm/v/vue-rich-editor.svg?longCache=true&style=for-the-badge
 [npm-url]: https://www.npmjs.com/package/vue-rich-editor
+
+> 定制 vue 富文本编辑器，基于 Quill
 
 ![logo](https://github.com/ReAlign/vue-rich-editor/blob/master/source/github-vue-rich-logo.png)
 
 ![demo](http://olz3b8fm9.bkt.clouddn.com/17-12-26/22851530.jpg)
-> a vue rich text editor，based on quill
 
-## Introduction
+## 介绍
 
-1. Based on the quill
-2. Configurable module
-    * [x] inline style
-    * [x] [image resize](https://github.com/Fandom-OSS/quill-blot-formatter)
-    * [ ] [image drop](https://github.com/kensnyder/quill-image-drop-module)
-    * [x] support via the url to upload pictures
-    * [ ] support the clipboard to paste pictures
+1. 基于 quill 封装
+2. 可配置模块
+    * [x] 行内样式（inline style）
+    * [x] [图片缩放（image resize）](https://github.com/Fandom-OSS/quill-blot-formatter)
+    * [ ] [拖拽上传（image drop）](https://github.com/kensnyder/quill-image-drop-module)
+    * [x] 链接上传图片（support via the url to upload pictures）
+    * [ ] 剪贴板粘贴图片（support the clipboard to paste pictures）
 
-## Demo
+## 示例
 
-[deploy demo](http://realign.pw/vue-rich-editor/)
+[静态示例](http://realign.pw/vue-rich-editor/)
 
-[codesandbox demo](https://codesandbox.io/s/w0m20jjxrl)
+[codesandbox 示例](https://codesandbox.io/s/w0m20jjxrl)
 
-## Usage
+## 使用
 
-[example](https://github.com/ReAlign/vue-rich-editor/tree/master/example)
+[实例](https://github.com/ReAlign/vue-rich-editor/tree/master/example)
 
-## Props
+## 配置
 
-| key | default | type | note |
-| --- | --- | --- | --- |
+| 属性值 | 默认 | 类型 | 备注 |
+|  --- |  --- |  --- |   --- |
 | value | '' | string | content |
 | id | 'quill-container' | string | *, only tag |
 | disabled | false | boolean |  |
@@ -41,41 +42,61 @@
 | placeholder | '' | string | |
 | linkPlaceholder | '请输入链接' | string |  |
 | editorContainer | [] | array |  |
+| imageLinkTitle | '请输入图片地址：' | string |  |
+| imageLinkPlaceholder | 'https://' | string |  |
 
-table extra value:
+## 方法
 
-## Methods
+[示例](https://github.com/ReAlign/vue-rich-editor/tree/master/example)
 
-[example](https://github.com/ReAlign/vue-rich-editor/tree/master/example)
-
-## State
+## 编辑器状态相关
 
 ```javascript
+// focus
 reFocus(range)
 ```
 
 ```javascript
+// 内容高亮
 reHighlighted(text, range)
 ```
 
 ```javascript
+// blur
 reBlur()
 ```
 
-## Image
+## 图片相关
 
 ```javascript
-reImageAdded(file, Editor, cursorLocation)
+// 文件 上传图片
+/**
+ * 此处注意，更新到 V0.7.0 之后，参数格式变了
+ */
+reImageAdded(options)
+options = {
+    file,           // 文件
+    Editor,         // 当前编辑器
+    range,
+    cursorLocation
+}
 ```
 
 ```javascript
-reImageLink(Editor, cursorLocation)
+// 链接上传图片
+reImageLink(type, options)
+options = {
+    url,            // 输入路径
+    Editor,         // 当前编辑器
+    range,
+    cursorLocation
+}
 ```
 
-### TODO
+### 待完善
 
-1. [x] inline-style
-2. [x] image-resize
+1. [x] 行内样式（inline-style）
+2. [x] 图片缩放（image-resize）
 3. [x] link and style conflict
 4. [x] link placeholder
 5. [x] use the url to upload image

@@ -19,7 +19,7 @@
 
 <script>
 import Quill from 'quill';
-import _ from 'n-tools';
+import _ from './extend/util';
 
 import Config from './config';
 
@@ -58,6 +58,14 @@ export default {
         linkPlaceholder: {
             type: String,
             default: '请输入链接'
+        },
+        imageLinkTitle: {
+            type: String,
+            default: '请输入图片地址：'
+        },
+        imageLinkPlaceholder: {
+            type: String,
+            default: 'https://'
         }
     },
 
@@ -65,20 +73,31 @@ export default {
         return {
             quill: null,
             editor: null,
-            toolbarContainer: ((_.typeof(this.editorContainer) === 'array')
+            toolbarContainer: ((_.typeOf(this.editorContainer) === 'array')
                                 && this.editorContainer.length)
-                                ? this.editorContainer
-                                : Config.defaultEditorContainer,
+                                    ? this.editorContainer
+                                    : Config.defaultEditorContainer,
             toolbarHandlers: {
                 'image-link': () => {
                     const Editor = this.quill;
                     const range = Editor.getSelection();
                     const cursorLocation = range.index;
-                    this.$emit('reImageLink', {
+                    let type = '';
+
+                    const url = prompt(this.imageLinkTitle, this.imageLinkPlaceholder);
+
+                    type = url === null
+                            ? 'cancel'
+                            : 'ok';
+
+                    const options = {
+                        url,
                         Editor,
                         range,
                         cursorLocation
-                        });
+                    };
+
+                    this.$emit('reImageLink', type, options);
                 }
             }
         };
@@ -226,7 +245,15 @@ export default {
             const Editor = this.quill;
             const range = Editor.getSelection();
             const cursorLocation = range.index;
-            this.$emit('reImageAdded', file, Editor, cursorLocation);
+
+            const options = {
+                file,
+                Editor,
+                range,
+                cursorLocation
+            };
+
+            this.$emit('reImageAdded', options);
         }
     }
 };

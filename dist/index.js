@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "https://github.com/ReAlign/vue-rich-editor#readme/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 139);
+/******/ 	return __webpack_require__(__webpack_require__.s = 131);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -24057,22 +24057,11 @@ exports.default = UnclickableBlotSpec;
 
 /***/ }),
 /* 65 */
-/***/ (function(module, exports) {
-
-module.exports = ((_) => {
-    _.typeOf = (o = '') =>
-        (o == null
-            ? String(o)
-            : ({}).toString.call(o).slice(8, -1).toLowerCase());
-});
-
-/***/ }),
-/* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_rich_editor_index_vue__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_rich_editor_index_vue__ = __webpack_require__(124);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_rich_editor_index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__vue_rich_editor_index_vue__);
 /* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "VueRichEditor", function() { return __WEBPACK_IMPORTED_MODULE_0__vue_rich_editor_index_vue___default.a; });
 
@@ -24088,16 +24077,15 @@ var VEditor = {
 
 
 /***/ }),
-/* 67 */
+/* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_quill__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_quill___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_quill__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_n_tools__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_n_tools___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_n_tools__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__extend_util__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config__ = __webpack_require__(67);
 //
 //
 //
@@ -24162,6 +24150,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         linkPlaceholder: {
             type: String,
             default: '请输入链接'
+        },
+        imageLinkTitle: {
+            type: String,
+            default: '请输入图片地址：'
+        },
+        imageLinkPlaceholder: {
+            type: String,
+            default: 'https://'
         }
     },
 
@@ -24171,17 +24167,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             quill: null,
             editor: null,
-            toolbarContainer: __WEBPACK_IMPORTED_MODULE_1_n_tools___default.a.typeof(this.editorContainer) === 'array' && this.editorContainer.length ? this.editorContainer : __WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */].defaultEditorContainer,
+            toolbarContainer: __WEBPACK_IMPORTED_MODULE_1__extend_util__["a" /* default */].typeOf(this.editorContainer) === 'array' && this.editorContainer.length ? this.editorContainer : __WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */].defaultEditorContainer,
             toolbarHandlers: {
                 'image-link': function imageLink() {
                     var Editor = _this.quill;
                     var range = Editor.getSelection();
                     var cursorLocation = range.index;
-                    _this.$emit('reImageLink', {
+                    var type = '';
+
+                    var url = prompt(_this.imageLinkTitle, _this.imageLinkPlaceholder);
+
+                    type = url === null ? 'cancel' : 'ok';
+
+                    var options = {
+                        url: url,
                         Editor: Editor,
                         range: range,
                         cursorLocation: cursorLocation
-                    });
+                    };
+
+                    _this.$emit('reImageLink', type, options);
                 }
             }
         };
@@ -24310,13 +24315,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var Editor = this.quill;
             var range = Editor.getSelection();
             var cursorLocation = range.index;
-            this.$emit('reImageAdded', file, Editor, cursorLocation);
+
+            var options = {
+                file: file,
+                Editor: Editor,
+                range: range,
+                cursorLocation: cursorLocation
+            };
+
+            this.$emit('reImageAdded', options);
         }
     }
 });
 
 /***/ }),
-/* 68 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24342,7 +24355,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_n_quill_blot_formatter_dist_actions_ResizeAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_n_quill_blot_formatter_dist_actions_ResizeAction__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_actions_DeleteAction__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_actions_DeleteAction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_n_quill_blot_formatter_dist_actions_DeleteAction__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__custom_modules_image_link_index__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__custom_modules_image_link_index__ = __webpack_require__(68);
 
 
 
@@ -24438,7 +24451,7 @@ config.MyImageSpec = MyImageSpec;
 /* harmony default export */ __webpack_exports__["a"] = (config);
 
 /***/ }),
-/* 69 */
+/* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24458,6 +24471,21 @@ var ImageLink = function ImageLink() {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (ImageLink);
+
+/***/ }),
+/* 69 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _ = {
+    typeOf: function typeOf() {
+        var o = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+        return o == null ? String(o) : {}.toString.call(o).slice(8, -1).toLowerCase();
+    }
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (_);
 
 /***/ }),
 /* 70 */
@@ -26632,7 +26660,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(138)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(130)))
 
 /***/ }),
 /* 82 */
@@ -27786,294 +27814,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-let _ = {};
-
-__webpack_require__(65)(_);
-
-__webpack_require__(128)(_);
-__webpack_require__(129)(_);
-__webpack_require__(130)(_);
-__webpack_require__(131)(_);
-
-__webpack_require__(125)(_);
-
-__webpack_require__(127)(_);
-
-__webpack_require__(126)(_);
-
-// Export it
-module.exports = _;
-
-/***/ }),
-/* 125 */
-/***/ (function(module, exports) {
-
-module.exports = ((_) => {
-    _.arrayEquals = (x, y, { strictMode, keepOrder } = { strictMode: false, keepOrder: true }) => {
-        if (!x || !y) {
-            return false;
-        }
-
-        if(x.length != y.length) {
-            return false;
-        }
-
-        let _x = _.deepClone(x);
-        let _y = _.deepClone(y);
-
-        // 内容
-        if(!keepOrder) {
-            _x.sort();
-            _y.sort();
-        }
-
-        for (let i = 0, len = _x.length; i < len; i++) {
-            if (_x[i] instanceof Array && _y[i] instanceof Array) {
-                /*eslint-disable*/
-                if(!_.arrayEquals(_x[i], _y[i], { strictMode: strictMode, keepOrder: keepOrder })) {
-                    return false;
-                }
-                /*eslint-enable*/
-            } else {
-                if(strictMode) {
-                    if(_x[i] !== _y[i]) {
-                        return false;
-                    }
-                } else {
-                    if(_x[i] != _y[i]) {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return true;
-    };
-});
-
-/***/ }),
-/* 126 */
-/***/ (function(module, exports) {
-
-module.exports = ((_) => {
-    _.deepGet = (obj = {}, path = '', defaVal = '') =>
-        (Array.isArray(path)
-            ? path
-            : path.replace(/\[/g, '.').replace(/\]/g, '').split('.'))
-            .reduce((o, k) => (o || {})[k], obj) || defaVal;
-
-});
-
-/***/ }),
-/* 127 */
-/***/ (function(module, exports) {
-
-module.exports = ((_) => {
-    _.keepDecimal = (num = 0, prec = 2) => {
-        num = parseFloat(num);
-        if (isNaN(num) || isNaN(prec)) {
-            console.error('Parameter is not digital, please check it!');
-            return false;
-        }
-        // toFixed() 保证精度
-        return Math.round((num * Math.pow(10, prec)).toFixed(prec)) / Math.pow(10, prec);
-    };
-
-    _.formatDigital = (val = 0) => {
-        if (isNaN(val)) {
-            console.error('Parameter is not digital, please check it!');
-            return false;
-        }
-
-        return val >= 10000 ? `${_.keepDecimal(val / 10000)}万` : parseInt(val).toLocaleString();
-    };
-});
-
-/***/ }),
-/* 128 */
-/***/ (function(module, exports) {
-
-module.exports = ((_) => {
-    _.compareObject = (x, y) => {
-        // If both x and y are null or undefined and exactly the same
-        if (x === y) {
-            return true;
-        }
-
-        // If they are not strictly equal, they both need to be Objects
-        if (!(x instanceof Object) || !(y instanceof Object)) {
-            return false;
-        }
-
-        //They must have the exact same prototype chain,the closest we can do is
-        //test the constructor.
-        if (x.constructor !== y.constructor) {
-            return false;
-        }
-
-        for (let p in x) {
-            //Inherited properties were tested using x.constructor === y.constructor
-            if (x.hasOwnProperty(p)) {
-                // Allows comparing x[ p ] and y[ p ] when set to undefined
-                if (!y.hasOwnProperty(p)) {
-                    return false;
-                }
-
-                // If they have the same strict value or identity then they are equal
-                if (x[p] === y[p]) {
-                    continue;
-                }
-
-                // Numbers, Strings, Functions, Booleans must be strictly equal
-                if (!(_.typeOf(x[p]) == 'object' || _.typeOf(x[p]) == 'array')) {
-                    return false;
-                }
-
-                // Objects and Arrays must be tested recursively
-                if (!_.compareObject(x[p], y[p])) {
-                    return false;
-                }
-            }
-        }
-
-        for (let p in y) {
-            // allows x[ p ] to be set to undefined
-            if (y.hasOwnProperty(p) && !x.hasOwnProperty(p)) {
-                return false;
-            }
-        }
-        return true;
-    };
-});
-
-/***/ }),
-/* 129 */
-/***/ (function(module, exports, __webpack_require__) {
-
-let _t = {};
-
-__webpack_require__(65)(_t);
-
-let x = {
-    cloneObj: (obj) => {
-        let result = {},
-            item, type;
-        for(let i in obj) {
-            if(obj.hasOwnProperty(i)) {
-                item = obj[i];
-                type = _t.typeOf(item);
-                if (type === 'object') {
-                    result[i] = x.cloneObj(item);
-                } else if (type === 'array') {
-                    result[i] = x.cloneArray(item);
-                } else {
-                    result[i] = item;
-                }
-            }
-        }
-        return result;
-    },
-    cloneArray: (obj) => {
-        let result = [],
-            item, type;
-        for (let i = 0; i < obj.length; i++) {
-            item = obj[i];
-            type = _t.typeOf(item);
-            if (type === 'object') {
-                result[i] = x.cloneObj(item);
-            } else if (type === 'array') {
-                result[i] = x.cloneArray(item);
-            } else if (typeof item !== 'object') {
-                result[i] = item;
-            }
-        }
-        return result;
-    }
-};
-
-module.exports = ((_) => {
-    _.deepClone = (obj) => {
-        let type = _t.typeOf(obj);
-        switch (type) {
-            case 'object':
-                return x.cloneObj(obj);
-            case 'array':
-                return x.cloneArray(obj);
-            default:
-                return obj;
-        }
-    };
-});
-
-/***/ }),
-/* 130 */
-/***/ (function(module, exports) {
-
-module.exports = ((_) => {
-    _.extend = (o1 = {}, o2 = {}, override = false) => {
-        const _keys = Object.keys(o2) || [];
-
-        _keys.forEach((k) => {
-            if (o1[k] == undefined || override) {
-                o1[k] = o2[k];
-            }
-        });
-
-        return o1;
-    };
-});
-
-/***/ }),
-/* 131 */
-/***/ (function(module, exports) {
-
-module.exports = ((_) => {
-    _.merge = (obj1 = {}, obj2 = {}) => {
-        const type1 = _.typeOf(obj1);
-        const type2 = _.typeOf(obj2);
-        // let len;
-
-        if (type1 !== type2) {
-            return obj2;
-        }
-
-        switch(type2) {
-            case 'object':
-                for (let i in obj2) {
-                    if (obj2.hasOwnProperty(i)) {
-                        obj1[i] = _.merge(obj1[i], obj2[i]);
-                    }
-                }
-                break;
-            case 'array':
-                for (let i = 0, lens = obj2.length; i < lens; i++) {
-                    obj1[i] = _.merge(obj1[i], obj2[i]);
-                }
-                obj1.length = obj2.length;
-                break;
-            default:
-                return obj2;
-        }
-        return obj1;
-    };
-});
-
-/***/ }),
-/* 132 */
-/***/ (function(module, exports, __webpack_require__) {
-
 
 /* styles */
-__webpack_require__(135)
+__webpack_require__(127)
 
-var Component = __webpack_require__(133)(
+var Component = __webpack_require__(125)(
   /* script */
-  __webpack_require__(67),
+  __webpack_require__(66),
   /* template */
-  __webpack_require__(134),
+  __webpack_require__(126),
   /* scopeId */
   null,
   /* cssModules */
@@ -28100,7 +27849,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 133 */
+/* 125 */
 /***/ (function(module, exports) {
 
 // this module is a runtime utility for cleaner component module output and will
@@ -28157,7 +27906,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 134 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -28195,7 +27944,7 @@ if (false) {
 }
 
 /***/ }),
-/* 135 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -28205,7 +27954,7 @@ var content = __webpack_require__(119);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(136)("8be957c0", content, false);
+var update = __webpack_require__(128)("8be957c0", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -28221,7 +27970,7 @@ if(false) {
 }
 
 /***/ }),
-/* 136 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -28240,7 +27989,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(137)
+var listToStyles = __webpack_require__(129)
 
 /*
 type StyleObject = {
@@ -28442,7 +28191,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 137 */
+/* 129 */
 /***/ (function(module, exports) {
 
 /**
@@ -28475,7 +28224,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 138 */
+/* 130 */
 /***/ (function(module, exports) {
 
 var g;
@@ -28502,10 +28251,10 @@ module.exports = g;
 
 
 /***/ }),
-/* 139 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(66);
+module.exports = __webpack_require__(65);
 
 
 /***/ })
