@@ -25,7 +25,7 @@
 
 ## 示例
 
-[静态示例](http://realign.pw/vue-rich-editor/)
+[静态示例](https://realign.github.io/vue-rich-editor/)
 
 [codesandbox 示例](https://codesandbox.io/s/w0m20jjxrl)
 
