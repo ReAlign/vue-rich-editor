@@ -1400,14 +1400,17 @@
 .quill-wrapper .ql-snow.ql-toolbar .ql-formats button:not(:last-child) {
         border-right: 1px solid #ccc;
 }
-.quill-wrapper .ql-snow .ql-editor img, .quill-wrapper .ql-snow .ql-editor p img, .quill-wrapper .ql-snow .ql-editor * img {
+.quill-wrapper .ql-snow .ql-editor img,
+  .quill-wrapper .ql-snow .ql-editor p img,
+  .quill-wrapper .ql-snow .ql-editor * img {
     max-width: 10000%;
 }
 .quill-wrapper .ql-snow .ql-picker.ql-size {
     height: 24px;
     line-height: 24px;
 }
-.quill-wrapper .ql-snow .ql-thin, .quill-wrapper .ql-snow .ql-stroke.ql-thin {
+.quill-wrapper .ql-snow .ql-thin,
+  .quill-wrapper .ql-snow .ql-stroke.ql-thin {
     stroke-width: 1px !important;
 }
 .quill-wrapper .ql-snow .ql-stroke {
