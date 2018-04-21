@@ -263,4 +263,5 @@ export default {
 @import './../../node_modules/quill/dist/quill.core.css';
 @import './../../node_modules/quill/dist/quill.snow.css';
 @import './index.scss';
+@import './custom-modules/image-link/index.scss';
 </style>

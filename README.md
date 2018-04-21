@@ -1,6 +1,6 @@
 # vue-rich-editor
 
-## V0.7.0 部分 API 有更新，请注意
+## ！！！从 V0.7.x 开始，API 有更新，请注意
 
 [![NPM version][npm-image]][npm-url]
 
