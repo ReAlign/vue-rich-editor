@@ -987,7 +987,7 @@ var ImageLink = function ImageLink() {
     var imageLinkBtns = document.getElementsByClassName('ql-image-link');
     if (imageLinkBtns) {
         [].slice.call(imageLinkBtns).forEach(function (item) {
-            item.innerHTML = '\n                    <span\n                        style="\n                            font-size: 14px;\n                            font-weight: bold;\n                            line-height: 14px;">\n                        \u56FE\n                    </span>\n                ';
+            item.innerHTML = '<span class="ql-image-link-inner"></span>';
         });
     };
 };

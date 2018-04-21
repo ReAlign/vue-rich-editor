@@ -1472,5 +1472,17 @@
 .quill-wrapper .ql-snow .ql-tooltip a.ql-remove::before {
     content: '\79FB\9664';
 }
+.ql-image-link .ql-image-link-inner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+}
+.ql-image-link .ql-image-link-inner::before {
+    content: '\56FE';
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 18px;
+    text-align: center;
+}
 
 /*# sourceMappingURL=client.css.map*/
