@@ -11,7 +11,7 @@
 
 ![logo](https://github.com/ReAlign/vue-rich-editor/blob/master/source/github-vue-rich-logo.png)
 
-![demo](http://olz3b8fm9.bkt.clouddn.com/17-12-26/22851530.jpg)
+![demo](https://haitao.nos.netease.com/d7d7a03f-1490-4d41-8819-2738b54ddbf8.jpg)
 
 ## 介绍
 
