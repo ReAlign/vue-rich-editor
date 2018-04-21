@@ -1,5 +1,7 @@
 # vue-rich-editor
 
+## V0.7.0 部分 API 有更新，请注意
+
 [![NPM version][npm-image]][npm-url]
 
 [npm-image]: https://img.shields.io/npm/v/vue-rich-editor.svg?longCache=true&style=for-the-badge
