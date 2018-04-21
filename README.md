@@ -38,10 +38,10 @@
 | value | '' | string | content |
 | id | 'quill-container' | string | *, only tag |
 | disabled | false | boolean |  |
+| editorContainer | [] | array |  |
 | quillRegisterKeys | null | array |  |
 | placeholder | '' | string | |
 | linkPlaceholder | '请输入链接' | string |  |
-| editorContainer | [] | array |  |
 | imageLinkTitle | '请输入图片地址：' | string |  |
 | imageLinkPlaceholder | 'https://' | string |  |
 
@@ -85,6 +85,7 @@ options = {
 ```javascript
 // 链接上传图片
 reImageLink(type, options)
+type            // string：'ok':点击确定，'cancel':点击取消
 options = {
     url,            // 输入路径
     Editor,         // 当前编辑器
