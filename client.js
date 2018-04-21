@@ -257,7 +257,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "ve-container"
-  }, [_c('h3', [_vm._v("vue rich editor example1")]), _vm._v(" "), _c('vue-rich-editor', {
+  }, [_c('h3', [_vm._v("vue rich editor example")]), _vm._v(" "), _c('vue-rich-editor', {
     attrs: {
       "id": _vm.editorId,
       "quillRegisterKeys": _vm.quillRegisterKeys,
@@ -484,7 +484,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             editorId: 'editor',
-            editorContent: 'demo string<img src="http://olz3b8fm9.bkt.clouddn.com/18-1-11/17450321.jpg" width="100px" height="100px" />',
+            editorContent: 'demo string<br/><img src="http://olz3b8fm9.bkt.clouddn.com/18-1-11/17450321.jpg" width="200px" height="100px" />',
             setEditorDemo: '<h1>hahahah</h1>',
             editorIsDisabled: false,
             quillRegisterKeys: ['inline', 'size', 'imageResize', 'imageLink'],
