@@ -337,6 +337,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "linkPlaceholder": _vm.linkPlaceholder
     },
     on: {
+      "reCursorMove": _vm.editorCursorMove,
       "reBlur": _vm.editorBlurEvt,
       "reFocus": _vm.editorFocusEvt,
       "reHighlighted": _vm.editorHighlightedEvt,
@@ -544,6 +545,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -610,6 +612,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     cursorLocation: _c.cursorLocation
                 };
                 this.uploadImage(opt);
+            }
+        },
+        editorCursorMove: function editorCursorMove(opt) {
+            var editorFocusCache = this.editorFocusCache;
+            var range = opt.range,
+                oldRange = opt.oldRange;
+
+            if (editorFocusCache && !range && oldRange) {
+                editorFocusCache.range = oldRange;
+                editorFocusCache.cursorLocation = oldRange.index;
             }
         },
         editorBlurEvt: function editorBlurEvt() {
@@ -895,6 +907,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         listenStateChangeEditor: function listenStateChangeEditor() {
             var self = this;
             var quill = self.quill;
+
+            quill.on('editor-change', function (eventName) {
+                if (eventName === 'selection-change') {
+                    self.$emit('reCursorMove', {
+                        range: arguments.length <= 1 ? undefined : arguments[1],
+                        oldRange: arguments.length <= 2 ? undefined : arguments[2]
+                    });
+                }
+            });
 
             quill.on('selection-change', function (range, oldRange, source) {
                 var Editor = quill;
