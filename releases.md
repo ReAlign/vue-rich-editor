@@ -55,3 +55,12 @@
     ```
 
 * 图片缩放功能
+
+## 0.7.3
+
+### API优化
+
+* 参数优化
+  * reFocus
+  * reHighlighted
+  * reBlur

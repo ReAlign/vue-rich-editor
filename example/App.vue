@@ -52,6 +52,7 @@
 import { VueRichEditor } from '../src/index.js';
 import axios from 'axios';
 import { Config } from './config';
+import ClipboardPaste from 'clipboard-paste';
 
 export default {
     components: {
@@ -60,12 +61,13 @@ export default {
     data() {
         return {
             editorId: 'editor',
-            editorContent: 'demo string<br/><img src="http://olz3b8fm9.bkt.clouddn.com/18-1-11/17450321.jpg" width="200px" height="100px" />',
+            editorContent: '',
             setEditorDemo: '<h1>hahahah</h1>',
             editorIsDisabled: false,
             quillRegisterKeys: ['inline', 'size', 'imageResize', 'imageLink'],
             linkPlaceholder: '请输入链接',
-
+            editorFocusCache: null,
+            editorHasFocusFlag: false,
             //
             editorId1: 'editor1',
             editorContent1: 'demo1<img src="http://olz3b8fm9.bkt.clouddn.com/18-1-11/17450321.jpg" width="200px" height="100px" />',
@@ -74,6 +76,9 @@ export default {
             quillRegisterKeys1: ['inline', 'size', 'imageResize', 'imageLink'],
             linkPlaceholder1: '请输入链接1'
         };
+    },
+    mounted() {
+        //
     },
     methods: {
         setEditor(str = 'demo') {
@@ -84,15 +89,38 @@ export default {
             console.log(content);
         },
 
-        editorFocusEvt(range) {
-            console.log(range);
-            console.log('Cursor in the editor');
+        editorFocusEvt(opt) {
+            this.editorFocusCache = opt;
+
+            if(!this.editorHasFocusFlag) {
+                this.editorHasFocusFlag = true;
+                ClipboardPaste.addEvtPaste4Image(`#${this.editorId}`, this.cbPasteEvtImage);
+            }
+        },
+        cbPasteEvtImage(e, blob) {
+            if(blob) {
+                e.preventDefault();
+                const _c = this.editorFocusCache;
+
+                console.log(e, blob);
+                console.log(_c);
+
+                const opt = {
+                    file: blob.content,
+                    Editor: _c.Editor,
+                    cursorLocation: _c.cursorLocation
+                };
+                this.uploadImage(opt);
+            }
         },
 
         editorBlurEvt() {
             console.log('Cursor not in the editor');
         },
-        editorHighlightedEvt(text, range) {
+        editorHighlightedEvt(opt) {
+            const {
+                text, range
+            } = opt;
             console.log('User has highlighted: ', text);
             console.log(range);
         },
@@ -150,7 +178,7 @@ export default {
 
         addImageLink1(type, options) {
             console.log(type, options);
-        },
+        }
     }
 };
 </script>

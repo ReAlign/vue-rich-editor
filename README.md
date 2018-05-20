@@ -55,17 +55,36 @@
 
 ```javascript
 // focus
-reFocus(range)
+reFocus(options)
+options = {
+    Editor,
+    source,
+    range,
+    oldRange,
+    cursorLocation
+}
 ```
 
 ```javascript
 // 内容高亮
-reHighlighted(text, range)
+reHighlighted(options)
+options = {
+    Editor,
+    source,
+    range,
+    oldRange,
+    cursorLocation,
+    text
+}
 ```
 
 ```javascript
 // blur
-reBlur()
+reBlur(options)
+options = {
+    Editor,
+    source
+}
 ```
 
 ## 图片相关

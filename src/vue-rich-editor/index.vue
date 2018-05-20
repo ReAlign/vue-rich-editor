@@ -220,18 +220,35 @@ export default {
 
         listenStateChangeEditor() {
             const self = this;
+            const quill = self.quill;
 
-            this.quill.on('selection-change', (range, oldRange, source) => {
-                console.log(source);
+            quill.on('selection-change', (range, oldRange, source) => {
+                const Editor = quill;
+
+                let options = {
+                    Editor,
+                    source
+                };
                 if(range) {
+                    const cursorLocation = range.index;
+
+                    const _o = {
+                        range,
+                        oldRange,
+                        cursorLocation
+                    };
+
+                    Object.assign(options, _o);
+
                     if(range.length == 0) {
-                        self.$emit('reFocus', range);
+                        self.$emit('reFocus', options);
                     } else {
-                        const text = self.quill.getText(range.index, range.length);
-                        self.$emit('reHighlighted', text, range);
+                        const text = quill.getText(range.index, range.length);
+                        Object.assign(options, { text });
+                        self.$emit('reHighlighted', options);
                     }
                 } else {
-                    self.$emit('reBlur', source);
+                    self.$emit('reBlur', options);
                 }
             });
         },
