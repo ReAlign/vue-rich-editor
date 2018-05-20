@@ -10,6 +10,7 @@
                 :disabled="editorIsDisabled"
                 :linkPlaceholder="linkPlaceholder"
                 v-model="editorContent"
+                @reCursorMove="editorCursorMove"
                 @reBlur="editorBlurEvt"
                 @reFocus="editorFocusEvt"
                 @reHighlighted="editorHighlightedEvt"
@@ -111,6 +112,18 @@ export default {
                     cursorLocation: _c.cursorLocation
                 };
                 this.uploadImage(opt);
+            }
+        },
+
+        editorCursorMove(opt) {
+            const editorFocusCache = this.editorFocusCache;
+            const {
+                range,
+                oldRange,
+            } = opt;
+            if(editorFocusCache && !range && oldRange) {
+                editorFocusCache.range = oldRange;
+                editorFocusCache.cursorLocation = oldRange.index;
             }
         },
 

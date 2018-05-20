@@ -24426,6 +24426,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var self = this;
             var quill = self.quill;
 
+            quill.on('editor-change', function (eventName) {
+                if (eventName === 'selection-change') {
+                    self.$emit('reCursorMove', {
+                        range: arguments.length <= 1 ? undefined : arguments[1],
+                        oldRange: arguments.length <= 2 ? undefined : arguments[2]
+                    });
+                }
+            });
+
             quill.on('selection-change', function (range, oldRange, source) {
                 var Editor = quill;
 

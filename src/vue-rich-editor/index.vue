@@ -222,6 +222,15 @@ export default {
             const self = this;
             const quill = self.quill;
 
+            quill.on('editor-change', (eventName, ...args) => {
+                if(eventName === 'selection-change') {
+                    self.$emit('reCursorMove', {
+                        range: args[0],
+                        oldRange: args[1]
+                    });
+                }
+            });
+
             quill.on('selection-change', (range, oldRange, source) => {
                 const Editor = quill;
 

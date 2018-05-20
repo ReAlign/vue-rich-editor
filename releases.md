@@ -64,3 +64,9 @@
   * reFocus
   * reHighlighted
   * reBlur
+
+## 0.7.4
+
+### AP增加
+
+* reCursorMove：鼠标指针移动事件

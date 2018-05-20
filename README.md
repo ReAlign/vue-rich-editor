@@ -87,6 +87,15 @@ options = {
 }
 ```
 
+```javascript
+// cursor move evt
+reCursorMove(options)
+options = {
+    range,
+    oldRange
+}
+```
+
 ## 图片相关
 
 ```javascript
