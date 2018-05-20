@@ -21,7 +21,7 @@
     * [x] [图片缩放（image resize）](https://github.com/Fandom-OSS/quill-blot-formatter)
     * [ ] [拖拽上传（image drop）](https://github.com/kensnyder/quill-image-drop-module)
     * [x] 链接上传图片（support via the url to upload pictures）
-    * [ ] 剪贴板粘贴图片（support the clipboard to paste pictures）
+    * [x] 剪贴板粘贴图片（support the clipboard to paste pictures）
 
 ## 示例
 
