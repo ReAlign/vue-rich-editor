@@ -1,6 +1,6 @@
 {
     "name": "vue-rich-editor",
-    "version": "0.7.4",
+    "version": "0.7.5",
     "description": "a vue rich text editor，based on quill",
     "main": "dist/index.js",
     "scripts": {
@@ -14,7 +14,12 @@
         "build-umd": "vbuild -c vbuild.config.js --format umd",
         "example": "vbuild -c vbuild.example.js -d",
         "deploy": "vbuild -c vbuild.example.js && gh-pages -d dist-example",
-        "precommit": "lint-staged"
+        "precommit": "lint-staged",
+        "pub-clean": "rm -rf ./npm-public/*",
+        "pub-copy-npm": "gulp copy-npm",
+        "before-pub": "npm run build && npm run pub-clean && npm run pub-copy-npm",
+        "do-pub": "cd npm-public && npm publish",
+        "pub": "npm run before-pub && npm run do-pub"
     },
     "lint-staged": {
         "gitDir": ".",
@@ -53,7 +58,10 @@
         "eslint-plugin-html": "^3.0.0",
         "lint-staged": "^6.0.0",
         "axios": "^0.16.2",
-        "clipboard-paste": "0.0.5"
+        "clipboard-paste": "0.0.5",
+        "gulp": "3.9.1",
+        "gulp-all": "1.1.0",
+        "gulp-rename": "1.4.0"
     },
     "repository": {
         "type": "git",

@@ -14,3 +14,5 @@ dist-example
 example/cloudinary.vue
 
 package-lock.json
+
+npm-public

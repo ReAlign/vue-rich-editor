@@ -35,6 +35,10 @@ export default {
             required: true,
             default: 'quill-container'
         },
+        keepPasteFormat: {
+            type: Boolean,
+            default: true
+        },
         disabled: {
             type: Boolean,
             default: false
@@ -184,6 +188,15 @@ export default {
                 placeholder: this.placeholder,
                 readOnly: this.disabled ? this.disabled : false
             });
+            // clear format from Clipboard Paste
+            if(!this.keepPasteFormat) {
+                this.quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
+                    delta.ops = delta.ops.map(op => {
+                        return { insert: op.insert };
+                    });
+                    return delta;
+                });
+            }
 
             const tooltip = this.quill.theme.tooltip;
             const input = tooltip.root.querySelector('input[data-link]');

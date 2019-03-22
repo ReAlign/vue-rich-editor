@@ -1,0 +1,26 @@
+{
+    "name": "vue-rich-editor",
+    "version": "0.7.5",
+    "description": "a vue rich text editor，based on quill",
+    "main": "dist/index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ReAlign/vue-rich-editor.git"
+    },
+    "keywords": [
+        "quill",
+        "rich editor",
+        "html editor",
+        "text editor",
+        "vue",
+        "vue-component",
+        "module config",
+        "inline style"
+    ],
+    "author": "ReAlign <realign@yeah.net>",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ReAlign/vue-rich-editor/issues"
+    },
+    "homepage": "https://github.com/ReAlign/vue-rich-editor#readme"
+}

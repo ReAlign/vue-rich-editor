@@ -4,6 +4,7 @@
             <h3>vue rich editor example</h3>
             <vue-rich-editor
                 :id="editorId"
+                :keepPasteFormat="keepPasteFormat"
                 :quillRegisterKeys="quillRegisterKeys"
                 useCustomImageHandler
                 useCustomImageLinkHandler
@@ -62,6 +63,7 @@ export default {
     data() {
         return {
             editorId: 'editor',
+            keepPasteFormat: false,
             editorContent: '',
             setEditorDemo: '<h1>hahahah</h1>',
             editorIsDisabled: false,
@@ -71,7 +73,7 @@ export default {
             editorHasFocusFlag: false,
             //
             editorId1: 'editor1',
-            editorContent1: 'demo1<img src="http://olz3b8fm9.bkt.clouddn.com/18-1-11/17450321.jpg" width="200px" height="100px" />',
+            editorContent1: 'demo1<img src="https://public-bucket-realign.nos-eastchina1.126.net/image/normal/2018-12-30/img-1546104722969-415.png" width="536px" height="408px" />',
             setEditorDemo1: '<h2>hahahah</h2>',
             editorIsDisabled1: false,
             quillRegisterKeys1: ['inline', 'size', 'imageResize', 'imageLink'],

@@ -39,6 +39,7 @@
 |  --- |  --- |  --- |   --- |
 | value | '' | string | content |
 | id | 'quill-container' | string | *, only tag |
+| keepPasteFormat | true | boolean | keep text format, from clipboard |
 | disabled | false | boolean |  |
 | editorContainer | [] | array |  |
 | quillRegisterKeys | null | array |  |

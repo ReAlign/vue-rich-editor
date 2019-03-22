@@ -80,7 +80,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.5.6' };
+var core = module.exports = { version: '2.5.7' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -24255,6 +24255,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             required: true,
             default: 'quill-container'
         },
+        keepPasteFormat: {
+            type: Boolean,
+            default: true
+        },
         disabled: {
             type: Boolean,
             default: false
@@ -24394,6 +24398,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 placeholder: this.placeholder,
                 readOnly: this.disabled ? this.disabled : false
             });
+            // clear format from Clipboard Paste
+            if (!this.keepPasteFormat) {
+                this.quill.clipboard.addMatcher(Node.ELEMENT_NODE, function (node, delta) {
+                    delta.ops = delta.ops.map(function (op) {
+                        return { insert: op.insert };
+                    });
+                    return delta;
+                });
+            }
 
             var tooltip = this.quill.theme.tooltip;
             var input = tooltip.root.querySelector('input[data-link]');
@@ -28103,7 +28116,7 @@ var Component = __webpack_require__(130)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Users/seewater/NOTE/my_github/vue-rich-editor/src/vue-rich-editor/index.vue"
+Component.options.__file = "/Users/seewater/hub/editor/vue-rich-editor/src/vue-rich-editor/index.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] index.vue: functional components are not supported with templates, they should use render functions.")}
 
