@@ -9,6 +9,7 @@ import ResizeAction from 'n-quill-blot-formatter/dist/actions/ResizeAction';
 import DeleteAction from 'n-quill-blot-formatter/dist/actions/DeleteAction';
 
 import ImageLink from './custom-modules/image-link/index';
+import CustomLink from './custom-modules/custom-link/index';
 
 const config = {};
 
@@ -38,7 +39,8 @@ config.defaultQuillRegisterKeys = [
     'inline',
     'size',
     'imageResize',
-    'imageLink'
+    'imageLink',
+    'customLink'
 ];
 
 config.ENUM_MAP = {
@@ -72,6 +74,12 @@ config.ENUM_MAP = {
         {
             key: 'modules/imageLink',
             value: ImageLink
+        }
+    ],
+    customLink: [
+        {
+            key: 'modules/customLink',
+            value: CustomLink
         }
     ]
 };

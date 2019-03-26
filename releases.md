@@ -76,3 +76,11 @@
 ### 新增选项
 
 * keepPasteFormat: 粘贴是否保持格式
+
+## 0.7.6
+
+### 新增 toolbar-customLink
+
+* 自定义链接按钮
+  * 给选中文字设置默认链接
+  * props: `customLinkHref: 'http://realign.pw'`

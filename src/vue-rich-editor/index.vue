@@ -70,6 +70,10 @@ export default {
         imageLinkPlaceholder: {
             type: String,
             default: 'https://'
+        },
+        customLinkHref: {
+            type: String,
+            default: ''
         }
     },
 
@@ -77,10 +81,7 @@ export default {
         return {
             quill: null,
             editor: null,
-            toolbarContainer: ((_.typeOf(this.editorContainer) === 'array')
-                                && this.editorContainer.length)
-                                    ? this.editorContainer
-                                    : Config.defaultEditorContainer,
+            toolbarContainer: [],
             toolbarHandlers: {
                 'image-link': () => {
                     const Editor = this.quill;
@@ -102,12 +103,26 @@ export default {
                     };
 
                     this.$emit('reImageLink', type, options);
+                },
+                'custom-link': function() {
+                    const vm = this;
+                    const Editor = vm.quill;
+                    const cusHref = vm.customLinkHref || '';
+                    const { index = 0, length = 0 } = Editor.getSelection() || {};
+
+                    if(length) {
+                        const hrefCL = cusHref ? cusHref : Editor.getText(index, length);
+                        Editor.format('link', hrefCL);
+                    } else {
+                        console.warn('[WARNING]: Selection is empty!');
+                    }
                 }
             }
         };
     },
 
     mounted() {
+        this.initToolbarContainer();
         this.initRegisterModules();
         this.initializeVueRichEditor();
         this.handleUpdatedEditor();
@@ -130,6 +145,23 @@ export default {
     },
 
     methods: {
+        // 初始化操作按钮
+        initToolbarContainer() {
+            const vm = this;
+            const barArr = vm.editorContainer;
+            const _flag = _.typeOf(barArr) === 'array'
+                            && barArr.length;
+            const attachBars = [];
+
+            if(vm.customLinkHref) {
+                attachBars.push('custom-link');
+            }
+
+            vm.toolbarContainer = _flag ? barArr : Config.defaultEditorContainer;
+            if(attachBars.length) {
+                vm.toolbarContainer.push(attachBars);
+            }
+        },
         initRegisterModules() {
             if(!this.quillRegisterKeys
                 || (this.quillRegisterKeys
@@ -168,7 +200,8 @@ export default {
                 clipboard: {
                     matchVisual: false
                 },
-                imageLink: true
+                imageLink: true,
+                customLink: true
             };
 
             if((this.quillRegisterKeys &&
@@ -303,4 +336,5 @@ export default {
 @import './../../node_modules/quill/dist/quill.snow.css';
 @import './index.scss';
 @import './custom-modules/image-link/index.scss';
+@import './custom-modules/custom-link/index.scss';
 </style>

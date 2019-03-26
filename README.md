@@ -47,6 +47,25 @@
 | linkPlaceholder | '请输入链接' | string |  |
 | imageLinkTitle | '请输入图片地址：' | string |  |
 | imageLinkPlaceholder | 'https://' | string |  |
+| customLinkHref | '' | string | 自定义链接内容；有值：显示按钮，空，表示不显示 |
+
+### customLink 图标样式自定义
+
+* 默认是文字风格，可自由修改，下面的例子是采用图片[按钮内区域大小为：18*18]
+
+```less
+.ql-custom-link {
+    .ql-custom-link-inner {
+        // 图片
+        background-image: url(https://dwz.cn/H9EkfLih);
+        background-size: 100% 100%;
+        // 重置掉文字
+        &::before {
+            content: '';
+        }
+    }
+}
+```
 
 ## 方法
 

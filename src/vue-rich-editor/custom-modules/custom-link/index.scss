@@ -1,0 +1,14 @@
+.ql-custom-link {
+    .ql-custom-link-inner {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        &::before {
+            content: '链';
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 18px;
+            text-align: center;
+        }
+    }
+}
