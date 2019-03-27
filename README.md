@@ -9,9 +9,9 @@
 
 > 定制 vue 富文本编辑器，基于 Quill
 
-![logo](https://github.com/ReAlign/vue-rich-editor/blob/master/source/github-vue-rich-logo.png)
+![logo](https://dwz.cn/lyPrpas0)
 
-![demo](https://haitao.nos.netease.com/d7d7a03f-1490-4d41-8819-2738b54ddbf8.jpg)
+![demo](https://dwz.cn/wrchFtrx)
 
 ## 介绍
 
@@ -27,7 +27,7 @@
 
 [静态示例](https://realign.github.io/vue-rich-editor/)
 
-[codesandbox 示例](https://codesandbox.io/s/w0m20jjxrl)
+[codesandbox 示例](https://codesandbox.io/s/w0m20jjxrl)[不定期更新]
 
 ## 使用
 

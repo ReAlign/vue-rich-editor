@@ -1,9 +1,10 @@
 <template>
     <div id="app">
         <div class="ve-container">
-            <h3>vue rich editor example</h3>
+            <h2>DEMO</h2>
             <vue-rich-editor
                 :id="editorId"
+                :customLinkHref="customLinkHref"
                 :keepPasteFormat="keepPasteFormat"
                 useCustomImageHandler
                 useCustomImageLinkHandler
@@ -21,7 +22,7 @@
                 <button
                     class="ve-button"
                     @click="saveContent(editorContent)">
-                    save content
+                    console content
                 </button>
 
                 <button
@@ -32,11 +33,10 @@
             </div>
         </div>
 
-        <div class="ve-container">
+        <!-- <div class="ve-container">
             <h3>vue rich editor example2</h3>
             <vue-rich-editor
                 :id="editorId1"
-                customLinkHref="http://realign.pw"
                 useCustomImageHandler
                 useCustomImageLinkHandler
                 :disabled="editorIsDisabled1"
@@ -45,7 +45,7 @@
                 @reImageAdded="uploadImage1"
                 @reImageLink="addImageLink1"
             />
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -62,19 +62,20 @@ export default {
     data() {
         return {
             editorId: 'editor',
+            customLinkHref: 'http://realign.pw',
             keepPasteFormat: false,
-            editorContent: '',
+            editorContent: '<h4><span style="font-weight: bold; font-style: italic; color: rgb(230, 0, 0);">这是一段文字</span></h4><br><br><img src="https://dwz.cn/fBofuN4L" width="150px" height="150px" />',
             setEditorDemo: '<h1>hahahah</h1>',
             editorIsDisabled: false,
             linkPlaceholder: '请输入链接',
             editorFocusCache: null,
             editorHasFocusFlag: false,
             //
-            editorId1: 'editor1',
-            editorContent1: 'demo1<img src="https://public-bucket-realign.nos-eastchina1.126.net/image/normal/2018-12-30/img-1546104722969-415.png" width="536px" height="408px" />',
-            setEditorDemo1: '<h2>hahahah</h2>',
-            editorIsDisabled1: false,
-            linkPlaceholder1: '请输入链接1'
+            // editorId1: 'editor1',
+            // editorContent1: 'demo1<img src="https://public-bucket-realign.nos-eastchina1.126.net/image/normal/2018-12-30/img-1546104722969-415.png" width="536px" height="408px" />',
+            // setEditorDemo1: '<h2>hahahah</h2>',
+            // editorIsDisabled1: false,
+            // linkPlaceholder1: '请输入链接1'
         };
     },
     mounted() {
@@ -196,10 +197,27 @@ export default {
 </script>
 
 <style lang='scss'>
+$h2-before-height: 10px;
+$h2-before-width: 4px;
+h2 {
+    position: relative;
+    margin-bottom: 12px;
+    text-indent: $h2-before-width * 2;
+    &::before {
+        content: "";
+        position: absolute;
+        top: $h2-before-height / 2;
+        left: 0;
+        width: $h2-before-width;
+        height: calc(100% - #{$h2-before-height});
+        background: #333;
+    }
+}
 .ve-container {
     position: relative;
-    width: calc(100% - 40px);
-    margin: 0 auto;
+    // width: calc(100% - 40px);
+    width: 700px;
+    margin: 60px auto 0;
     .ve-button-area {
         margin: 10px 0 0 0;
         .ve-button {
