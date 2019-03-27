@@ -84,3 +84,13 @@
 * 自定义链接按钮
   * 给选中文字设置默认链接
   * props: `customLinkHref: 'http://realign.pw'`
+
+## 0.7.7
+
+### API新增
+
+* reCustomLink：自定义链接回调
+
+### bugfix
+
+* 设置自定义链接不生效问题

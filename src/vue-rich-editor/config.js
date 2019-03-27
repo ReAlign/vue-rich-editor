@@ -98,4 +98,9 @@ class MyImageSpec extends ImageSpec {
 
 config.MyImageSpec = MyImageSpec;
 
+config.customLinkMsgMap = {
+    0: 'Set custom-link successful.',
+    1: 'Selection is empty!'
+};
+
 export default config;

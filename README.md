@@ -144,6 +144,17 @@ options = {
 }
 ```
 
+## 自定义链接
+
+```javascript
+// 自定义链接回调
+reCustomLink(opts)
+opts = {
+    code,           // 状态码：0 成功；1 失败
+    msg,            // 状态描述
+}
+```
+
 ### 待完善
 
 1. [x] 行内样式（inline-style）

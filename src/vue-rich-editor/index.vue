@@ -104,18 +104,22 @@ export default {
 
                     this.$emit('reImageLink', type, options);
                 },
-                'custom-link': function() {
+                'custom-link': () => {
                     const vm = this;
                     const Editor = vm.quill;
+                    const msgMap = Config.customLinkMsgMap;
                     const cusHref = vm.customLinkHref || '';
                     const { index = 0, length = 0 } = Editor.getSelection() || {};
+                    let code = 0;
 
                     if(length) {
                         const hrefCL = cusHref ? cusHref : Editor.getText(index, length);
                         Editor.format('link', hrefCL);
                     } else {
-                        console.warn('[WARNING]: Selection is empty!');
+                        code = 1;
                     }
+
+                    this.$emit('reCustomLink', { code, msg: msgMap[code] || '' });
                 }
             }
         };

@@ -11,6 +11,7 @@
                 :disabled="editorIsDisabled"
                 :linkPlaceholder="linkPlaceholder"
                 v-model="editorContent"
+                @reCustomLink="editorCustomLink"
                 @reCursorMove="editorCursorMove"
                 @reBlur="editorBlurEvt"
                 @reFocus="editorFocusEvt"
@@ -115,6 +116,9 @@ export default {
             }
         },
 
+        editorCustomLink(opts) {
+            console.log(opts);
+        },
         editorCursorMove(opt) {
             const editorFocusCache = this.editorFocusCache;
             const {

@@ -24329,8 +24329,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this.$emit('reImageLink', type, options);
                 },
                 'custom-link': function customLink() {
-                    var vm = this;
+                    var vm = _this;
                     var Editor = vm.quill;
+                    var msgMap = __WEBPACK_IMPORTED_MODULE_3__config__["a" /* default */].customLinkMsgMap;
                     var cusHref = vm.customLinkHref || '';
 
                     var _ref = Editor.getSelection() || {},
@@ -24339,12 +24340,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         _ref$length = _ref.length,
                         length = _ref$length === undefined ? 0 : _ref$length;
 
+                    var code = 0;
+
                     if (length) {
                         var hrefCL = cusHref ? cusHref : Editor.getText(index, length);
                         Editor.format('link', hrefCL);
                     } else {
-                        console.warn('[WARNING]: Selection is empty!');
+                        code = 1;
                     }
+
+                    _this.$emit('reCustomLink', { code: code, msg: msgMap[code] || '' });
                 }
             }
         };
@@ -24664,6 +24669,11 @@ var MyImageSpec = function (_ImageSpec) {
 }(__WEBPACK_IMPORTED_MODULE_10_n_quill_blot_formatter_dist_specs_ImageSpec___default.a);
 
 config.MyImageSpec = MyImageSpec;
+
+config.customLinkMsgMap = {
+    0: 'Set custom-link successful.',
+    1: 'Selection is empty!'
+};
 
 /* harmony default export */ __webpack_exports__["a"] = (config);
 
