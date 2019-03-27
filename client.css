@@ -1,8 +1,22 @@
 
+h2 {
+  position: relative;
+  margin-bottom: 12px;
+  text-indent: 8px;
+}
+h2::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 4px;
+    height: calc(100% - 10px);
+    background: #333;
+}
 .ve-container {
   position: relative;
-  width: calc(100% - 40px);
-  margin: 0 auto;
+  width: 700px;
+  margin: 60px auto 0;
 }
 .ve-container .ve-button-area {
     margin: 10px 0 0 0;
@@ -1479,6 +1493,18 @@
 }
 .ql-image-link .ql-image-link-inner::before {
     content: '\56FE';
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 18px;
+    text-align: center;
+}
+.ql-custom-link .ql-custom-link-inner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+}
+.ql-custom-link .ql-custom-link-inner::before {
+    content: '\94FE';
     font-size: 14px;
     font-weight: bold;
     line-height: 18px;
