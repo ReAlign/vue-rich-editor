@@ -123,7 +123,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         getTrans: function getTrans() {
             var vm = this;
-            console.log(vm.$refs[vm.vueEditorRef]._$getTransHtml());
+            console.log(vm.$refs[vm.vueEditorRef]._$getTagFillHtml());
         },
         setEditor: function setEditor() {
             var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'demo';
@@ -567,7 +567,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.$emit('reImageAdded', options);
         },
-        _$getTransHtml: function _$getTransHtml() {
+        _$getTagFillHtml: function _$getTagFillHtml() {
             return new __WEBPACK_IMPORTED_MODULE_2_trans_style_tags__["a" /* default */]().parse(this.value);
         }
     }
