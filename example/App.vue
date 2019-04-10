@@ -29,6 +29,12 @@
 
                 <button
                     class="ve-button"
+                    @click="showEffectiveValue()">
+                    console effective content
+                </button>
+
+                <button
+                    class="ve-button"
                     @click="setEditor(setEditorDemo)">
                     set editor
                 </button>
@@ -81,6 +87,11 @@ export default {
 
         saveContent(content = '') {
             console.log(content);
+        },
+
+        showEffectiveValue() {
+            const vm = this;
+            console.log(vm.$refs[vm.vueEditorRef]._$getEffectiveValue());
         },
 
         editorFocusEvt(opt) {

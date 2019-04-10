@@ -162,9 +162,15 @@ opts = {
 ### 获取移动端可使用富文本
 
 ```javascript
-// _$getTagFillHtml
 _$getTagFillHtml()
-return = `${transedHtml}`
+return = `${transedHtml}` | String
+```
+
+### 获取当前富文本有效内容
+
+```javascript
+_$getEffectiveValue()
+return = `${effectiveValue}` | String
 ```
 
 ### 待完善

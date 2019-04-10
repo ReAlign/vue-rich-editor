@@ -334,6 +334,18 @@ export default {
         },
         _$getTagFillHtml() {
             return new TransStyleTags().parse(this.value);
+        },
+        _$getEffectiveValue() {
+            const vm = this;
+            const Editor = vm.quill;
+
+            const trimLenIsZero = Editor.getText().trim().length === 0;
+            const notExistImg = Editor.container.firstChild.innerHTML.includes('img') === false;
+            // trim长度为0 && 没有图片
+            const isEmpty = trimLenIsZero && notExistImg;
+            const content = isEmpty ? '' : vm.value;
+
+            return content;
         }
     }
 };

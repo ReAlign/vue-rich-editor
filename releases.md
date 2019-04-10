@@ -99,5 +99,12 @@
 
 ### API新增
 
-* _$getTagFillHtml：获取当前富文本 `tag` 填充的形式
+* _$getTagFillHtml: 获取当前富文本 `tag` 填充的形式
   * 供移动使用的，必须使用 `tag` 格式
+
+## 0.7.9
+
+### API新增
+
+* _$getEffectiveValue: 获取当前富文本有效内容
+  * 解决 `quill` 填完内容再删除后含有空标签，导致判断错误问题
