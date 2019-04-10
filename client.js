@@ -92,6 +92,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -134,6 +140,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var content = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
 
             console.log(content);
+        },
+        showEffectiveValue: function showEffectiveValue() {
+            var vm = this;
+            console.log(vm.$refs[vm.vueEditorRef]._$getEffectiveValue());
         },
         editorFocusEvt: function editorFocusEvt(opt) {
             this.editorFocusCache = opt;
@@ -569,6 +579,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         _$getTagFillHtml: function _$getTagFillHtml() {
             return new __WEBPACK_IMPORTED_MODULE_2_trans_style_tags__["a" /* default */]().parse(this.value);
+        },
+        _$getEffectiveValue: function _$getEffectiveValue() {
+            var vm = this;
+            var Editor = vm.quill;
+
+            var trimLenIsZero = Editor.getText().trim().length === 0;
+            var notExistImg = Editor.container.firstChild.innerHTML.includes('img') === false;
+            // trim长度为0 && 没有图片
+            var isEmpty = trimLenIsZero && notExistImg;
+            var content = isEmpty ? '' : vm.value;
+
+            return content;
         }
     }
 });
@@ -1177,6 +1199,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_vm._v("\n                console content\n            ")]), _vm._v(" "), _c('button', {
+    staticClass: "ve-button",
+    on: {
+      "click": function($event) {
+        _vm.showEffectiveValue()
+      }
+    }
+  }, [_vm._v("\n                console effective content\n            ")]), _vm._v(" "), _c('button', {
     staticClass: "ve-button",
     on: {
       "click": function($event) {
