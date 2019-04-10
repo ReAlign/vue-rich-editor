@@ -3,6 +3,7 @@
         <div class="ve-container">
             <h2>DEMO</h2>
             <vue-rich-editor
+                :ref="vueEditorRef"
                 :id="editorId"
                 :customLinkHref="customLinkHref"
                 :keepPasteFormat="keepPasteFormat"
@@ -31,22 +32,14 @@
                     @click="setEditor(setEditorDemo)">
                     set editor
                 </button>
+
+                <button
+                    class="ve-button"
+                    @click="getTrans()">
+                    get transed html
+                </button>
             </div>
         </div>
-
-        <!-- <div class="ve-container">
-            <h3>vue rich editor example2</h3>
-            <vue-rich-editor
-                :id="editorId1"
-                useCustomImageHandler
-                useCustomImageLinkHandler
-                :disabled="editorIsDisabled1"
-                :linkPlaceholder="linkPlaceholder1"
-                v-model="editorContent1"
-                @reImageAdded="uploadImage1"
-                @reImageLink="addImageLink1"
-            />
-        </div> -->
     </div>
 </template>
 
@@ -62,6 +55,7 @@ export default {
     },
     data() {
         return {
+            vueEditorRef: 'vueEditorRef',
             editorId: 'editor',
             customLinkHref: 'http://realign.pw',
             keepPasteFormat: false,
@@ -70,19 +64,17 @@ export default {
             editorIsDisabled: false,
             linkPlaceholder: '请输入链接',
             editorFocusCache: null,
-            editorHasFocusFlag: false,
-            //
-            // editorId1: 'editor1',
-            // editorContent1: 'demo1<img src="https://public-bucket-realign.nos-eastchina1.126.net/image/normal/2018-12-30/img-1546104722969-415.png" width="536px" height="408px" />',
-            // setEditorDemo1: '<h2>hahahah</h2>',
-            // editorIsDisabled1: false,
-            // linkPlaceholder1: '请输入链接1'
+            editorHasFocusFlag: false
         };
     },
     mounted() {
         //
     },
     methods: {
+        getTrans() {
+            const vm = this;
+            console.log(vm.$refs[vm.vueEditorRef]._$getTagFillHtml());
+        },
         setEditor(str = 'demo') {
             this.editorContent = str;
         },
@@ -187,14 +179,6 @@ export default {
                     alert('url 必填哈');
                 }
             }
-        },
-
-        uploadImage1(options) {
-            console.log(options);
-        },
-
-        addImageLink1(type, options) {
-            console.log(type, options);
         }
     }
 };

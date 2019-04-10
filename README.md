@@ -71,7 +71,9 @@
 
 [示例](https://github.com/ReAlign/vue-rich-editor/tree/master/example)
 
-## 编辑器状态相关
+## Emit - 主动抛出
+
+### 编辑器状态相关
 
 ```javascript
 // focus
@@ -116,7 +118,7 @@ options = {
 }
 ```
 
-## 图片相关
+### 图片相关
 
 ```javascript
 // 文件 上传图片
@@ -144,7 +146,7 @@ options = {
 }
 ```
 
-## 自定义链接
+### 自定义链接
 
 ```javascript
 // 自定义链接回调
@@ -153,6 +155,16 @@ opts = {
     code,           // 状态码：0 成功；1 失败
     msg,            // 状态描述
 }
+```
+
+## RefCall - 被动调用
+
+### 获取移动端可使用富文本
+
+```javascript
+// _$getTagFillHtml
+_$getTagFillHtml()
+return = `${transedHtml}`
 ```
 
 ### 待完善

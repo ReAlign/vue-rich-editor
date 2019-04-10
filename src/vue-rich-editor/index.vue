@@ -19,6 +19,7 @@
 
 <script>
 import Quill from 'quill';
+import TransStyleTags from 'trans-style-tags';
 import _ from './extend/util';
 
 import Config from './config';
@@ -330,6 +331,9 @@ export default {
             };
 
             this.$emit('reImageAdded', options);
+        },
+        _$getTagFillHtml() {
+            return new TransStyleTags().parse(this.value);
         }
     }
 };
