@@ -31472,6 +31472,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         _$getTagFillHtml: function _$getTagFillHtml() {
             return new __WEBPACK_IMPORTED_MODULE_2_trans_style_tags__["a" /* default */]().parse(this.value);
+        },
+        _$getEffectiveValue: function _$getEffectiveValue() {
+            var vm = this;
+            var Editor = vm.quill;
+
+            var trimLenIsZero = Editor.getText().trim().length === 0;
+            var notExistImg = Editor.container.firstChild.innerHTML.includes('img') === false;
+            // trim长度为0 && 没有图片
+            var isEmpty = trimLenIsZero && notExistImg;
+            var content = isEmpty ? '' : vm.value;
+
+            return content;
         }
     }
 });
