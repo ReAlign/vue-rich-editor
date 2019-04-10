@@ -168,6 +168,8 @@ return = `${transedHtml}` | String
 
 ### 获取当前富文本有效内容
 
+* 解决填完内容再删除后含有空标签，导致判断错误问题
+
 ```javascript
 _$getEffectiveValue()
 return = `${effectiveValue}` | String
