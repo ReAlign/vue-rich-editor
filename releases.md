@@ -99,5 +99,18 @@
 
 ### API新增
 
-* _$getTagFillHtml：获取当前富文本 `tag` 填充的形式
+* _$getTagFillHtml: 获取当前富文本 `tag` 填充的形式
   * 供移动使用的，必须使用 `tag` 格式
+
+## 0.7.9
+
+### API新增
+
+* _$getEffectiveValue: 获取当前富文本有效内容
+  * 解决填完内容再删除后含有空标签，导致判断错误问题
+
+## 0.7.9-beta.0
+
+### 引用包 bugFix
+
+* [trans-style-tags](https://www.npmjs.com/package/trans-style-tags#003)
