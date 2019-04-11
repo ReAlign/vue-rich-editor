@@ -19,6 +19,8 @@
 
 <script>
 import Quill from 'quill';
+const FormatsLink = Quill.import('formats/link');
+
 import TransStyleTags from 'trans-style-tags';
 import _ from './extend/util';
 
@@ -72,6 +74,10 @@ export default {
             type: String,
             default: 'https://'
         },
+        customProtocol: {
+            type: Array,
+            default: () => null
+        },
         customLinkHref: {
             type: String,
             default: ''
@@ -83,6 +89,7 @@ export default {
             quill: null,
             editor: null,
             toolbarContainer: [],
+            allProtocol: null,
             toolbarHandlers: {
                 'image-link': () => {
                     const Editor = this.quill;
@@ -109,12 +116,26 @@ export default {
                     const vm = this;
                     const Editor = vm.quill;
                     const msgMap = Config.customLinkMsgMap;
+                    const allProtocol = vm.allProtocol;
                     const cusHref = vm.customLinkHref || '';
                     const { index = 0, length = 0 } = Editor.getSelection() || {};
                     let code = 0;
 
                     if(length) {
-                        const hrefCL = cusHref ? cusHref : Editor.getText(index, length);
+                        // 判断自定义链接协议是否安全
+                        const protocolOK = _.protocolSafe(allProtocol, cusHref);
+                        // 不安全有提示
+                        if(!protocolOK) {
+                            const err = [
+                                'Error:',
+                                `\tcustomLinkHref's protocol is unsafe.`,
+                                '\tif you really want to use,',
+                                '\tPlease set up prop: customProtocol'
+                            ];
+                            console.error(err.join('\n'));
+                        }
+                        // 不安全的协议 Quill 会自动过滤掉
+                        const hrefCL = protocolOK ? cusHref : Editor.getText(index, length);
                         Editor.format('link', hrefCL);
                     } else {
                         code = 1;
@@ -127,11 +148,13 @@ export default {
     },
 
     mounted() {
-        this.initToolbarContainer();
-        this.initRegisterModules();
-        this.initializeVueRichEditor();
-        this.handleUpdatedEditor();
-        this.listenStateChangeEditor();
+        const vm = this;
+        vm.registerCustomProtocol();
+        vm.initToolbarContainer();
+        vm.initRegisterModules();
+        vm.initializeVueRichEditor();
+        vm.handleUpdatedEditor();
+        vm.listenStateChangeEditor();
     },
 
     created() {
@@ -150,6 +173,17 @@ export default {
     },
 
     methods: {
+        // 注册自定义协议
+        registerCustomProtocol() {
+            const vm = this;
+            (vm.customProtocol || []).forEach(protocol => {
+                FormatsLink.PROTOCOL_WHITELIST.push(protocol);
+            });
+
+            Quill.register(FormatsLink, true);
+
+            vm.allProtocol = FormatsLink.PROTOCOL_WHITELIST.map(item => item);
+        },
         // 初始化操作按钮
         initToolbarContainer() {
             const vm = this;
@@ -162,7 +196,7 @@ export default {
                 attachBars.push('custom-link');
             }
 
-            vm.toolbarContainer = _flag ? barArr : Config.defaultEditorContainer;
+            vm.toolbarContainer = _flag ? barArr : Config.defaultEditorContainer();
             if(attachBars.length) {
                 vm.toolbarContainer.push(attachBars);
             }
@@ -174,7 +208,7 @@ export default {
                 const _keys = (this.quillRegisterKeys
                                 && this.quillRegisterKeys.length)
                             ? this.quillRegisterKeys
-                            : Config.defaultQuillRegisterKeys;
+                            : Config.defaultQuillRegisterKeys();
 
                 let _modules = {};
 
@@ -221,7 +255,7 @@ export default {
             this.quill = new Quill(this.$refs.quillContainer, {
                 theme: 'snow',
                 bounds: `#${this.id}`,
-                formats: Config.defaultClipboardFormats,
+                formats: Config.defaultClipboardFormats(),
                 modules: _modulesConf,
                 placeholder: this.placeholder,
                 readOnly: this.disabled ? this.disabled : false

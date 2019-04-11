@@ -13,7 +13,7 @@ import CustomLink from './custom-modules/custom-link/index';
 
 const config = {};
 
-config.defaultEditorContainer = [
+config.defaultEditorContainer = () => [
     ['link', 'bold', 'italic', 'underline'],
     [{ color: [] }],
     [
@@ -29,13 +29,13 @@ config.defaultEditorContainer = [
     ['clean']
 ];
 
-config.defaultClipboardFormats = [
+config.defaultClipboardFormats = () => [
     'link', 'bold', 'italic', 'underline',
     'color', 'list', 'image',
     'width', 'height', 'size', 'header'
 ];
 
-config.defaultQuillRegisterKeys = [
+config.defaultQuillRegisterKeys = () => [
     'inline',
     'size',
     'imageResize',

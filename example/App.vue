@@ -5,6 +5,7 @@
             <vue-rich-editor
                 :ref="vueEditorRef"
                 :id="editorId"
+                :customProtocol="customProtocol"
                 :customLinkHref="customLinkHref"
                 :keepPasteFormat="keepPasteFormat"
                 useCustomImageHandler
@@ -40,6 +41,16 @@
                 </button>
             </div>
         </div>
+
+        <div class="ve-container">
+            <h2>DEMO2</h2>
+            <vue-rich-editor
+                :ref="vueEditorRef2"
+                :id="editorId2"
+                :customLinkHref="customLinkHref2"
+                v-model="editorContent2"
+            />
+        </div>
     </div>
 </template>
 
@@ -57,14 +68,20 @@ export default {
         return {
             vueEditorRef: 'vueEditorRef',
             editorId: 'editor',
-            customLinkHref: 'http://realign.pw',
+            customProtocol: ['qiyu'],
+            customLinkHref: 'htstp://action.qiyukf.com?command=applyHumanStaff',
             keepPasteFormat: false,
             editorContent: '<h4><span style="font-weight: bold; font-style: italic; color: rgb(230, 0, 0);">这是一段文字</span></h4><br><br><img src="https://dwz.cn/fBofuN4L" width="150px" height="150px" />',
             setEditorDemo: '<h1>hahahah</h1>',
             editorIsDisabled: false,
             linkPlaceholder: '请输入链接',
             editorFocusCache: null,
-            editorHasFocusFlag: false
+            editorHasFocusFlag: false,
+
+            vueEditorRef2: 'vueEditorRef2',
+            editorId2: 'editor2',
+            customLinkHref2: 'qiyu//:qqq',
+            editorContent2: ''
         };
     },
     mounted() {
