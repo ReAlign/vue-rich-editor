@@ -38,7 +38,7 @@
 | 属性值 | 默认 | 类型 | 备注 |
 |  --- |  --- |  --- |   --- |
 | value | '' | string | content |
-| id | 'quill-container' | string | <i style="color: red;">**</i>, only tag |
+| id | 'quill-container' | string | <i class="Subhead-heading--danger">**</i>, only tag |
 | keepPasteFormat | true | boolean | keep text format, from clipboard |
 | disabled | false | boolean |  |
 | editorContainer | [] | array |  |
