@@ -98,6 +98,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -112,14 +123,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             vueEditorRef: 'vueEditorRef',
             editorId: 'editor',
-            customLinkHref: 'http://realign.pw',
+            customProtocol: ['qiyu'],
+            customLinkHref: 'htstp://action.qiyukf.com?command=applyHumanStaff',
             keepPasteFormat: false,
             editorContent: '<h4><span style="font-weight: bold; font-style: italic; color: rgb(230, 0, 0);">这是一段文字</span></h4><br><br><img src="https://dwz.cn/fBofuN4L" width="150px" height="150px" />',
             setEditorDemo: '<h1>hahahah</h1>',
             editorIsDisabled: false,
             linkPlaceholder: '请输入链接',
             editorFocusCache: null,
-            editorHasFocusFlag: false
+            editorHasFocusFlag: false,
+
+            vueEditorRef2: 'vueEditorRef2',
+            editorId2: 'editor2',
+            customLinkHref2: 'qiyu//:qqq',
+            editorContent2: ''
         };
     },
     mounted: function mounted() {
@@ -274,6 +291,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
+var FormatsLink = __WEBPACK_IMPORTED_MODULE_1_quill___default.a.import('formats/link');
+
 
 
 
@@ -331,6 +350,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             type: String,
             default: 'https://'
         },
+        customProtocol: {
+            type: Array,
+            default: function _default() {
+                return null;
+            }
+        },
         customLinkHref: {
             type: String,
             default: ''
@@ -344,6 +369,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             quill: null,
             editor: null,
             toolbarContainer: [],
+            allProtocol: null,
             toolbarHandlers: {
                 'image-link': function imageLink() {
                     var Editor = _this.quill;
@@ -368,6 +394,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     var vm = _this;
                     var Editor = vm.quill;
                     var msgMap = __WEBPACK_IMPORTED_MODULE_4__config__["a" /* default */].customLinkMsgMap;
+                    var allProtocol = vm.allProtocol;
                     var cusHref = vm.customLinkHref || '';
 
                     var _ref = Editor.getSelection() || {},
@@ -379,7 +406,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     var code = 0;
 
                     if (length) {
-                        var hrefCL = cusHref ? cusHref : Editor.getText(index, length);
+                        // 判断自定义链接协议是否安全
+                        var protocolOK = __WEBPACK_IMPORTED_MODULE_3__extend_util__["a" /* default */].protocolSafe(allProtocol, cusHref);
+                        // 不安全有提示
+                        if (!protocolOK) {
+                            var err = ['Error:', '\tcustomLinkHref\'s protocol is unsafe.', '\tif you really want to use,', '\tPlease set up prop: customProtocol'];
+                            console.error(err.join('\n'));
+                        }
+                        // 不安全的协议 Quill 会自动过滤掉
+                        var hrefCL = protocolOK ? cusHref : Editor.getText(index, length);
                         Editor.format('link', hrefCL);
                     } else {
                         code = 1;
@@ -391,11 +426,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     mounted: function mounted() {
-        this.initToolbarContainer();
-        this.initRegisterModules();
-        this.initializeVueRichEditor();
-        this.handleUpdatedEditor();
-        this.listenStateChangeEditor();
+        var vm = this;
+        vm.registerCustomProtocol();
+        vm.initToolbarContainer();
+        vm.initRegisterModules();
+        vm.initializeVueRichEditor();
+        vm.handleUpdatedEditor();
+        vm.listenStateChangeEditor();
     },
     created: function created() {
         //
@@ -414,6 +451,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        // 注册自定义协议
+        registerCustomProtocol: function registerCustomProtocol() {
+            var vm = this;
+            (vm.customProtocol || []).forEach(function (protocol) {
+                FormatsLink.PROTOCOL_WHITELIST.push(protocol);
+            });
+
+            __WEBPACK_IMPORTED_MODULE_1_quill___default.a.register(FormatsLink, true);
+
+            vm.allProtocol = FormatsLink.PROTOCOL_WHITELIST.map(function (item) {
+                return item;
+            });
+        },
+
         // 初始化操作按钮
         initToolbarContainer: function initToolbarContainer() {
             var vm = this;
@@ -425,14 +476,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 attachBars.push('custom-link');
             }
 
-            vm.toolbarContainer = _flag ? barArr : __WEBPACK_IMPORTED_MODULE_4__config__["a" /* default */].defaultEditorContainer;
+            vm.toolbarContainer = _flag ? barArr : __WEBPACK_IMPORTED_MODULE_4__config__["a" /* default */].defaultEditorContainer();
             if (attachBars.length) {
                 vm.toolbarContainer.push(attachBars);
             }
         },
         initRegisterModules: function initRegisterModules() {
             if (!this.quillRegisterKeys || this.quillRegisterKeys && this.quillRegisterKeys.length) {
-                var _keys = this.quillRegisterKeys && this.quillRegisterKeys.length ? this.quillRegisterKeys : __WEBPACK_IMPORTED_MODULE_4__config__["a" /* default */].defaultQuillRegisterKeys;
+                var _keys = this.quillRegisterKeys && this.quillRegisterKeys.length ? this.quillRegisterKeys : __WEBPACK_IMPORTED_MODULE_4__config__["a" /* default */].defaultQuillRegisterKeys();
 
                 var _modules = {};
 
@@ -474,7 +525,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.quill = new __WEBPACK_IMPORTED_MODULE_1_quill___default.a(this.$refs.quillContainer, {
                 theme: 'snow',
                 bounds: '#' + this.id,
-                formats: __WEBPACK_IMPORTED_MODULE_4__config__["a" /* default */].defaultClipboardFormats,
+                formats: __WEBPACK_IMPORTED_MODULE_4__config__["a" /* default */].defaultClipboardFormats(),
                 modules: _modulesConf,
                 placeholder: this.placeholder,
                 readOnly: this.disabled ? this.disabled : false
@@ -666,13 +717,19 @@ var VEditor = {
 
 var config = {};
 
-config.defaultEditorContainer = [['link', 'bold', 'italic', 'underline'], [{ color: [] }], [{ list: 'bullet' }, { list: 'ordered' }], ['image', 'image-link'], [{
-    size: ['32px', '24px', '18px', '16px', '13px', '12px', false]
-}], ['clean']];
+config.defaultEditorContainer = function () {
+    return [['link', 'bold', 'italic', 'underline'], [{ color: [] }], [{ list: 'bullet' }, { list: 'ordered' }], ['image', 'image-link'], [{
+        size: ['32px', '24px', '18px', '16px', '13px', '12px', false]
+    }], ['clean']];
+};
 
-config.defaultClipboardFormats = ['link', 'bold', 'italic', 'underline', 'color', 'list', 'image', 'width', 'height', 'size', 'header'];
+config.defaultClipboardFormats = function () {
+    return ['link', 'bold', 'italic', 'underline', 'color', 'list', 'image', 'width', 'height', 'size', 'header'];
+};
 
-config.defaultQuillRegisterKeys = ['inline', 'size', 'imageResize', 'imageLink', 'customLink'];
+config.defaultQuillRegisterKeys = function () {
+    return ['inline', 'size', 'imageResize', 'imageLink', 'customLink'];
+};
 
 config.ENUM_MAP = {
     inline: [{
@@ -807,6 +864,16 @@ var _ = {
         var o = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
 
         return o == null ? String(o) : {}.toString.call(o).slice(8, -1).toLowerCase();
+    },
+    protocolSafe: function protocolSafe() {
+        var list = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+        var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
+        var location = document.createElement('a');
+        location.href = url || '';
+        var protocol = location.protocol || '';
+        protocol = protocol.substr(0, protocol.length - 1);
+        return list.includes(protocol);
     }
 };
 
@@ -1166,6 +1233,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     ref: _vm.vueEditorRef,
     attrs: {
       "id": _vm.editorId,
+      "customProtocol": _vm.customProtocol,
       "customLinkHref": _vm.customLinkHref,
       "keepPasteFormat": _vm.keepPasteFormat,
       "useCustomImageHandler": "",
@@ -1219,7 +1287,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.getTrans()
       }
     }
-  }, [_vm._v("\n                get transed html\n            ")])])], 1)])
+  }, [_vm._v("\n                get transed html\n            ")])])], 1), _vm._v(" "), _c('div', {
+    staticClass: "ve-container"
+  }, [_c('h2', [_vm._v("DEMO2")]), _vm._v(" "), _c('vue-rich-editor', {
+    ref: _vm.vueEditorRef2,
+    attrs: {
+      "id": _vm.editorId2,
+      "customLinkHref": _vm.customLinkHref2
+    },
+    model: {
+      value: (_vm.editorContent2),
+      callback: function($$v) {
+        _vm.editorContent2 = $$v
+      },
+      expression: "editorContent2"
+    }
+  })], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
