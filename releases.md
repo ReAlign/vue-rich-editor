@@ -114,3 +114,11 @@
 ### 引用包 bugFix
 
 * [trans-style-tags](https://www.npmjs.com/package/trans-style-tags#003)
+
+## 0.7.9-beta.1
+
+### bugfix
+
+* 单页面多实例下，自定义请求按钮出现多个
+* 自定义(不安全)协议被重置成 `about:blank`
+  * 增加 `prop`: `customProtocol`

@@ -38,7 +38,7 @@
 | 属性值 | 默认 | 类型 | 备注 |
 |  --- |  --- |  --- |   --- |
 | value | '' | string | content |
-| id | 'quill-container' | string | *, only tag |
+| id | 'quill-container' | string | <i style="color: red;">**</i>, only tag |
 | keepPasteFormat | true | boolean | keep text format, from clipboard |
 | disabled | false | boolean |  |
 | editorContainer | [] | array |  |
@@ -47,6 +47,7 @@
 | linkPlaceholder | '请输入链接' | string |  |
 | imageLinkTitle | '请输入图片地址：' | string |  |
 | imageLinkPlaceholder | 'https://' | string |  |
+| customProtocol | null | array | 自定义链接需要额外支持的协议 |
 | customLinkHref | '' | string | 自定义链接内容；有值：显示按钮，空，表示不显示 |
 
 ### customLink 图标样式自定义
