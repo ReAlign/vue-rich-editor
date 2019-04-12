@@ -11,7 +11,7 @@
 
 ![logo](https://dwz.cn/lyPrpas0)
 
-![demo](https://dwz.cn/fU0HGQtu)
+![demo](https://public-bucket-realign.nos-eastchina1.126.net/image/normal/2019-04-13/img-1555087545986-5207.png)
 
 ## 介绍
 
