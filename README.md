@@ -35,20 +35,21 @@
 
 ## 配置
 
-| 属性值 | 默认 | 类型 | 备注 |
-|  --- |  --- |  --- |   --- |
-| value | '' | string | content |
-| id | 'quill-container' | string | <i class="Subhead-heading--danger">**</i>, only tag |
-| keepPasteFormat | true | boolean | keep text format, from clipboard |
-| disabled | false | boolean |  |
-| editorContainer | [] | array |  |
-| quillRegisterKeys | null | array |  |
-| placeholder | '' | string | |
-| linkPlaceholder | '请输入链接' | string |  |
-| imageLinkTitle | '请输入图片地址：' | string |  |
-| imageLinkPlaceholder | 'https://' | string |  |
-| customProtocol | null | array | 自定义链接需要额外支持的协议 |
-| customLinkHref | '' | string | 自定义链接内容；有值：显示按钮，空，表示不显示 |
+| 属性值 | 必须 | 默认值 | 类型 | 备注 |
+| ----- | --- | ----- | --- | --- |
+| value | - | '' | string | 富文本内容 |
+| id | 是 | 'quill-container' | string | 用于单页面多实例 |
+| keepPasteFormat | - | true | boolean | 粘贴保留文本格式 |
+| disabled | - | false | boolean | - |
+| editorContainer | - | [] | array | - |
+| quillRegisterKeys | - | null | array | - |
+| placeholder | - | '' | string | - |
+| linkPlaceholder | - | '请输入链接' | string | - |
+| imageLinkTitle | - | '请输入图片地址：' | string | - |
+| imageLinkPlaceholder | - | 'https://' | string | - |
+| customProtocol | - | null | array | 自定义链接需要额外支持的协议 |
+| customLinkHref | - | '' | string | 自定义链接内容；有值：显示按钮，空，表示不显示 |
+| toolbarTips | - | false | boolean | 显示操作栏按钮文字提示 |
 
 ### customLink 图标样式自定义
 
