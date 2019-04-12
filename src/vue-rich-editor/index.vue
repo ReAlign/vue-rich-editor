@@ -1,5 +1,5 @@
 <template>
-    <div class="quill-wrapper">
+    <div class="quill-wrapper" :id="wrapId">
         <div
             ref="quillContainer"
             class="vre-editor-sign-only"
@@ -23,6 +23,7 @@ const FormatsLink = Quill.import('formats/link');
 
 import TransStyleTags from 'trans-style-tags';
 import _ from './extend/util';
+import dom from './extend/dom.js';
 
 import Config from './config';
 
@@ -81,6 +82,10 @@ export default {
         customLinkHref: {
             type: String,
             default: ''
+        },
+        toolbarTips: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -147,20 +152,6 @@ export default {
         };
     },
 
-    mounted() {
-        const vm = this;
-        vm.registerCustomProtocol();
-        vm.initToolbarContainer();
-        vm.initRegisterModules();
-        vm.initializeVueRichEditor();
-        vm.handleUpdatedEditor();
-        vm.listenStateChangeEditor();
-    },
-
-    created() {
-        //
-    },
-
     watch: {
         value(val) {
             if(val != this.editor.innerHTML && !this.quill.hasFocus()) {
@@ -170,6 +161,25 @@ export default {
         disabled(status) {
             this.quill.enable(!status);
         }
+    },
+    computed: {
+        wrapId: function () {
+            return `j-${this.id}-wrap`;
+        }
+    },
+
+    mounted() {
+        const vm = this;
+        vm.registerCustomProtocol();
+        vm.initToolbarContainer();
+        vm.initRegisterModules();
+        vm.initializeVueRichEditor();
+        vm.handleUpdatedEditor();
+        vm.listenStateChangeEditor();
+
+        setTimeout(() => {
+            vm.createToolbarTips();
+        }, 0);
     },
 
     methods: {
@@ -366,6 +376,29 @@ export default {
 
             this.$emit('reImageAdded', options);
         },
+
+        createToolbarTips() {
+            const vm = this;
+
+            // 需要展示提示
+            if(!vm.toolbarTips) {
+                return false;
+            }
+
+            const wrap = dom.$(`#${vm.wrapId}`);
+            const BTNS = Config.toolbarBtns;
+
+            Object.keys(BTNS).forEach((k) => {
+                const tipObj = BTNS[k];
+                const btn = dom.$$$(wrap, tipObj.cls)[tipObj.order || 0];
+                const tipDom = dom.create('span');
+
+                tipDom.className += 'm-vre-tooltips m-vre-tooltips-dark';
+                dom.html(tipDom, `<span>${tipObj.tip || '-'}</span>`)
+                dom.inject(tipDom, btn);
+            });
+        },
+
         _$getTagFillHtml() {
             return new TransStyleTags().parse(this.value);
         },

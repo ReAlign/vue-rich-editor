@@ -12,6 +12,7 @@ module.exports = {
   ],
   'rules': {
     'arrow-parens': 0,
-    'generator-star-spacing': 0
+    'generator-star-spacing': 0,
+    'no-negated-condition': 'off'
   }
 }

@@ -103,4 +103,57 @@ config.customLinkMsgMap = {
     1: 'Selection is empty!'
 };
 
+config.toolbarBtns = {
+    link: {
+        cls: '.ql-link',
+        tip: '超链接'
+    },
+    bold: {
+        cls: '.ql-bold',
+        tip: '粗体'
+    },
+    italic: {
+        cls: '.ql-italic',
+        tip: '斜体'
+    },
+    underline: {
+        cls: '.ql-underline',
+        tip: '下划线'
+    },
+    color: {
+        cls: '.ql-color-picker',
+        tip: '文字颜色'
+    },
+    bullet: {
+        cls: '.ql-list',
+        order: 0,
+        tip: '无序列表'
+    },
+    ordered: {
+        cls: '.ql-list',
+        order: 1,
+        tip: '有序列表'
+    },
+    image: {
+        cls: '.ql-image',
+        tip: '图片文件'
+    },
+    'image-link': {
+        cls: '.ql-image-link',
+        tip: '在线图片'
+    },
+    size: {
+        cls: '.ql-size',
+        tip: '文字大小'
+    },
+    clean: {
+        cls: '.ql-clean',
+        tip: '清除格式'
+    },
+    'custom-link': {
+        cls: '.ql-custom-link',
+        tip: '自定义链接'
+    }
+};
+
 export default config;

@@ -5,6 +5,7 @@
             <vue-rich-editor
                 :ref="vueEditorRef"
                 :id="editorId"
+                :toolbarTips="toolbarTips"
                 :customProtocol="customProtocol"
                 :customLinkHref="customLinkHref"
                 :keepPasteFormat="keepPasteFormat"
@@ -74,6 +75,7 @@ export default {
         return {
             vueEditorRef: 'vueEditorRef',
             editorId: 'editor',
+            toolbarTips: true,
             customProtocol: ['qiyu'],
             customLinkHref: 'htstp://action.qiyukf.com?command=applyHumanStaff',
             keepPasteFormat: false,

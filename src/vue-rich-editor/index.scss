@@ -1,17 +1,22 @@
+@import "./style/theme.scss";
+
 .ql-editor {
-  min-height: 200px;
-  font-size: 14px;
+    min-height: 200px;
+    font-size: 14px;
 }
 
 .quill-wrapper {
     line-height: 26px;
+
     .ql-disabled {
         cursor: not-allowed;
         user-select: none;
     }
+
     .ql-editor ul {
-        &[data-checked='true'] > li::before,
-        &[data-checked='false'] > li::before {
+
+        &[data-checked='true']>li::before,
+        &[data-checked='false']>li::before {
             font-size: 14px;
             vertical-align: baseline;
             bottom: 0;
@@ -19,82 +24,165 @@
             color: #222;
         }
     }
-    .ql-snow.ql-toolbar {
-        padding-top: 8px;
-        padding-bottom: 4px;
-        line-height: 26px;
-        button {
-            // margin: 1px;
-            svg {
-                width: 18px;
-                height: 18px;
-            }
-        }
-        .ql-formats {
-            border: 1px solid #ccc;
-            margin-bottom: 4px;
-            button {
-                margin: 0;
-            }
-            button:not(:last-child) {
-                border-right: 1px solid #ccc;
-            }
-        }
-    }
+
     .ql-snow {
+        &.ql-toolbar {
+            padding-top: 8px;
+            padding-bottom: 4px;
+            line-height: 26px;
+            @include theme-border;
+            background: $toolbar-bg;
+
+            button {
+                svg {
+                    width: 18px;
+                    height: 18px;
+                }
+            }
+
+            .ql-formats {
+                @include theme-border;
+                margin-bottom: 4px;
+
+                button {
+                    position: relative;
+                    margin: 0;
+                }
+
+                button:not(:last-child) {
+                    border-right: 1px solid $main-color;
+                }
+
+                .m-vre-tooltips {
+                    position: absolute;
+                    min-width: 30px;
+                    max-width: 100px;
+                    left: 50%;
+                    top: -100%;
+                    padding: 0 8px;
+                    transform: translate(-50%, -100%);
+                    border: 1px solid #000;
+                    border-radius: 3px;
+                    opacity: 0;
+                    color: #fff;
+                    font-size: 12px;
+                    font-weight: 300;
+                    cursor: default;
+                    pointer-events: none;
+                    z-index: 9999;
+                    word-break: keep-all;
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        top: 100%;
+                        left: 50%;
+                        height: 0;
+                        width: 0;
+                        border: solid transparent;
+                        border-color: transparent;
+                        border-width: 6px;
+                        margin-left: -6px;
+                        pointer-events: none;
+                    }
+
+                    &.m-vre-tooltips-dark {
+                        background: $hover-tips-dark;
+                        &::after {
+                            border-top-color: $hover-tips-dark;
+                        }
+                    }
+
+                    transition: opacity .3s, transform .3s;
+
+                    & > span {
+                        display: inline-block;
+                        line-height: 28px;
+                    }
+                }
+
+                button,
+                &>span {
+                    z-index: 1;
+
+                    &:hover .m-vre-tooltips {
+                        pointer-events: auto;
+                        opacity: 1;
+                        transform: translate(-50%, -50%);
+                    }
+                }
+            }
+        }
+
+        &.ql-container {
+            @include theme-border;
+        }
+
         .ql-editor img,
         .ql-editor p img,
         .ql-editor * img {
             max-width: 10000%;
         }
+
         .ql-picker.ql-size {
             height: 24px;
             line-height: 24px;
         }
+
         .ql-thin,
         .ql-stroke.ql-thin {
             stroke-width: 1px !important;
         }
+
         .ql-stroke {
             stroke: rgba(63, 63, 63, 0.95);
             stroke-linecap: square;
             stroke-linejoin: initial;
             stroke-width: 1.7px;
         }
+
         .ql-active .ql-stroke {
             stroke-width: 2.25px;
         }
+
         .ql-picker.ql-size {
+
             .ql-picker-label[data-value='12px']::before,
             .ql-picker-item[data-value='12px']::before {
                 content: '12px';
                 font-size: 12px;
             }
+
             .ql-picker-label[data-value='13px']::before,
             .ql-picker-item[data-value='13px']::before {
                 content: '13px';
                 font-size: 13px;
             }
+
             .ql-picker-label[data-value='16px']::before,
             .ql-picker-item[data-value='16px']::before {
                 content: '16px';
                 font-size: 14px;
             }
+
             .ql-picker-label[data-value='18px']::before,
             .ql-picker-item[data-value='18px']::before {
                 content: '18px';
                 font-size: 15px;
             }
+
             .ql-picker-label[data-value='24px']::before,
             .ql-picker-item[data-value='24px']::before {
                 content: '24px';
                 font-size: 16px;
             }
+
             .ql-picker-label[data-value='32px']::before,
             .ql-picker-item[data-value='32px']::before {
                 content: '32px';
                 font-size: 18px;
             }
+
             //默认的样式
             .ql-picker-label::before,
             .ql-picker-item::before {
@@ -102,21 +190,30 @@
                 font-size: 14px;
             }
         }
-        .ql-tooltip[data-mode='link']::before {
-            content: '输入链接:';
-        }
-        .ql-tooltip::before {
-            content: '访问链接:';
-        }
-        .ql-tooltip.ql-editing a.ql-action::after {
-            content: '保存';
-        }
+
         .ql-tooltip {
-            a.ql-action::after {
-                content: '编辑';
+            &[data-mode='link']::before {
+                content: '输入链接:';
             }
-            a.ql-remove::before {
-                content: '移除';
+
+            &::before {
+                content: '访问链接:';
+            }
+
+            &.ql-editing {
+                a.ql-action::after {
+                    content: '保存';
+                }
+            }
+
+            a {
+                &.ql-action::after {
+                    content: '编辑';
+                }
+
+                &.ql-remove::before {
+                    content: '移除';
+                }
             }
         }
     }

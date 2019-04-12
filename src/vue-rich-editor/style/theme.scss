@@ -1,0 +1,11 @@
+$main-color: #E1E3E6;
+$toolbar-bg: #fafbfc;
+
+@mixin theme-border {
+    border: 1px solid $main-color;
+}
+
+$bar-btn-w: 28px;
+$bar-btn-h: 24px;
+
+$hover-tips-dark: rgba(42, 48, 53, .9);
