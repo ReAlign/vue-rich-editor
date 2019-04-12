@@ -1399,20 +1399,81 @@ h2::before {
     padding-top: 8px;
     padding-bottom: 4px;
     line-height: 26px;
+    border: 1px solid #E1E3E6;
+    background: #fafbfc;
 }
 .quill-wrapper .ql-snow.ql-toolbar button svg {
       width: 18px;
       height: 18px;
 }
 .quill-wrapper .ql-snow.ql-toolbar .ql-formats {
-      border: 1px solid #ccc;
+      border: 1px solid #E1E3E6;
       margin-bottom: 4px;
 }
 .quill-wrapper .ql-snow.ql-toolbar .ql-formats button {
+        position: relative;
         margin: 0;
 }
 .quill-wrapper .ql-snow.ql-toolbar .ql-formats button:not(:last-child) {
-        border-right: 1px solid #ccc;
+        border-right: 1px solid #E1E3E6;
+}
+.quill-wrapper .ql-snow.ql-toolbar .ql-formats .m-vre-tooltips {
+        position: absolute;
+        min-width: 30px;
+        max-width: 100px;
+        left: 50%;
+        top: -100%;
+        padding: 0 8px;
+        -ms-transform: translate(-50%, -100%);
+            transform: translate(-50%, -100%);
+        border: 1px solid #000;
+        border-radius: 3px;
+        opacity: 0;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 300;
+        cursor: default;
+        pointer-events: none;
+        z-index: 9999;
+        word-break: keep-all;
+        transition: opacity .3s, transform .3s;
+}
+.quill-wrapper .ql-snow.ql-toolbar .ql-formats .m-vre-tooltips::after {
+          content: "";
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          height: 0;
+          width: 0;
+          border: solid transparent;
+          border-color: transparent;
+          border-width: 6px;
+          margin-left: -6px;
+          pointer-events: none;
+}
+.quill-wrapper .ql-snow.ql-toolbar .ql-formats .m-vre-tooltips.m-vre-tooltips-dark {
+          background: rgba(42, 48, 53, 0.9);
+}
+.quill-wrapper .ql-snow.ql-toolbar .ql-formats .m-vre-tooltips.m-vre-tooltips-dark::after {
+            border-top-color: rgba(42, 48, 53, 0.9);
+}
+.quill-wrapper .ql-snow.ql-toolbar .ql-formats .m-vre-tooltips > span {
+          display: inline-block;
+          line-height: 28px;
+}
+.quill-wrapper .ql-snow.ql-toolbar .ql-formats button,
+      .quill-wrapper .ql-snow.ql-toolbar .ql-formats > span {
+        z-index: 1;
+}
+.quill-wrapper .ql-snow.ql-toolbar .ql-formats button:hover .m-vre-tooltips,
+        .quill-wrapper .ql-snow.ql-toolbar .ql-formats > span:hover .m-vre-tooltips {
+          pointer-events: auto;
+          opacity: 1;
+          -ms-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
+}
+.quill-wrapper .ql-snow.ql-container {
+    border: 1px solid #E1E3E6;
 }
 .quill-wrapper .ql-snow .ql-editor img,
   .quill-wrapper .ql-snow .ql-editor p img,
