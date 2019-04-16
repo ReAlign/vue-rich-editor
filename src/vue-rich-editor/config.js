@@ -36,11 +36,11 @@ config.defaultClipboardFormats = () => [
 ];
 
 config.defaultQuillRegisterKeys = () => [
-    'inline',
-    'size',
-    'imageResize',
-    'imageLink',
-    'customLink'
+    'inline', // b、i、u 内联
+    'size', // 自定义字号
+    'imageResize', // 图片缩放
+    'imageLink', // 根据链接上传图片
+    'customLink' // 自定义链接
 ];
 
 config.ENUM_MAP = {
