@@ -19,7 +19,7 @@
 2. 可配置模块
     * [x] 行内样式（inline style）
     * [x] [图片缩放（image resize）](https://github.com/Fandom-OSS/quill-blot-formatter)
-    * [ ] [拖拽上传（image drop）](https://github.com/kensnyder/quill-image-drop-module)
+    * ~~[拖拽上传（image drop）](https://github.com/kensnyder/quill-image-drop-module)~~
     * [x] 链接上传图片（support via the url to upload pictures）
     * [x] 剪贴板粘贴图片（support the clipboard to paste pictures）
 
@@ -40,13 +40,13 @@
 | value | - | '' | string | 富文本内容 |
 | id | 是 | 'quill-container' | string | 用于单页面多实例 |
 | keepPasteFormat | - | true | boolean | 粘贴保留文本格式 |
-| disabled | - | false | boolean | - |
-| editorContainer | - | [] | array | - |
-| quillRegisterKeys | - | null | array | - |
-| placeholder | - | '' | string | - |
-| linkPlaceholder | - | '请输入链接' | string | - |
-| imageLinkTitle | - | '请输入图片地址：' | string | - |
-| imageLinkPlaceholder | - | 'https://' | string | - |
+| disabled | - | false | boolean | 禁用 |
+| editorContainer | - | [] | array | 自定义操作栏功能，参照[config.js#L16](https://github.com/ReAlign/vue-rich-editor/blob/master/src/vue-rich-editor/config.js#L16) |
+| quillRegisterKeys | - | null | array | 需要注册的模块，[默认](https://github.com/ReAlign/vue-rich-editor/blob/master/src/vue-rich-editor/config.js#L38) |
+| placeholder | - | '' | string | 富文本区域默认占位符 |
+| linkPlaceholder | - | '请输入链接' | string | 链接输入框占位符 |
+| imageLinkTitle | - | '请输入图片地址：' | string | 图片地址输入框标题 |
+| imageLinkPlaceholder | - | 'https://' | string | 图片地址输入框占位符 |
 | customProtocol | - | null | array | 自定义链接需要额外支持的协议 |
 | customLinkHref | - | '' | string | 自定义链接内容；有值：显示按钮，空，表示不显示 |
 | toolbarTips | - | false | boolean | 显示操作栏按钮文字提示 |
