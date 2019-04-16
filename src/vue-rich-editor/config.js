@@ -106,7 +106,7 @@ config.customLinkMsgMap = {
 config.toolbarBtns = {
     link: {
         cls: '.ql-link',
-        tip: '超链接'
+        tip: '插入超链接'
     },
     bold: {
         cls: '.ql-bold',
@@ -136,11 +136,11 @@ config.toolbarBtns = {
     },
     image: {
         cls: '.ql-image',
-        tip: '图片文件'
+        tip: '选择图片上传'
     },
     'image-link': {
         cls: '.ql-image-link',
-        tip: '在线图片'
+        tip: '通过链接上传图片'
     },
     size: {
         cls: '.ql-size',
@@ -152,7 +152,7 @@ config.toolbarBtns = {
     },
     'custom-link': {
         cls: '.ql-custom-link',
-        tip: '自定义链接'
+        tip: '插入自定义链接'
     }
 };
 

@@ -86,6 +86,10 @@ export default {
         toolbarTips: {
             type: Boolean,
             default: false
+        },
+        toolbarTipsText: {
+            type: Object,
+            default: () => null
         }
     },
 
@@ -387,15 +391,17 @@ export default {
 
             const wrap = dom.$(`#${vm.wrapId}`);
             const BTNS = Config.toolbarBtns;
+            const TEXT = vm.toolbarTipsText || {};
 
             Object.keys(BTNS).forEach((k) => {
                 const tipObj = BTNS[k];
                 const btn = dom.$$$(wrap, tipObj.cls)[tipObj.order || 0];
-                const tipDom = dom.create('span');
-
-                tipDom.className += 'm-vre-tooltips m-vre-tooltips-dark';
-                dom.html(tipDom, `<span>${tipObj.tip || '-'}</span>`)
-                dom.inject(tipDom, btn);
+                if(btn) {
+                    const tipDom = dom.create('span');
+                    tipDom.className += 'm-vre-tooltips m-vre-tooltips-dark';
+                    dom.html(tipDom, `<span>${TEXT[k] || tipObj.tip || '-'}</span>`)
+                    dom.inject(tipDom, btn);
+                }
             });
         },
 
