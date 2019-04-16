@@ -42,6 +42,7 @@
 | keepPasteFormat | - | true | boolean | 粘贴保留文本格式 |
 | disabled | - | false | boolean | 禁用 |
 | editorContainer | - | [] | array | 自定义操作栏功能，参照[config.js#L16](https://github.com/ReAlign/vue-rich-editor/blob/master/src/vue-rich-editor/config.js#L16) |
+| useCustomImageHandler | - | false | boolean | 使用自定义的图片上传【默认是 `insert` `base64`】 |
 | quillRegisterKeys | - | null | array | 需要注册的模块，默认参照[config.js#L38](https://github.com/ReAlign/vue-rich-editor/blob/master/src/vue-rich-editor/config.js#L38) |
 | placeholder | - | '' | string | 富文本区域默认占位符 |
 | linkPlaceholder | - | '请输入链接' | string | 链接输入框占位符 |
