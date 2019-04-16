@@ -38,11 +38,11 @@
 | 属性值 | 必须 | 默认值 | 类型 | 备注 |
 | ----- | --- | ----- | --- | --- |
 | value | - | '' | string | 富文本内容 |
-| id | 是 | 'quill-container' | string | 用于单页面多实例 |
+| id | 是 | 'quill-container' | string | 唯一标识组件，**单页面多实例情况下必填** |
 | keepPasteFormat | - | true | boolean | 粘贴保留文本格式 |
 | disabled | - | false | boolean | 禁用 |
 | editorContainer | - | [] | array | 自定义操作栏功能，参照[config.js#L16](https://github.com/ReAlign/vue-rich-editor/blob/master/src/vue-rich-editor/config.js#L16) |
-| quillRegisterKeys | - | null | array | 需要注册的模块，[默认](https://github.com/ReAlign/vue-rich-editor/blob/master/src/vue-rich-editor/config.js#L38) |
+| quillRegisterKeys | - | null | array | 需要注册的模块，默认参照[config.js#L38](https://github.com/ReAlign/vue-rich-editor/blob/master/src/vue-rich-editor/config.js#L38) |
 | placeholder | - | '' | string | 富文本区域默认占位符 |
 | linkPlaceholder | - | '请输入链接' | string | 链接输入框占位符 |
 | imageLinkTitle | - | '请输入图片地址：' | string | 图片地址输入框标题 |
