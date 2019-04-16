@@ -51,7 +51,7 @@
 | customProtocol | - | null | array | 自定义链接需要额外支持的协议 |
 | customLinkHref | - | '' | string | 自定义链接内容；有值：显示按钮，空，表示不显示 |
 | toolbarTips | - | false | boolean | 显示操作栏按钮文字提示 |
-| toolbarTipsText | - | null | object | 自定义操作栏提示文字内容<br>{ link: 'this is link' }<br>所有支持key参照[config.js#L106](https://github.com/ReAlign/vue-rich-editor/blob/master/src/vue-rich-editor/config.js#L38) |
+| toolbarTipsText | - | null | object | 自定义操作栏提示文字内容<br>{ link: 'this is link' }<br>所有支持key参照[config.js#L106](https://github.com/ReAlign/vue-rich-editor/blob/master/src/vue-rich-editor/config.js#L106) |
 
 ### customLink 图标样式自定义
 
