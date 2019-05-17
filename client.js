@@ -370,6 +370,12 @@ var FormatsLink = __WEBPACK_IMPORTED_MODULE_2_quill___default.a.import('formats/
         toolbarTips: {
             type: Boolean,
             default: false
+        },
+        toolbarTipsText: {
+            type: Object,
+            default: function _default() {
+                return null;
+            }
         }
     },
 
@@ -657,15 +663,17 @@ var FormatsLink = __WEBPACK_IMPORTED_MODULE_2_quill___default.a.import('formats/
 
             var wrap = __WEBPACK_IMPORTED_MODULE_5__extend_dom_js__["a" /* default */].$('#' + vm.wrapId);
             var BTNS = __WEBPACK_IMPORTED_MODULE_6__config__["a" /* default */].toolbarBtns;
+            var TEXT = vm.toolbarTipsText || {};
 
             __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys___default()(BTNS).forEach(function (k) {
                 var tipObj = BTNS[k];
                 var btn = __WEBPACK_IMPORTED_MODULE_5__extend_dom_js__["a" /* default */].$$$(wrap, tipObj.cls)[tipObj.order || 0];
-                var tipDom = __WEBPACK_IMPORTED_MODULE_5__extend_dom_js__["a" /* default */].create('span');
-
-                tipDom.className += 'm-vre-tooltips m-vre-tooltips-dark';
-                __WEBPACK_IMPORTED_MODULE_5__extend_dom_js__["a" /* default */].html(tipDom, '<span>' + (tipObj.tip || '-') + '</span>');
-                __WEBPACK_IMPORTED_MODULE_5__extend_dom_js__["a" /* default */].inject(tipDom, btn);
+                if (btn) {
+                    var tipDom = __WEBPACK_IMPORTED_MODULE_5__extend_dom_js__["a" /* default */].create('span');
+                    tipDom.className += 'm-vre-tooltips m-vre-tooltips-dark';
+                    __WEBPACK_IMPORTED_MODULE_5__extend_dom_js__["a" /* default */].html(tipDom, '<span>' + (TEXT[k] || tipObj.tip || '-') + '</span>');
+                    __WEBPACK_IMPORTED_MODULE_5__extend_dom_js__["a" /* default */].inject(tipDom, btn);
+                }
             });
         },
         _$getTagFillHtml: function _$getTagFillHtml() {
@@ -768,7 +776,12 @@ config.defaultClipboardFormats = function () {
 };
 
 config.defaultQuillRegisterKeys = function () {
-    return ['inline', 'size', 'imageResize', 'imageLink', 'customLink'];
+    return ['inline', // b、i、u 内联
+    'size', // 自定义字号
+    'imageResize', // 图片缩放
+    'imageLink', // 根据链接上传图片
+    'customLink' // 自定义链接
+    ];
 };
 
 config.ENUM_MAP = {
@@ -848,7 +861,7 @@ config.customLinkMsgMap = {
 config.toolbarBtns = {
     link: {
         cls: '.ql-link',
-        tip: '超链接'
+        tip: '插入超链接'
     },
     bold: {
         cls: '.ql-bold',
@@ -878,11 +891,11 @@ config.toolbarBtns = {
     },
     image: {
         cls: '.ql-image',
-        tip: '图片文件'
+        tip: '选择图片上传'
     },
     'image-link': {
         cls: '.ql-image-link',
-        tip: '在线图片'
+        tip: '通过链接上传图片'
     },
     size: {
         cls: '.ql-size',
@@ -894,7 +907,7 @@ config.toolbarBtns = {
     },
     'custom-link': {
         cls: '.ql-custom-link',
-        tip: '自定义链接'
+        tip: '插入自定义链接'
     }
 };
 

@@ -1420,7 +1420,7 @@ h2::before {
 .quill-wrapper .ql-snow.ql-toolbar .ql-formats .m-vre-tooltips {
         position: absolute;
         min-width: 30px;
-        max-width: 100px;
+        max-width: 120px;
         left: 50%;
         top: -100%;
         padding: 0 8px;
@@ -1458,8 +1458,12 @@ h2::before {
             border-top-color: rgba(42, 48, 53, 0.9);
 }
 .quill-wrapper .ql-snow.ql-toolbar .ql-formats .m-vre-tooltips > span {
-          display: inline-block;
+          display: block;
+          width: 100%;
           line-height: 28px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          float: left;
 }
 .quill-wrapper .ql-snow.ql-toolbar .ql-formats button,
       .quill-wrapper .ql-snow.ql-toolbar .ql-formats > span {
