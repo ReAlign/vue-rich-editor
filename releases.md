@@ -133,3 +133,10 @@
 ### 增强交互 —— 工具条文字提示
 
 如题
+
+## 0.8.1
+
+### bugfix
+
+* 获取 AOS/IOS 数据时报错修复
+* ![](https://public-bucket-realign.nos-eastchina1.126.net/image/normal/2019-05-17/img-1558082863608-6540.jpg)
