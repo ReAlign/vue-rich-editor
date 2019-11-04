@@ -22,7 +22,22 @@
     * ~~[拖拽上传（image drop）](https://github.com/kensnyder/quill-image-drop-module)~~
     * [x] 链接上传图片（support via the url to upload pictures）
     * [x] 剪贴板粘贴图片（support the clipboard to paste pictures）
-    * [x] 支持 `@(at)` 功能
+    * [x] 支持 `@(at)`（support @(at) function）
+        * 这一版只是实现了 **最基础的 @(at) 功能**
+        * 这个功能，简单了来说，只需要：
+            1. 识别键入 `@`，响应事件
+            2. 呼出对应备选列表
+            3. 点击某项之后插入
+            4. 稍好一点，点击抛出事件
+        * 复杂了说：
+            1. @的元素是个整体
+                * 鼠标指针不可侵入
+                * 要么都删，要么都不删
+                * 要么都选，要么都不选
+                * ...
+            2. 应该对应有颜色标识
+            3. 样式不受富文本编辑格式的控制
+            4. ...【其他】
 
 ## 示例
 
