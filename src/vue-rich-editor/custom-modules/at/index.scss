@@ -1,0 +1,33 @@
+$ul-border-w: 1px;
+$ul-max-h: 156px;
+
+.ql-custom-at-tag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 120px;
+    background-color: #fff;
+    display: none;
+    & > ul {
+        padding: 0;
+        margin: 0;
+        width: 100px;
+        max-height: $ul-max-h + $ul-border-w * 2;
+        border: $ul-border-w solid rgb(220, 220, 220);
+        border-radius: 4px;
+        box-shadow: 2px 0px 10px 3px rgb(230, 230, 230);
+        overflow-y: auto;
+        & > li {
+            padding: 0 8px;
+            list-style: none;
+            cursor: pointer;
+            &:hover {
+                background: #eee;
+            }
+        }
+    }
+}
+
+.ql-u-at-atspan {
+    color: red;
+}

@@ -22,6 +22,7 @@
     * ~~[拖拽上传（image drop）](https://github.com/kensnyder/quill-image-drop-module)~~
     * [x] 链接上传图片（support via the url to upload pictures）
     * [x] 剪贴板粘贴图片（support the clipboard to paste pictures）
+    * [x] 支持 `@(at)` 功能
 
 ## 示例
 
@@ -52,6 +53,8 @@
 | customLinkHref | - | '' | string | 自定义链接内容；有值：显示按钮，空，表示不显示 |
 | toolbarTips | - | false | boolean | 显示操作栏按钮文字提示 |
 | toolbarTipsText | - | null | object | 自定义操作栏提示文字内容<br>{ link: 'this is link' }<br>所有支持key参照[config.js#L106](https://github.com/ReAlign/vue-rich-editor/blob/master/src/vue-rich-editor/config.js#L106) |
+| atList | - | false | array-object | @呼出选择列表数据，**如开启@功能，此项必须**，具体格式参见下述：**【开启 @-at 功能】** |
+| atHooks | - | false | object | @功能的钩子，具体格式参见下述：**【开启 @-at 功能】** |
 
 ### customLink 图标样式自定义
 
@@ -69,6 +72,43 @@
         }
     }
 }
+```
+
+### 开启 @-at 功能
+
+> @ 默认不开启，需要开启的话，请先配置 `quillRegisterKeys`【如果之前使用了默认配置，即没有显式配置，需要将默认 key 显式注册一下】
+
+#### 配置参数
+
+atList
+
+```js
+const atList = [
+    atListItem,
+    atListItem,
+    ...
+];
+
+const atListItem = {
+    label: '',  // 【*】 显式的文字
+    ...,        // 其他需要的数据
+};
+```
+
+atHooks
+
+```js
+const atHooks = {
+    click(opts) {
+        //
+    }
+};
+
+const opts = {
+    list, // 当前 list，即 atList，为便利取值
+    item, // 点击的项，即 list[clickIndex]
+    index // 点击项的索引
+};
 ```
 
 ## 方法

@@ -13,6 +13,9 @@
                 useCustomImageLinkHandler
                 :disabled="editorIsDisabled"
                 :linkPlaceholder="linkPlaceholder"
+                :quillRegisterKeys="quillRegisterKeys"
+                :atList="atList"
+                :atHooks="atHooks"
                 v-model="editorContent"
                 @reCustomLink="editorCustomLink"
                 @reCursorMove="editorCursorMove"
@@ -66,7 +69,6 @@ import { VueRichEditor } from '../src/index.js';
 import axios from 'axios';
 import { Config } from './config';
 import ClipboardPaste from 'clipboard-paste';
-
 export default {
     components: {
         VueRichEditor
@@ -77,15 +79,33 @@ export default {
             editorId: 'editor',
             toolbarTips: true,
             customProtocol: ['qiyu'],
+            quillRegisterKeys: [
+                'inline', // b、i、u 内联
+                'size', // 自定义字号
+                'imageResize', // 图片缩放
+                'imageLink', // 根据链接上传图片
+                'customLink', // 自定义链接
+                'at' // 默认不开启
+            ],
+            atList: [
+                { value: 1, label: '订单号' },
+                { value: 2, label: '售后单号' },
+                { value: 3, label: '售后状态' }
+            ],
+            atHooks: {
+                click(opts) {
+                    console.log(opts);
+                }
+            },
             customLinkHref: 'htstp://action.qiyukf.com?command=applyHumanStaff',
             keepPasteFormat: false,
-            editorContent: '<h4><span style="font-weight: bold; font-style: italic; color: rgb(230, 0, 0);">这是一段文字</span></h4><br><br><img src="https://dwz.cn/fBofuN4L" width="150px" height="150px" />',
+            // editorContent: '<h4><span style="font-weight: bold; font-style: italic; color: rgb(230, 0, 0);">这是一段文字</span></h4><br><br><img src="https://dwz.cn/fBofuN4L" width="150px" height="150px" />',
+            editorContent: '',
             setEditorDemo: '<h1>hahahah</h1>',
             editorIsDisabled: false,
             linkPlaceholder: '请输入链接',
             editorFocusCache: null,
             editorHasFocusFlag: false,
-
             vueEditorRef2: 'vueEditorRef2',
             editorId2: 'editor2',
             customLinkHref2: 'qiyu//:qqq',
@@ -103,19 +123,15 @@ export default {
         setEditor(str = 'demo') {
             this.editorContent = str;
         },
-
         saveContent(content = '') {
             console.log(content);
         },
-
         showEffectiveValue() {
             const vm = this;
             console.log(vm.$refs[vm.vueEditorRef]._$getEffectiveValue());
         },
-
         editorFocusEvt(opt) {
             this.editorFocusCache = opt;
-
             if(!this.editorHasFocusFlag) {
                 this.editorHasFocusFlag = true;
                 ClipboardPaste.addEvtPaste4Image(`#${this.editorId}`, this.cbPasteEvtImage);
@@ -125,10 +141,8 @@ export default {
             if(blob) {
                 e.preventDefault();
                 const _c = this.editorFocusCache;
-
                 console.log(e, blob);
                 console.log(_c);
-
                 const opt = {
                     file: blob.content,
                     Editor: _c.Editor,
@@ -137,7 +151,6 @@ export default {
                 this.uploadImage(opt);
             }
         },
-
         editorCustomLink(opts) {
             console.log(opts);
         },
@@ -152,7 +165,6 @@ export default {
                 editorFocusCache.cursorLocation = oldRange.index;
             }
         },
-
         editorBlurEvt() {
             console.log('Cursor not in the editor');
         },
@@ -163,7 +175,6 @@ export default {
             console.log('User has highlighted: ', text);
             console.log(range);
         },
-
         uploadImage(options) {
             const self = this;
             const {
@@ -173,9 +184,7 @@ export default {
             } = options;
             let formData = new FormData();
             formData.append(Config.imageFileName, file);
-
             this.editorIsDisabled = true;
-
             axios({
                 url: Config.URL.UPLOAD_IMAGE,
                 method: 'POST',
@@ -192,7 +201,6 @@ export default {
                     console.log(err);
                 });
         },
-
         addImageLink(type = 'ok', options) {
             const {
                 url,

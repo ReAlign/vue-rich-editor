@@ -43,7 +43,7 @@ dom.html = (node = null, html = '') => {
     }
 };
 
-dom.create = (type = '') => {
+dom.create = (type = 'div') => {
     const d = type ? document.createElement(type) : null;
     return d;
 };
@@ -63,5 +63,28 @@ dom.inject = (node = null, refer = null) => {
 
     refer.appendChild(node);
 };
+
+/**
+ * event
+ */
+const testNode = dom.create();
+const _listener = !!testNode.addEventListener;
+dom.on = () => {/**/};
+dom.del = () => {/**/};
+if(_listener) {
+    dom.on = (node = null, type = '', fn = () => {/**/}, capture = false) => {
+        node.addEventListener(type, fn, capture);
+    };
+    dom.del = (node = null, type = '', fn = () => {/**/}, capture = false) => {
+        node.removeEventListener(type, fn, capture);
+    };
+} else {
+    dom.on = (node, type, fn) => {
+        node.attachEvent(`on${type}`, fn);
+    };
+    dom.del = (node, type, fn) => {
+        node.detachEvent(`on${type}`, fn);
+    };
+}
 
 export default dom;

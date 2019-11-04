@@ -23,7 +23,7 @@ const FormatsLink = Quill.import('formats/link');
 
 import TransStyleTags from 'trans-style-tags';
 import _ from './extend/util';
-import dom from './extend/dom.js';
+import dom from './extend/dom';
 
 import Config from './config';
 
@@ -90,6 +90,14 @@ export default {
         toolbarTipsText: {
             type: Object,
             default: () => null
+        },
+        atList: {
+            type: Array,
+            default: () => []
+        },
+        atHooks: {
+            type: Object,
+            default: () => null
         }
     },
 
@@ -152,7 +160,8 @@ export default {
 
                     this.$emit('reCustomLink', { code, msg: msgMap[code] || '' });
                 }
-            }
+            },
+            __registedKeys__: []
         };
     },
 
@@ -219,14 +228,14 @@ export default {
             if(!this.quillRegisterKeys
                 || (this.quillRegisterKeys
                     && this.quillRegisterKeys.length)) {
-                const _keys = (this.quillRegisterKeys
+                this.__registedKeys__ = (this.quillRegisterKeys
                                 && this.quillRegisterKeys.length)
                             ? this.quillRegisterKeys
                             : Config.defaultQuillRegisterKeys();
 
                 let _modules = {};
 
-                _keys.forEach(item => {
+                this.__registedKeys__.forEach(item => {
                     if(Config.ENUM_MAP[item]) {
                         Config.ENUM_MAP[item].forEach(that => {
                             _modules[that.key] = that.value;
@@ -245,37 +254,18 @@ export default {
         },
 
         setQuillElement() {
-            const _modulesConf = {
-                toolbar: {
-                    container: this.toolbarContainer,
-                    handlers: this.toolbarHandlers
-                },
-                clipboard: {
-                    matchVisual: false
-                },
-                imageLink: true,
-                customLink: true
-            };
-
-            if((this.quillRegisterKeys &&
-                this.quillRegisterKeys.length &&
-                this.quillRegisterKeys.indexOf('imageResize') != -1) ||
-                !this.quillRegisterKeys) {
-                _modulesConf.blotFormatter = {
-                    specs: [Config.MyImageSpec]
-                };
-            }
-
-            this.quill = new Quill(this.$refs.quillContainer, {
+            const vm = this;
+            const modules = vm.getQuillModules();
+            vm.quill = new Quill(vm.$refs.quillContainer, {
                 theme: 'snow',
-                bounds: `#${this.id}`,
+                bounds: `#${vm.id}`,
                 formats: Config.defaultClipboardFormats(),
-                modules: _modulesConf,
-                placeholder: this.placeholder,
-                readOnly: this.disabled ? this.disabled : false
+                modules,
+                placeholder: vm.placeholder,
+                readOnly: vm.disabled ? vm.disabled : false
             });
             // clear format from Clipboard Paste
-            if(!this.keepPasteFormat) {
+            if(!vm.keepPasteFormat) {
                 this.quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
                     delta.ops = delta.ops.map(op => {
                         return { insert: op.insert };
@@ -284,11 +274,11 @@ export default {
                 });
             }
 
-            const tooltip = this.quill.theme.tooltip;
+            const tooltip = vm.quill.theme.tooltip;
             const input = tooltip.root.querySelector('input[data-link]');
-            input.dataset.link = this.linkPlaceholder;
+            input.dataset.link = vm.linkPlaceholder;
 
-            this.checkForCustomImageHandler();
+            vm.checkForCustomImageHandler();
         },
 
         setEditorElement() {
@@ -419,6 +409,51 @@ export default {
             const content = isEmpty ? '' : vm.value;
 
             return content;
+        },
+
+        getQuillModules() {
+            const vm = this;
+            const _modulesConf = {
+                toolbar: {
+                    container: vm.toolbarContainer,
+                    handlers: vm.toolbarHandlers
+                },
+                clipboard: {
+                    matchVisual: false
+                },
+                imageLink: true,
+                customLink: true
+            };
+            /**
+             * 动态注册
+             */
+            const _rKeys_ = vm.__registedKeys__;
+            // 是图缩放：设置 formatter
+            if(_rKeys_.includes('imageResize')) {
+                _modulesConf.blotFormatter = {
+                    specs: [Config.MyImageSpec]
+                };
+            }
+            // 是 at && 参数合法
+            if(_rKeys_.includes('at') && vm.checkAtParams()) {
+                _modulesConf.at = {
+                    list: vm.atList,
+                    hooks: vm.atHooks
+                };
+            }
+            return _modulesConf;
+        },
+        checkAtParams() {
+            const atList = this.atList;
+            // const atHooks = this.atHooks;
+            const atListOK = (atList) => {
+                const flag = _.typeOf(atList) === 'array'
+                    && atList.length
+                    && _.typeOf(atList[0].label) === 'string';
+                return flag;
+            };
+            const atHooksOK = () => true;
+            return atListOK && atHooksOK;
         }
     }
 };
@@ -430,4 +465,5 @@ export default {
 @import './index.scss';
 @import './custom-modules/image-link/index.scss';
 @import './custom-modules/custom-link/index.scss';
+@import './custom-modules/at/index.scss';
 </style>

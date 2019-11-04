@@ -10,6 +10,7 @@ import DeleteAction from 'n-quill-blot-formatter/dist/actions/DeleteAction';
 
 import ImageLink from './custom-modules/image-link/index';
 import CustomLink from './custom-modules/custom-link/index';
+import At from './custom-modules/at/index';
 
 const config = {};
 
@@ -41,6 +42,7 @@ config.defaultQuillRegisterKeys = () => [
     'imageResize', // 图片缩放
     'imageLink', // 根据链接上传图片
     'customLink' // 自定义链接
+    // 'at' // 默认不开启
 ];
 
 config.ENUM_MAP = {
@@ -80,6 +82,12 @@ config.ENUM_MAP = {
         {
             key: 'modules/customLink',
             value: CustomLink
+        }
+    ],
+    at: [
+        {
+            key: 'modules/at',
+            value: At
         }
     ]
 };
