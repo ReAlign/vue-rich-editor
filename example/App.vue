@@ -5,6 +5,7 @@
             <vue-rich-editor
                 :ref="vueEditorRef"
                 :id="editorId"
+                :placeholder="placeholder"
                 :toolbarTips="toolbarTips"
                 :customProtocol="customProtocol"
                 :customLinkHref="customLinkHref"
@@ -77,6 +78,7 @@ export default {
         return {
             vueEditorRef: 'vueEditorRef',
             editorId: 'editor',
+            placeholder: '试试 @ 吧',
             toolbarTips: true,
             customProtocol: ['qiyu'],
             quillRegisterKeys: [
@@ -88,9 +90,9 @@ export default {
                 'at' // 默认不开启
             ],
             atList: [
-                { value: 1, label: '订单号' },
-                { value: 2, label: '售后单号' },
-                { value: 3, label: '售后状态' }
+                { value: 1, label: '你瞅啥' },
+                { value: 2, label: '瞅你咋的' },
+                { value: 3, label: '再瞅一个试试' }
             ],
             atHooks: {
                 click(opts) {
