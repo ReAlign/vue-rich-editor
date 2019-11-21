@@ -30,7 +30,7 @@ h2::before {
       cursor: pointer;
 }
 /*!
- * Quill Editor v1.3.6
+ * Quill Editor v1.3.7
  * https://quilljs.com/
  * Copyright (c) 2014, Jason Chen
  * Copyright (c) 2013, salesforce.com
@@ -427,7 +427,7 @@ h2::before {
   right: 15px;
 }
 /*!
- * Quill Editor v1.3.6
+ * Quill Editor v1.3.7
  * https://quilljs.com/
  * Copyright (c) 2014, Jason Chen
  * Copyright (c) 2013, salesforce.com
@@ -1373,6 +1373,12 @@ h2::before {
 }
 
 @charset "UTF-8";
+.vre-f-toe {
+  overflow: hidden;
+  word-wrap: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .ql-editor {
   min-height: 200px;
   font-size: 14px;
@@ -1574,6 +1580,35 @@ h2::before {
     font-weight: bold;
     line-height: 18px;
     text-align: center;
+}
+.ql-custom-at-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 120px;
+  background-color: #fff;
+  display: none;
+}
+.ql-custom-at-tag > ul {
+    padding: 0;
+    margin: 0;
+    width: 100px;
+    max-height: 158px;
+    border: 1px solid gainsboro;
+    border-radius: 4px;
+    box-shadow: 2px 0px 10px 3px #e6e6e6;
+    overflow-y: auto;
+}
+.ql-custom-at-tag > ul > li {
+      padding: 0 8px;
+      list-style: none;
+      cursor: pointer;
+}
+.ql-custom-at-tag > ul > li:hover {
+        background: #eee;
+}
+.ql-u-at-atspan {
+  color: red;
 }
 
 /*# sourceMappingURL=client.css.map*/
