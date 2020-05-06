@@ -2,6 +2,11 @@
     <div id="app">
         <div class="ve-container">
             <h2>DEMO</h2>
+            <div class="ve-cont-generate">
+                <span>Origin rich string: </span>
+                <input type="text" v-model="oriStr">
+                <button class="ve-button" @click="generateIt">generate</button>
+            </div>
             <vue-rich-editor
                 :ref="vueEditorRef"
                 :id="editorId"
@@ -29,6 +34,7 @@
             <div class="ve-button-area">
                 <button
                     class="ve-button"
+                    title="For H5/PC"
                     @click="saveContent(editorContent)">
                     console content
                 </button>
@@ -39,14 +45,15 @@
                     console effective content
                 </button>
 
-                <button
+                <!-- <button
                     class="ve-button"
                     @click="setEditor(setEditorDemo)">
                     set editor
-                </button>
+                </button> -->
 
                 <button
                     class="ve-button"
+                    title="For AOS/IOS"
                     @click="getTrans()">
                     get transed html
                 </button>
@@ -76,9 +83,11 @@ export default {
     },
     data() {
         return {
+            oriStr: '',
+
             vueEditorRef: 'vueEditorRef',
             editorId: 'editor',
-            placeholder: '试试 @ 吧',
+            placeholder: 'Try input `@`',
             toolbarTips: true,
             customProtocol: ['qiyu'],
             quillRegisterKeys: [
@@ -118,6 +127,11 @@ export default {
         //
     },
     methods: {
+        generateIt() {
+            const vm = this;
+
+            vm.editorContent = vm.oriStr;
+        },
         getTrans() {
             const vm = this;
             console.log(vm.$refs[vm.vueEditorRef]._$getTagFillHtml());
@@ -248,13 +262,27 @@ h2 {
     margin: 60px auto 0;
     .ve-button-area {
         margin: 10px 0 0 0;
-        .ve-button {
+    }
+    .ve-button {
         padding: 4px 10px;
         background: #00a3cf;
         border: 0;
         border-radius: 3px;
         color: #fff;
         cursor: pointer;
+        outline: none;
+    }
+    .ve-cont-generate {
+        margin-bottom: 4px;
+        & > input {
+            width: 400px;
+            padding: 3px 6px;
+            outline: none;
+            border: 1px solid #E1E3E6;
+            border-radius: 2px;
+            &:focus {
+                border: 1px solid gray;
+            }
         }
     }
 }
