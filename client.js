@@ -94,6 +94,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -105,9 +112,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
+            oriStr: '',
+
             vueEditorRef: 'vueEditorRef',
             editorId: 'editor',
-            placeholder: '试试 @ 吧',
+            placeholder: 'Try input `@`',
             toolbarTips: true,
             customProtocol: ['qiyu'],
             quillRegisterKeys: ['inline', // b、i、u 内联
@@ -143,6 +152,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        generateIt: function generateIt() {
+            var vm = this;
+
+            vm.editorContent = vm.oriStr;
+        },
         getTrans: function getTrans() {
             var vm = this;
             console.log(vm.$refs[vm.vueEditorRef]._$getTagFillHtml());
@@ -1632,7 +1646,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "ve-container"
-  }, [_c('h2', [_vm._v("DEMO")]), _vm._v(" "), _c('vue-rich-editor', {
+  }, [_c('h2', [_vm._v("DEMO")]), _vm._v(" "), _c('div', {
+    staticClass: "ve-cont-generate"
+  }, [_c('span', [_vm._v("Origin rich string: ")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.oriStr),
+      expression: "oriStr"
+    }],
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.oriStr)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.oriStr = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('button', {
+    staticClass: "ve-button",
+    on: {
+      "click": _vm.generateIt
+    }
+  }, [_vm._v("generate")])]), _vm._v(" "), _c('vue-rich-editor', {
     ref: _vm.vueEditorRef,
     attrs: {
       "id": _vm.editorId,
@@ -1669,6 +1709,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "ve-button-area"
   }, [_c('button', {
     staticClass: "ve-button",
+    attrs: {
+      "title": "For H5/PC"
+    },
     on: {
       "click": function($event) {
         return _vm.saveContent(_vm.editorContent)
@@ -1683,13 +1726,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("\n                console effective content\n            ")]), _vm._v(" "), _c('button', {
     staticClass: "ve-button",
-    on: {
-      "click": function($event) {
-        return _vm.setEditor(_vm.setEditorDemo)
-      }
-    }
-  }, [_vm._v("\n                set editor\n            ")]), _vm._v(" "), _c('button', {
-    staticClass: "ve-button",
+    attrs: {
+      "title": "For AOS/IOS"
+    },
     on: {
       "click": function($event) {
         return _vm.getTrans()

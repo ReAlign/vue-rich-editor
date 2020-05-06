@@ -21,13 +21,27 @@ h2::before {
 .ve-container .ve-button-area {
     margin: 10px 0 0 0;
 }
-.ve-container .ve-button-area .ve-button {
-      padding: 4px 10px;
-      background: #00a3cf;
-      border: 0;
-      border-radius: 3px;
-      color: #fff;
-      cursor: pointer;
+.ve-container .ve-button {
+    padding: 4px 10px;
+    background: #00a3cf;
+    border: 0;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+}
+.ve-container .ve-cont-generate {
+    margin-bottom: 4px;
+}
+.ve-container .ve-cont-generate > input {
+      width: 400px;
+      padding: 3px 6px;
+      outline: none;
+      border: 1px solid #E1E3E6;
+      border-radius: 2px;
+}
+.ve-container .ve-cont-generate > input:focus {
+        border: 1px solid gray;
 }
 /*!
  * Quill Editor v1.3.7
